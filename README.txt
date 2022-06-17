@@ -1,0 +1,1 @@
+pip install -i http://nexus.centr.m:8081/repository/pypi/simple/ --trusted-host nexus.centr.m -r requirements.txt

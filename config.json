@@ -1,0 +1,150 @@
+{
+  "api":{
+    "url": "http://10.10.72.214",
+    "services": {
+      "StartupApi" : {
+        "port": 5050,
+        "service_name": null
+      }
+    }
+  },
+  "timeouts": {
+    "timeoutImplicit": 0,
+    "timeoutCondition": 20,
+    "timeoutScript": 10,
+    "timeoutPageLoad": 15,
+    "timeoutPollingInterval": 0.1,
+    "timeoutApi": 5
+  },
+  "logger": {
+    "level": "debug",
+    "language": "en",
+    "logPageSource": true,
+    "encoding": "utf-8",
+    "filemode": "w",
+    "format": "[%(asctime)s: %(levelname)s] %(message)s",
+    "lineLength": 100
+  },
+  "jira": {
+    "url": "https://jira.steor.tech",
+    "login": "",
+    "password": ""
+  },
+
+
+  "ui": {
+    "projectSettings": {
+      "url": "http://10.10.127.22:3002",
+      "login": "admin",
+      "password": "5555",
+      "isBasicAuthorization": false
+
+    },
+    "browserSettings": {
+      "browserName": "chrome",
+      "githubToken": "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",
+      "isHeadless": false,
+      "windowSize": {
+        "width": 1280,
+        "height": 1000
+      },
+      "maximize": false,
+      "isHighlightElement": true,
+      "isPrivate": false,
+      "chrome": {
+        "webDriverVersion": "102.0.5005.61",
+        "capabilities": {
+          "enableVNC": true,
+          "unhandledPromptBehavior": "accept",
+          "pageLoadStrategy": "eager",
+          "acceptInsecureCerts": true
+        },
+        "options": {
+          "prefs": {
+            "popups": 1,
+            "download.default_directory": "./downloads",
+            "download.prompt_for_download": false,
+            "safebrowsing.enabled": true,
+            "intl.accept_languages": "en",
+            "profile.default_content_settings.popups": 0
+          }
+        },
+        "startArguments": [
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--verbose",
+          "--ignore-certificate-errors",
+          "--disable-extensions"
+        ]
+      },
+       "chrome_settings": {
+      "driver_path": "C:\\Users\\tativa\\PycharmProjects\\chromedriver.exe",
+      "binary_path": "C:\\Users\\tativa\\PycharmProjects\\chromedriver.exe",
+      "log_path": null
+    }
+  },
+      "firefox": {
+        "webDriverVersion": "latest",
+        "capabilities": {
+          "enableVNC": true,
+          "unhandledPromptBehavior": "accept",
+          "pageLoadStrategy": "eager",
+          "acceptInsecureCerts": true
+        },
+        "firefox_settings": {
+      "driver_path": "C:\\Users\\tativa\\PycharmProjects\\geckodriver.exe",
+      "binary_path": "C:\\Users\\tativa\\PycharmProjects\\geckodriver.exe",
+      "log_path": null
+    },
+        "options": {
+          "intl.accept_languages": "en",
+          "browser.download.dir": "./downloads",
+          "browser.download.folderList": 2,
+          "browser.helperApps.neverAsk.saveToDisk": "application/octet-stream, application/x-debian-package, application/x-www-form-urlencod, application/json, application/x-compressed, application/x-zip-compressed, application/zip, multipart/x-zip, text/plain, text/csv",
+          "browser.helperApps.alwaysAsk.force": false,
+          "browser.download.manager.alertOnEXEOpen": false,
+          "browser.download.manager.focusWhenStarting": false,
+          "browser.download.useDownloadDir": true,
+          "browser.download.manager.showWhenStarting": false,
+          "browser.download.manager.closeWhenDone": true,
+          "browser.download.manager.showAlertOnComplete": false,
+          "browser.download.manager.useWindow": false,
+          "browser.download.panel.shown": false,
+          "disable-popup-blocking": false
+        },
+        "startArguments": []
+      }
+    },
+
+  "api":{
+    "url": "https://graphqlzero.almansi.me",
+    "services": {
+      "api": {
+        "port": null,
+        "service_name": "api"
+      }
+    }
+  },
+  "timeouts": {
+    "timeoutImplicit": 0,
+    "timeoutCondition": 20,
+    "timeoutScript": 10,
+    "timeoutPageLoad": 15,
+    "timeoutPollingInterval": 0.1,
+    "timeoutApi": 5
+  },
+  "logger": {
+    "level": "debug",
+    "language": "en",
+    "logPageSource": true,
+    "encoding": "utf-8",
+    "filemode": "w",
+    "format": "[%(asctime)s: %(levelname)s] %(message)s",
+    "lineLength": 100
+  },
+  "jira": {
+    "url": "https://jira.steor.tech/projects/VEGA2/",
+    "login": "tativa",
+    "password": ""
+  }
+}
