@@ -4,12 +4,12 @@ from aqas.element_factory import ElementFactory
 from aqas.forms.base_form import BaseForm, BaseFormElements
 
 
-class Line1ControlFormElements(BaseFormElements):
+class Lane1ControlFormElements(BaseFormElements):
     """
     Класс, который содержит элементы, используемые при проверке управления первой полосой
     """
 
-    BUSY_LINE_RADIO = ElementFactory.Labels(
+    BUSY_LANE_RADIO = ElementFactory.Labels(
         locator_type=By.XPATH,
         locator_value="//div[contains(@class, 'lane-head-items')]//span",
         name_prefix="Занятость полосы",
@@ -89,18 +89,18 @@ class Line1ControlFormElements(BaseFormElements):
         "Кнопка паузы в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ, упр. либо приостановлено либо оставновлено ")
 
 
-class Line1ControlForm(BaseForm):
+class Lane1ControlForm(BaseForm):
     """
         Класс, который содержит методы, используемые при проверке страницы управления первой полосой
         """
-    elements = Line1ControlFormElements()
+    elements = Lane1ControlFormElements()
 
     def __init__(self):
         super().__init__(By.XPATH, "//div[contains(text(),'Управление полосой')]",
                          "Страница управления первой полосой")
 
-    def change_busy_line(self):
-        self.elements.BUSY_LINE_RADIO.click()
+    def change_busy_lane(self):
+        self.elements.BUSY_LANE_RADIO.click()
 
     def go_shooters_menu(self):
         self.elements.SHOOTERS_MENU.state.wait_for_visible()
