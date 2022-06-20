@@ -25,7 +25,7 @@ class ShootingSettingsFormElements(BaseFormElements):
         By.XPATH, ".//label[contains(text(),'Дуэль')]",
         "Режим Дуэль")
 
-    LINE_COUNTS = ElementFactory.Button(
+    LANE_COUNTS = ElementFactory.Button(
         By.XPATH, " //*[@id='linesCount']/span]",
         "Поле выбора количества полос")
 

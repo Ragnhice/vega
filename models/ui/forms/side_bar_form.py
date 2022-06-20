@@ -8,8 +8,9 @@ class SideBarFormElements(BaseFormElements):
     Класс, который содержит элементы, используемые при проверке бокового меню
     """
 
-    MENU_BUTTON = ElementFactory.Button(By.XPATH,
-        "//div[contains(@class, 'p-toolbar-group-left')]//span"),"Меню")
+    MENU_BUTTON = ElementFactory.Button(
+        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//span"),
+         "Меню")
 
 
     SETTINGS = ElementFactory.Button(

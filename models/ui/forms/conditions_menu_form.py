@@ -112,7 +112,7 @@ class ConditionsMenuForm(BaseForm):
     """
             Класс, который содержит методы, используемые при проверке страницы с условиями
             """
-    elements = ConditionsMenuFormElements(BaseFormElements)
+    elements = ConditionsMenuFormElements()
 
     def __init__(self):
         super().__init__(By.XPATH, ".//div[contains(text(),'Выбор условий полосы 1')]",

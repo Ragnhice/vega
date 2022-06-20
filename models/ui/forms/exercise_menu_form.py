@@ -7,7 +7,7 @@ class ExerciseMenuFormElements(BaseFormElements):
     """
        Класс, который содержит элементы, используемые при проверке страницы установки упражнения
     """
-    BUSY_LINE_SWITCH = ElementFactory.Button(
+    BUSY_LANE_SWITCH = ElementFactory.Button(
         By.XPATH, ".//div [@class='p-inputswitch p-component p-mt-2 p-mr-2'] //span[@class='p-inputswitch-slider']",
         "Сменить занятость полосы")
 
