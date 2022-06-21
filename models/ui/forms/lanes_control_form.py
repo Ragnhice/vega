@@ -49,12 +49,8 @@ class LanesControlFormElements(BaseFormElements):
         name_prefix="Занятость полосы",
         )
 
-
-    def change_busy_lane1(self):
-        self.elements.BUSY_LANE_RADIO.click()
-
     LANE_IS_FREE = ElementFactory.Labels(
-        By.XPATH, "//tbody/tr[1]//div[contains(@class(),'instructor-text')][text()='не назначен']",
+        By.XPATH, "//tbody/tr[1]//div[contains(text(),'не назначен')]",
         "Флаг свободной полосы")
 
     LANE_IS_BUSY = ElementFactory.Labels(
@@ -62,11 +58,11 @@ class LanesControlFormElements(BaseFormElements):
         "Флаг занятой полосы")
 
     STOP_BUTTON_DISABLED = ElementFactory.Button(
-        By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'stop')]",
+        By.XPATH, "//tbody/tr[1]//button[contains(@class, 'p-disabled')]/span[contains(text(),'stop')]",
         "Кнопка остановки упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
     PLAY_BUTTON_DISABLED = ElementFactory.Button(
-        By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'play_arrow')]",
+        By.XPATH, "//tbody/tr[1]//button[contains(@class, 'p-disabled')]/span[contains(text(),'play_arrow')]",
         "Кнопка запуска упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
 
@@ -103,6 +99,9 @@ class LanesControlForm(BaseForm):
             return self.elements.LANE_IS_FREE.state.wait_for_located(timeout=3)
         except TimeoutException:
             return False
+
+    def change_busy_lane1(self):
+        self.elements.BUSY_LANE_RADIO.click()
 
     def change_busy_lane(self):
         self.elements.BUSY_LANE_RADIO.click()

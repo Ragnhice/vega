@@ -57,5 +57,5 @@ class ShootersChoseForm(BaseForm):
     def get_chosen_ammo_2(self):
         return self.elements.CHOSEN_AMMO_2.text
 
-    def back_to_line1(self):
+    def back_to_lane1(self):
         self.elements.BACK_BUTTON.click()

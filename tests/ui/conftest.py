@@ -30,20 +30,20 @@ def get_auth_admin():
 
 
 @pytest.fixture(scope="function")
-def go_line1(get_auth_admin):
+def go_lane1(get_auth_admin):
     """Для проверок, когда нужно перейти на 1 полосу и  занять ее"""
 
-    lines_control_page = get_auth_admin
+    lanes_control_page = get_auth_admin
     with pre_step("Подождать, пока не исчезнут Уведомления"):
-        lines_control_page.wait_for_invisible_notifications()
+        lanes_control_page.wait_for_invisible_notifications()
     with pre_step("Переход на страницу управления 1 полосой"):
-        lines_control_page.go_to_line1()
-        line1_control_page = Lane1ControlForm()
-        assert line1_control_page.is_wait_for_form_load(), "Страница не загрузилась"
+        lanes_control_page.go_to_lane1()
+        lane1_control_page = Lane1ControlForm()
+        assert lane1_control_page.is_wait_for_form_load(), "Страница не загрузилась"
 
     with pre_step("Занять полосу, если она освобождена"):
-        if line1_control_page.lane_is_free():
-            line1_control_page.change_busy_line()
+        if lane1_control_page.lane_is_free():
+            lane1_control_page.change_busy_lane()
 
 
 
@@ -81,8 +81,8 @@ def set_free_lane_and_stopped_ex(get_auth_admin):
             lanes_control_page.change_busy_lane()
 
     with pre_step("Остановить упражнение, если оно запущено"):
-        if not lanes_control_page.ex_is_stopped(): # если упр. не остановлено
-            lanes_control_page.press_stop() # остановить
+        if not lanes_control_page.ex_is_stopped():
+            lanes_control_page.press_stop()
 
     with pre_step("Подождать, пока не исчезнут Уведомления"):
         lanes_control_page.wait_for_invisible_notifications()
@@ -90,13 +90,18 @@ def set_free_lane_and_stopped_ex(get_auth_admin):
     yield  lanes_control_page
 
     with post_step("Остановить упражнение, если оно запущено"):
-        if not lanes_control_page.ex_is_stopped(): # если упр. не остановлено
-            lanes_control_page.press_stop() # остановить
+        if not lanes_control_page.ex_is_stopped():
+            lanes_control_page.press_stop()
 
     with post_step("Освободить полосу, если она занята"):
-        if lanes_control_page.lane_is_busy():  #Если полоса занята
-            lanes_control_page.change_busy_lane() #поменять занятость, освободить
+        if lanes_control_page.lane_is_busy():
+            lanes_control_page.change_busy_lane()
+
+    with post_step("Подождать, пока не исчезнут Уведомления"):
+        lanes_control_page.wait_for_invisible_notifications()
+        assert lanes_control_page.ex_is_stopped(), "Упражнение не останавливается"
         assert lanes_control_page.lane_is_free(), "Страница не освободилась"
+
 
 
 
