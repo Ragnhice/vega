@@ -14,7 +14,8 @@ class LanesControlFormElements(BaseFormElements):
         )
 
     PLAY_LANE1 = ElementFactory.Button(
-        By.XPATH, ".//span[@class='p-ml-2'][normalize-space()='1']/span[contains('play_arrow')]",
+        By.XPATH,
+        ".//span[@class='p-ml-2'][normalize-space()='1']/span[contains('play_arrow')]",
         "Запустить упражнение на полосе №1")
 
     STOP_LANE1 = ElementFactory.Button(
@@ -50,19 +51,23 @@ class LanesControlFormElements(BaseFormElements):
         )
 
     LANE_IS_FREE = ElementFactory.Labels(
-        By.XPATH, "//tbody/tr[1]//div[contains(text(),'не назначен')]",
+        By.XPATH,
+        "//tbody/tr[1]//div[contains(text(),'не назначен')]",
         "Флаг свободной полосы")
 
     LANE_IS_BUSY = ElementFactory.Labels(
-        By.XPATH, "//tbody/tr[1]//span[contains(text(),'check_circle')]",
+        By.XPATH,
+        "//tbody/tr[1]//span[contains(text(),'check_circle')]",
         "Флаг занятой полосы")
 
     STOP_BUTTON_DISABLED = ElementFactory.Button(
-        By.XPATH, "//tbody/tr[1]//button[contains(@class, 'p-disabled')]/span[contains(text(),'stop')]",
+        By.XPATH,
+        "//tbody/tr[1]//button[contains(@class, 'p-disabled')]/span[contains(text(),'stop')]",
         "Кнопка остановки упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
     PLAY_BUTTON_DISABLED = ElementFactory.Button(
-        By.XPATH, "//tbody/tr[1]//button[contains(@class, 'p-disabled')]/span[contains(text(),'play_arrow')]",
+        By.XPATH,
+        "//tbody/tr[1]//button[contains(@class, 'p-disabled')]/span[contains(text(),'play_arrow')]",
         "Кнопка запуска упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
 
@@ -70,9 +75,26 @@ class LanesControlFormElements(BaseFormElements):
             By.XPATH, "//tbody/tr[1]//span[contains(text(),'play_arrow')]",
             "Старт упражнения")
 
-    STOP_BUTTON = ElementFactory.Button(By.XPATH, "//tbody/tr[1]//span[contains(text(),'stop')]",
+    STOP_BUTTON = ElementFactory.Button(By.XPATH,
+                                        "//tbody/tr[1]//span[contains(text(),'stop')]",
                                             "Стоп упражнения")
 
+    CHOSEN_WEAPON = ElementFactory.Button(By.XPATH,
+                                          "//div[@id='weaponId']//span",
+                                          "Поле выбранного оружия")
+
+    CHOSEN_AMMO = ElementFactory.Button(By.XPATH,
+                                        "//div[@id='ammoId']//span",
+                                        "Поле выбранного боеприпаса")
+
+    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.Button(By.XPATH,
+                                                   "//span[contains(text(),'Закрыть')]",
+                                                   "Закрыть выбор оружия")
+
+    CONFIRM_CHOSEN_WEAPON = ElementFactory.Button(
+        By.XPATH,
+        "//span[contains(text(),'Подтвердить')]",
+                                                  "Подтвердить выбор оружия")
 
 class LanesControlForm(BaseForm):
     """
@@ -123,3 +145,18 @@ class LanesControlForm(BaseForm):
             return self.elements.STOP_BUTTON_DISABLED.state.wait_for_located(timeout=3)
         except TimeoutException:
             return False
+
+    def press_play(self):
+        self.elements.PLAY_BUTTON.click()
+
+    def get_chosen_weapon(self):
+        return self.elements.CHOSEN_WEAPON.text
+
+    def get_chosen_ammo(self):
+        return self.elements.CHOSEN_AMMO.text
+
+    def close_chose_weapon_tab(self):
+        self.elements.CLOSE_CHOSE_WEAPON_TAB.click()
+
+    def confirm_chosen_weapon(self):
+        self.elements.CONFIRM_CHOSEN_WEAPON.click()

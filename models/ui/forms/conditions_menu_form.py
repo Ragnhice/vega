@@ -12,14 +12,6 @@ class ConditionsMenuFormElements(BaseFormElements):
         By.XPATH, ".//button[contains(text(),'Сохранить ']",
         "Сохранить ")
 
-    NOTIFICATION = ElementFactory.Button(
-        By.XPATH, ".//div[@class='p-toast-detail']",
-        "Уведомление")
-
-    BACK_BUTTON = ElementFactory.Button(
-        By.XPATH, ".//span[normalize-space()='arrow_back']",
-        "Стрелка выйти назад")
-
     BUSY_LINE_SWITCH = ElementFactory.Button(
         By.XPATH, ".//span[@class='p-inputswitch-slider']",
         "Сменить занятость полосы")
@@ -135,6 +127,23 @@ class ConditionsMenuFormElements(BaseFormElements):
         "Занятость полосы"
         )
 
+    CHOSEN_WEAPON = ElementFactory.Button(By.XPATH, "//div[@id='weaponId']//span",
+                                          "Поле выбранного оружия")
+
+    CHOSEN_AMMO = ElementFactory.Button(By.XPATH, "//div[@id='ammoId']//span",
+                                        "Поле выбранного боеприпаса")
+
+    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.Button(By.XPATH, "//span[contains(text(),'Закрыть')]",
+                                                   "Закрыть выбор оружия")
+
+    CONFIRM_CHOSEN_WEAPON = ElementFactory.Button(By.XPATH, "//span[contains(text(),'Подтвердить')]",
+                                                  "Подтвердить выбор оружия")
+
+    PLAY_BUTTON = ElementFactory.Button(
+        By.XPATH, "//span[contains(text(),'play_arrow')]",
+        "Старт упражнения")
+
+
 class ConditionsMenuForm(BaseForm):
     """
             Класс, который содержит методы, используемые при проверке страницы с условиями
@@ -168,3 +177,19 @@ class ConditionsMenuForm(BaseForm):
 
     def change_busy_lane(self):
         self.elements.BUSY_LANE_RADIO.click()
+
+    def get_chosen_weapon(self):
+        return self.elements.CHOSEN_WEAPON.text
+
+    def get_chosen_ammo(self):
+        return self.elements.CHOSEN_AMMO.text
+
+    def close_chose_weapon_tab(self):
+        self.elements.CLOSE_CHOSE_WEAPON_TAB.click()
+
+    def confirm_chosen_weapon(self):
+        self.elements.CONFIRM_CHOSEN_WEAPON.click()
+
+    def press_play(self):
+        self.elements.PLAY_BUTTON.click()
+

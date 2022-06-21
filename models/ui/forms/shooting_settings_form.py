@@ -41,7 +41,8 @@ class ShootingSettingsForm(BaseForm):
     elements = ShootingSettingsFormElements()
 
     def __init__(self):
-        super().__init__(By.XPATH, "//div[ contains(text(),'Управление полосами')]", "Главная страница настроек тира")
+        super().__init__(By.XPATH, "//div[ contains(text(),'Управление полосами')]",
+                         "Главная страница настроек тира")
 
     """
     Класс, который содержит методы, используемые при проверке страницы управления полосами

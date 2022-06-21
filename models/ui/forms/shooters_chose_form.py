@@ -19,7 +19,8 @@ class ShootersChoseFormLocators(BaseFormElements):
         By.XPATH, "//*[@id='newWeaponId']/span",
         "Поле выбранного оружия")
 
-    ADD_WEAPON_BUTTON = ElementFactory.Button(By.XPATH, "//button[contains(text(),'добавить')]",
+    ADD_WEAPON_BUTTON = ElementFactory.Button(By.XPATH,
+                                              "//button[contains(text(),'добавить')]",
                                               "Добавить выбранное оружия")
 
     EDIT_EXERCISE = ElementFactory.Button(

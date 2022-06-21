@@ -57,12 +57,12 @@ def go_lane1(get_auth_admin):
     yield  lane1_control_page
 
     with post_step("Остановить упражнение, если оно запущено"):
-        if not lane1_control_page.ex_is_stopped(): # если упр. не остановлено
-            lane1_control_page.press_stop() # остановить
+        if not lane1_control_page.ex_is_stopped():
+            lane1_control_page.press_stop()
 
     with post_step("Освободить полосу, если она занята"):
-        if lane1_control_page.lane_is_busy():  #Если полоса занята
-            lane1_control_page.change_busy_lane() #поменять занятость, освободить
+        if lane1_control_page.lane_is_busy():
+            lane1_control_page.change_busy_lane()
         assert lane1_control_page.lane_is_free(), "Страница не освободилась"
 
 
@@ -78,7 +78,7 @@ def set_free_lane_and_stopped_ex(get_auth_admin):
 
     with pre_step("Освободить полосу, если она занята"):
         if lanes_control_page.lane_is_busy():
-            lanes_control_page.change_busy_lane()
+            lanes_control_page.change_busy_lane1()
 
     with pre_step("Остановить упражнение, если оно запущено"):
         if not lanes_control_page.ex_is_stopped():
@@ -95,7 +95,7 @@ def set_free_lane_and_stopped_ex(get_auth_admin):
 
     with post_step("Освободить полосу, если она занята"):
         if lanes_control_page.lane_is_busy():
-            lanes_control_page.change_busy_lane()
+            lanes_control_page.change_busy_lane1()
 
     with post_step("Подождать, пока не исчезнут Уведомления"):
         lanes_control_page.wait_for_invisible_notifications()
