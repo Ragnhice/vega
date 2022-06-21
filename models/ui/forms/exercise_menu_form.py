@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from aqas.element_factory import ElementFactory
 from aqas.forms.base_form import BaseForm, BaseFormElements
@@ -7,7 +8,7 @@ class ExerciseMenuFormElements(BaseFormElements):
     """
        Класс, который содержит элементы, используемые при проверке страницы установки упражнения
     """
-    BUSY_LANE_SWITCH = ElementFactory.Button(
+    BUSY_LINE_SWITCH = ElementFactory.Button(
         By.XPATH, ".//div [@class='p-inputswitch p-component p-mt-2 p-mr-2'] //span[@class='p-inputswitch-slider']",
         "Сменить занятость полосы")
 
@@ -44,8 +45,23 @@ class ExerciseMenuFormElements(BaseFormElements):
         "Все уведомления")
 
     BACK_BUTTON = ElementFactory.Button(
-        By.XPATH, ".//span[contains('arrow_back')]",
+        By.XPATH, ".//span[contains(text(),'arrow_back')]",
         "Стрелка Вернуться назад")
+
+    LANE_IS_FREE = ElementFactory.Labels(
+        By.XPATH, "//h2[contains(text(),'свободна')]",
+        "Флаг свободной полосы")
+
+    LANE_IS_BUSY = ElementFactory.Labels(
+        By.XPATH, "//h2[contains(text(),'занята')]",
+        "Флаг занятой полосы")
+
+    BUSY_LANE_RADIO = ElementFactory.Button(
+        By.XPATH,
+        "//div[contains(@class, 'lane-head-items')]//span[contains(@class, 'p-inputswitch-slider')]",
+        "Занятость полосы"
+        )
+
 
 
 class ExerciseMenuForm(BaseForm):
@@ -57,3 +73,27 @@ class ExerciseMenuForm(BaseForm):
     def __init__(self):
         super().__init__(By.CLASS_NAME, ".//div[contains(text(),' Выбор упражнения на полосу')]",
                          "Страница Выбор упражнения на полосу")
+
+    def back_to_lane1(self):
+        self.elements.BACK_BUTTON.click()
+
+    def wait_for_invisible_notification(self):
+        return self.elements.NOTIFICATION.state.wait_for_invisible()
+
+    def wait_for_invisible_notifications(self):
+        return self.elements.NOTIFICATIONS.state.wait_for_invisible()
+
+    def lane_is_busy(self):
+        try:
+            return self.elements.LANE_IS_BUSY.state.wait_for_located(timeout=3)
+        except TimeoutException:
+            return False
+
+    def lane_is_free(self):
+        try:
+            return self.elements.LANE_IS_FREE.state.wait_for_located(timeout=3)
+        except TimeoutException:
+            return False
+
+    def change_busy_lane(self):
+        self.elements.BUSY_LANE_RADIO.click()

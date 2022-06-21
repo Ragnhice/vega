@@ -45,7 +45,7 @@ class Lane1ControlFormElements(BaseFormElements):
         By.XPATH, ".//div[contains(text(),'Резульат')/div/div[5]/div[1]",
         "Значение времени от начала")
 
-    CONDITIONS = ElementFactory.Button(
+    CONDITIONS_MENU = ElementFactory.Button(
         By.XPATH,
         "//a[@href='/lines/1/conditions']",
         "открыть окно Выбор условий полосы 1")
@@ -61,7 +61,7 @@ class Lane1ControlFormElements(BaseFormElements):
     NOTIFICATION = ElementFactory.Labels(
         locator_type=By.CLASS_NAME,
         locator_value="p-toast-summary",
-        name_prefix="Уведомление Полоса занята"
+        name_prefix="Уведомление"
         )
 
     NOTIFICATIONS = ElementFactory.Labels(
@@ -153,3 +153,9 @@ class Lane1ControlForm(BaseForm):
             return self.elements.LANE_IS_FREE.state.wait_for_located(timeout=3)
         except TimeoutException:
             return False
+
+    def go_exercise_menu(self):
+        self.elements.EX_MENU.click()
+
+    def go_conditions_menu(self):
+        self.elements.CONDITIONS_MENU.click()

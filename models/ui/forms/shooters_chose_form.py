@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
 from aqas.element_factory import ElementFactory
@@ -41,6 +42,25 @@ class ShootersChoseFormLocators(BaseFormElements):
         By.XPATH, "//div[contains(@class, 'p-toast-top-right')]",
         "Все уведомления")
 
+    NOTIFICATION = ElementFactory.Labels(
+        locator_type=By.CLASS_NAME,
+        locator_value="p-toast-summary",
+        name_prefix="Уведомление"
+        )
+
+    LANE_IS_FREE = ElementFactory.Labels(
+        By.XPATH, "//h2[contains(text(),'свободна')]",
+        "Флаг свободной полосы")
+
+    LANE_IS_BUSY = ElementFactory.Labels(
+        By.XPATH, "//h2[contains(text(),'занята')]",
+        "Флаг занятой полосы")
+
+    BUSY_LANE_RADIO = ElementFactory.Labels(
+        locator_type=By.XPATH,
+        locator_value="//div[contains(@class, 'lane-head-items')]//span",
+        name_prefix="Занятость полосы",
+        )
 
 class ShootersChoseForm(BaseForm):
     """Класс методов для проверки появления уведомления о неуспешном сохранении без оружия на
@@ -59,3 +79,24 @@ class ShootersChoseForm(BaseForm):
 
     def back_to_lane1(self):
         self.elements.BACK_BUTTON.click()
+
+    def wait_for_invisible_notification(self):
+        return self.elements.NOTIFICATION.state.wait_for_invisible()
+
+    def wait_for_invisible_notifications(self):
+        return self.elements.NOTIFICATIONS.state.wait_for_invisible()
+
+    def lane_is_busy(self):
+        try:
+            return self.elements.LANE_IS_BUSY.state.wait_for_located(timeout=3)
+        except TimeoutException:
+            return False
+
+    def lane_is_free(self):
+        try:
+            return self.elements.LANE_IS_FREE.state.wait_for_located(timeout=3)
+        except TimeoutException:
+            return False
+
+    def change_busy_lane(self):
+        self.elements.BUSY_LANE_RADIO.click()

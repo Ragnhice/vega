@@ -43,7 +43,7 @@ class LanesControlFormElements(BaseFormElements):
         By.XPATH, "//span[@class='p-ml-2'][normalize-space()='2']",
         "Редактирвоать 2 полосу")
 
-    BUSY_LANE_RADIO = ElementFactory.Labels(
+    BUSY_LANE1_RADIO = ElementFactory.Labels(
         locator_type=By.XPATH,
         locator_value="//tbody/tr[1]//span[contains(text(),'vpn_key_off')]",
         name_prefix="Занятость полосы",
@@ -101,10 +101,7 @@ class LanesControlForm(BaseForm):
             return False
 
     def change_busy_lane1(self):
-        self.elements.BUSY_LANE_RADIO.click()
-
-    def change_busy_lane(self):
-        self.elements.BUSY_LANE_RADIO.click()
+        self.elements.BUSY_LANE1_RADIO.click()
 
     def press_stop(self):
         self.elements.STOP_BUTTON.click()
