@@ -1,4 +1,4 @@
-﻿aqa-sitronics==0.6
+﻿aqa-sitronics==0.8.1
 flake8-builtins==1.5.3
 flake8-commas==2.1.0
 flake8-function-order==0.0.5

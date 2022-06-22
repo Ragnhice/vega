@@ -1,7 +1,7 @@
-from selenium.common import TimeoutException
-from selenium.webdriver.common.by import By
 from aqas.element_factory import ElementFactory
 from aqas.forms.base_form import BaseForm, BaseFormElements
+from selenium.common import TimeoutException
+from selenium.webdriver.common.by import By
 
 
 class Lane1ControlFormElements(BaseFormElements):
@@ -9,82 +9,82 @@ class Lane1ControlFormElements(BaseFormElements):
     Класс, который содержит элементы, используемые при проверке управления первой полосой
     """
 
-    BUSY_LANE_RADIO = ElementFactory.Labels(
-        locator_type=By.XPATH,
-        locator_value="//div[contains(@class, 'lane-head-items')]//span",
-        name_prefix="Занятость полосы",
+    BUSY_LANE_RADIO = ElementFactory.label(
+       By.XPATH,
+        "//div[contains(@class, 'lane-head-items')]//span",
+       "Занятость полосы",
         )
 
-    PLAY_BUTTON = ElementFactory.Button(
+    PLAY = ElementFactory.button(
         By.XPATH, "//span[contains(text(),'play_arrow')]",
         "Старт упражнения")
 
-    STOP_BUTTON = ElementFactory.Button(By.XPATH, ".//span[contains(text(),'stop')]",
+    STOP = ElementFactory.button(By.XPATH, ".//span[contains(text(),'stop')]",
                                         "Стоп упражнения")
 
-    CHOSEN_WEAPON = ElementFactory.Button(By.XPATH, "//div[@id='weaponId']//span",
+    CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//div[@id='weaponId']//span",
                                           "Поле выбранного оружия")
 
-    CHOSEN_AMMO = ElementFactory.Button(By.XPATH, "//div[@id='ammoId']//span",
+    CHOSEN_AMMO = ElementFactory.button(By.XPATH, "//div[@id='ammoId']//span",
                                         "Поле выбранного боеприпаса")
 
-    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.Button(By.XPATH, "//span[contains(text(),'Закрыть')]",
+    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.button(By.XPATH, "//span[contains(text(),'Закрыть')]",
                                                    "Закрыть выбор оружия")
 
-    CONFIRM_CHOSEN_WEAPON = ElementFactory.Button(By.XPATH, "//span[contains(text(),'Подтвердить')]",
+    CONFIRM_CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//span[contains(text(),'Подтвердить')]",
                                                   "Подтвердить выбор оружия")
 
-    SHOOTERS_MENU = ElementFactory.Button(By.XPATH, "//a[@href='/lines/1/shooters']//span",
+    SHOOTERS_MENU = ElementFactory.button(By.XPATH, "//a[@href='/lines/1/shooters']//span",
                                           "Переход к  странице выбора стрелков")
 
-    PAUSE_BUTTON = ElementFactory.Button(
+    PAUSE = ElementFactory.button(
         By.XPATH, ".//span[contains(text(),'pause')]",
         "Приостановить упражнение")
 
-    TIME = ElementFactory.Button(
+    TIME = ElementFactory.button(
         By.XPATH, ".//div[contains(text(),'Резульат')/div/div[5]/div[1]",
         "Значение времени от начала")
 
-    CONDITIONS_MENU = ElementFactory.Button(
+    CONDITIONS_MENU = ElementFactory.button(
         By.XPATH,
         "//a[@href='/lines/1/conditions']",
         "открыть окно Выбор условий полосы 1")
 
-    PRINT_QUICK = ElementFactory.Button(
+    PRINT_QUICK = ElementFactory.button(
         By.XPATH, "//a[@href='/lines/1/stats']",
         "Распечатать отчет")
 
-    EX_MENU = ElementFactory.Button(
+    EX_MENU = ElementFactory.button(
         By.XPATH, "//a[@href='/lines/1/exercises']//span",
         "Открыть окно Выбор упражнения на полосу 1")
 
-    NOTIFICATION = ElementFactory.Labels(
-        locator_type=By.CLASS_NAME,
-        locator_value="p-toast-summary",
-        name_prefix="Уведомление"
+    NOTIFICATION = ElementFactory.label(
+        By.CLASS_NAME,
+        "p-toast-summary",
+        "Уведомление"
         )
 
-    NOTIFICATIONS = ElementFactory.Labels(
+    NOTIFICATIONS = ElementFactory.label(
         By.XPATH, "//div[contains(@class, 'p-toast-top-right')]",
         "Все уведомления")
 
-    LANE_IS_FREE = ElementFactory.Labels(
+    LANE_IS_FREE = ElementFactory.label(
         By.XPATH, "//h2[contains(text(),'свободна')]",
         "Флаг свободной полосы")
 
-    LANE_IS_BUSY = ElementFactory.Labels(
+    LANE_IS_BUSY = ElementFactory.label(
         By.XPATH, "//h2[contains(text(),'занята')]",
         "Флаг занятой полосы")
 
-    STOP_BUTTON_DISABLED = ElementFactory.Button(
+    STOP_DISABLED = ElementFactory.button(
         By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'stop')]",
         "Кнопка остановки упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
-    PLAY_BUTTON_DISABLED = ElementFactory.Button(
+    PLAY_DISABLED = ElementFactory.button(
         By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'play_arrow')]",
         "Кнопка запуска упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
-    PAUSED_BUTTON_DISABLED = ElementFactory.Button(
+    PAUSED_DISABLED = ElementFactory.button(
         By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'pause')]",
         "Кнопка паузы в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ, упр. либо приостановлено либо оставновлено ")
 
@@ -107,7 +107,7 @@ class Lane1ControlForm(BaseForm):
         self.elements.SHOOTERS_MENU.click()
 
     def press_play(self):
-        self.elements.PLAY_BUTTON.click()
+        self.elements.PLAY.click()
 
     def get_chosen_weapon(self):
         return self.elements.CHOSEN_WEAPON.text
@@ -122,7 +122,7 @@ class Lane1ControlForm(BaseForm):
         self.elements.CONFIRM_CHOSEN_WEAPON.click()
 
     def press_stop(self):
-        self.elements.STOP_BUTTON.click()
+        self.elements.STOP.click()
 
     def wait_for_invisible_notification(self):
         return self.elements.NOTIFICATION.state.wait_for_invisible()
@@ -132,13 +132,13 @@ class Lane1ControlForm(BaseForm):
 
     def ex_is_playing(self):
         try:
-            return self.elements.PLAY_BUTTON_DISABLED.state.wait_for_located()
+            return self.elements.PLAY_DISABLED.state.wait_for_located()
         except TimeoutException:
             return False
 
     def ex_is_stopped(self):
         try:
-            return self.elements.STOP_BUTTON_DISABLED.state.wait_for_located(timeout=3)
+            return self.elements.STOP_DISABLED.state.wait_for_located(timeout=3)
         except TimeoutException:
             return False
 

@@ -1,6 +1,6 @@
 import allure
-
 from constants import API_USER_ID
+
 from models.api.adapters.api_adapter import ApiAdapter
 
 

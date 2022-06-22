@@ -9,12 +9,13 @@ from models.ui.forms.shooters_chose_form import ShootersChoseForm
 class TestAutostandWeapon():
     """
     Класс, который содержит действия тестов при проверке автозаполнения полей оружия и боеприса
-    при быстром старте;на странице выбора стрелков; на странице управления полосами; на странице выбора условий полосы;
+    при быстром старте;на странице выбора стрелков; на странице управления полосами;
+     на странице выбора условий полосы;
     """
     SEARCH_CONDITION = "Автотесты"
 
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-321")
-    def test_autostand_faststart_lanescontrol(self,set_free_lane_and_stopped_ex):
+    def test_autostand_faststart_lanescontrol(self, set_free_lane_and_stopped_ex):
         lanes_control_page = set_free_lane_and_stopped_ex
         with step("Занять полосу"):
             if lanes_control_page.lane_is_free():
@@ -38,7 +39,6 @@ class TestAutostandWeapon():
         with step("Закрыть таблицу выбора оружия"):
             lanes_control_page.close_chose_weapon_tab()
 
-
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-246")
     def test_autostand_faststart_lane1(self, go_lane1):
         lane1_control_page = go_lane1
@@ -52,14 +52,13 @@ class TestAutostandWeapon():
                 "Поле выбора оружия пустое"
 
         with step("Проверка автозаполнения поля выбора  боеприпаса"):
-            assert lane1_control_page.get_chosen_ammo() is not None,  \
+            assert lane1_control_page.get_chosen_ammo() is not None, \
                 "Поле выбора боеприпаса пустое"
             assert lane1_control_page.get_chosen_ammo() != 'p - emptylabel', \
                 "Поле выбора боеприпаса пустое"
 
         with step("Закрыть таблицу выбора оружия"):
             lane1_control_page.close_chose_weapon_tab()
-
 
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-305")
     def test_autostand_weapon_ammo_shooters_menu(self, go_lane1):
@@ -83,7 +82,6 @@ class TestAutostandWeapon():
 
         with step("Вернуться на страницу Управление полосой 1"):
             shooter_chose_page.back_to_lane1()
-
 
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-329")
     def test_autostand_weapon_ammo_conditions_menu(self, go_lane1):

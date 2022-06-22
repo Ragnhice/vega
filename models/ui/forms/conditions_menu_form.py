@@ -1,145 +1,144 @@
-from selenium.common import TimeoutException
-from selenium.webdriver.common.by import By
 from aqas.element_factory import ElementFactory
 from aqas.forms.base_form import BaseForm, BaseFormElements
+from selenium.common import TimeoutException
+from selenium.webdriver.common.by import By
 
 
 class ConditionsMenuFormElements(BaseFormElements):
     """
       Класс, который содержит элементы, используемые при проверке страницы с условиями
       """
-    SAVE_BUTTON = ElementFactory.Button(
+    SAVE_button = ElementFactory.button(
         By.XPATH, ".//button[contains(text(),'Сохранить ']",
         "Сохранить ")
 
-    BUSY_LINE_SWITCH = ElementFactory.Button(
+    BUSY_LINE_SWITCH = ElementFactory.button(
         By.XPATH, ".//span[@class='p-inputswitch-slider']",
         "Сменить занятость полосы")
 
-    OPEN_EXERCISE_PAGE = ElementFactory.Button(
+    OPEN_EXERCISE_PAGE = ElementFactory.button(
         By.XPATH, ".//div[@class='p-col-3']//a[href='/lines/1/exercises']",
         "Переход на страницу Выбор упражнения на полосу 1")
 
-    LYING_POSITION = ElementFactory.Button(
+    LYING_POSITION = ElementFactory.button(
         By.XPATH, ".//div[aria-label='Сидя']",
         "Сидя")
 
-    STANDING_POSITION = ElementFactory.Button(
+    STANDING_POSITION = ElementFactory.button(
         By.XPATH, ".//div[aria-label='Стоя']",
         "Стоя")
 
-    ITTING_POSITION = ElementFactory.Button(
+    ITTING_POSITION = ElementFactory.button(
         By.XPATH, ".//div[aria-label='Лежа']",
         "Лежа")
 
-    SEASON = ElementFactory.Button(
+    SEASON = ElementFactory.button(
         By.ID, "",
         "Выбор сезона")
 
-    WINTER_SEASON = ElementFactory.Button(
+    WINTER_SEASON = ElementFactory.button(
         By.ID, "",
         "Зима")
 
-    SPRING_SEASON = ElementFactory.Button(
+    SPRING_SEASON = ElementFactory.button(
         By.ID, "btn-season-2",
         "Весна")
 
-    SUMMER_SEASON = ElementFactory.Button(
+    SUMMER_SEASON = ElementFactory.button(
         By.ID, "btn-season-3",
         "Лето")
 
-    AUTUMN_SEASON = ElementFactory.Button(
+    AUTUMN_SEASON = ElementFactory.button(
         By.ID, "btn-season-4",
         "Осень")
 
-    SHOOTERS_MENU = ElementFactory.Button(
+    SHOOTERS_MENU = ElementFactory.button(
         By.XPATH, ".//span[@class='material-icons md-22 md-light'][normalize-space()='launch']",
         "открыть окно выбора стрелков")
 
-    CHOOSE_TIME_OPEN_LIST = ElementFactory.Button(
+    CHOOSE_TIME_OPEN_LIST = ElementFactory.button(
         By.XPATH, ".//span[@class='p-dropdown-trigger-icon pi pi-chevron-down']",
         "Выбор точного времени")
 
-    TIME_IN_LIST_12 = ElementFactory.Button(
+    TIME_IN_LIST_12 = ElementFactory.button(
         By.XPATH, ".//li[aria-label='12'] ",
         "Время в поле Точное время")
 
-    VISIBILITY_SHOWN = ElementFactory.Button(
+    VISIBILITY_SHOWN = ElementFactory.button(
         By.XPATH, ".//h3[contains(text(),'Видимость: ')]",
         "Видимость показать")
 
-    VISIBILITY_TO_CHANGE = ElementFactory.Button(
+    VISIBILITY_TO_CHANGE = ElementFactory.button(
         By.XPATH, ".//span[role='slider'][tabindex='0'][aria-valuemin='1']",
         "Видимость изменить")
 
-    TEMPERATURE_SHOWN = ElementFactory.Button(
+    TEMPERATURE_SHOWN = ElementFactory.button(
         By.XPATH, ".//h3[contains(text(),'Температура: ')]",
         "Температура")
 
-    WIND_SPEED_SHOWN = ElementFactory.Button(
+    WIND_SPEED_SHOWN = ElementFactory.button(
         By.XPATH, ".//h3[contains(text(),'Скорость ветра: ')]",
         "Скорость ветра")
 
-    PRESSURE_SHOWN = ElementFactory.Button(
+    PRESSURE_SHOWN = ElementFactory.button(
         By.XPATH, ".//h3[contains(text(),'Давление:  ')]",
         "Давление")
 
-    WIND_DIRECTION_SHOWN = ElementFactory.Button(
+    WIND_DIRECTION_SHOWN = ElementFactory.button(
         By.XPATH, ".//h3[contains(text(),'Направление ветра: ')]",
         "Направление ветра")
 
-    HUMIDITY_SHOWN = ElementFactory.Button(
+    HUMIDITY_SHOWN = ElementFactory.button(
         By.XPATH, ".//h3[contains(text(),'Влажность: ')]  ",
         "Влажность")
 
-    ALTITUDE_SHOWN = ElementFactory.Button(
+    ALTITUDE_SHOWN = ElementFactory.button(
         By.XPATH, ". //h3[contains(text(),'Высота')] ",
         "Высота")
 
-    PRECIPITATION_SHOWN = ElementFactory.Button(
+    PRECIPITATION_SHOWN = ElementFactory.button(
         By.XPATH, ".//h3[contains(text(),'Интенсивность осадков')]  ",
         "Интенсивность осадков:")
 
-
-    NOTIFICATION = ElementFactory.Button(
+    NOTIFICATION = ElementFactory.button(
         By.XPATH, ".//div[@class='p-toast-detail']",
         "Уведомление")
 
-    NOTIFICATIONS = ElementFactory.Labels(
+    NOTIFICATIONS = ElementFactory.label(
         By.XPATH, "//div[contains(@class, 'p-toast-top-right')]",
         "Все уведомления")
 
-    BACK_BUTTON = ElementFactory.Button(
+    BACK_button = ElementFactory.button(
         By.XPATH, ".//span[contains(text(),'arrow_back')]",
         "Стрелка Вернуться назад")
 
-    LANE_IS_FREE = ElementFactory.Labels(
+    LANE_IS_FREE = ElementFactory.label(
         By.XPATH, "//h2[contains(text(),'свободна')]",
         "Флаг свободной полосы")
 
-    LANE_IS_BUSY = ElementFactory.Labels(
+    LANE_IS_BUSY = ElementFactory.label(
         By.XPATH, "//h2[contains(text(),'занята')]",
         "Флаг занятой полосы")
 
-    BUSY_LANE_RADIO = ElementFactory.Button(
+    BUSY_LANE_RADIO = ElementFactory.button(
         By.XPATH,
         "//div[contains(@class, 'lane-head-items')]//span[contains(@class, 'p-inputswitch-slider')]",
         "Занятость полосы"
         )
 
-    CHOSEN_WEAPON = ElementFactory.Button(By.XPATH, "//div[@id='weaponId']//span",
+    CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//div[@id='weaponId']//span",
                                           "Поле выбранного оружия")
 
-    CHOSEN_AMMO = ElementFactory.Button(By.XPATH, "//div[@id='ammoId']//span",
+    CHOSEN_AMMO = ElementFactory.button(By.XPATH, "//div[@id='ammoId']//span",
                                         "Поле выбранного боеприпаса")
 
-    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.Button(By.XPATH, "//span[contains(text(),'Закрыть')]",
+    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.button(By.XPATH, "//span[contains(text(),'Закрыть')]",
                                                    "Закрыть выбор оружия")
 
-    CONFIRM_CHOSEN_WEAPON = ElementFactory.Button(By.XPATH, "//span[contains(text(),'Подтвердить')]",
+    CONFIRM_CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//span[contains(text(),'Подтвердить')]",
                                                   "Подтвердить выбор оружия")
 
-    PLAY_BUTTON = ElementFactory.Button(
+    PLAY_button = ElementFactory.button(
         By.XPATH, "//span[contains(text(),'play_arrow')]",
         "Старт упражнения")
 
@@ -155,7 +154,7 @@ class ConditionsMenuForm(BaseForm):
                          "Страница Выбор условий полосы 1")
 
     def back_to_lane1(self):
-        self.elements.BACK_BUTTON.click()
+        self.elements.BACK_button.click()
 
     def wait_for_invisible_notification(self):
         return self.elements.NOTIFICATION.state.wait_for_invisible()
@@ -191,5 +190,4 @@ class ConditionsMenuForm(BaseForm):
         self.elements.CONFIRM_CHOSEN_WEAPON.click()
 
     def press_play(self):
-        self.elements.PLAY_BUTTON.click()
-
+        self.elements.PLAY_button.click()

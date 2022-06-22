@@ -1,6 +1,6 @@
-from selenium.webdriver.common.by import By
 from aqas.element_factory import ElementFactory
 from aqas.forms.base_form import BaseForm, BaseFormElements  # подгрузка из базового класса элементов
+from selenium.webdriver.common.by import By
 
 
 class AuthenticationFormElements(BaseFormElements):
@@ -8,24 +8,24 @@ class AuthenticationFormElements(BaseFormElements):
     Класс, который содержит элементы, используемые на странице аутентификации
     """
 
-    LOGIN_INPUT = ElementFactory.TextBox(
+    LOGIN_INPUT = ElementFactory.text_box(
         locator_type=By.XPATH, locator_value="//*[@id='login']",
         element_name="Поле ввода логина")
 
     LOGIN_NAME_ADMIN = 'admin'
-    PASSWORD_TAB_ADMIN = ElementFactory.Button(
+    PASSWORD_TAB_ADMIN = ElementFactory.button(
         locator_type=By.XPATH, locator_value="//div[contains(text(),'5')]",
-        element_name="Кнопка пароля")
+        element_name="Кнопка пароля администратора")
 
     LOGIN_NAME_INSTRUCTOR = 'instuctor'
-    PASSWORD_TAB_INSTRUCTOR = ElementFactory.Button(
+    PASSWORD_TAB_INSTRUCTOR = ElementFactory.button(
         locator_type=By.XPATH, locator_value="//div[contains(text(),'2')]",
-        element_name="Кнопка пароля")
+        element_name="Кнопка пароля инструктора")
 
     LOGIN_NAME_SHOOTER = 'shooter'
-    PASSWORD_TAB_SHOOTER = ElementFactory.Button(
+    PASSWORD_TAB_SHOOTER = ElementFactory.button(
         locator_type=By.XPATH, locator_value="//div[contains(text(),'1')]",
-        element_name="Кнопка пароля")
+        element_name="Кнопка пароля стрелка")
 
 
 class AuthenticationForm(BaseForm):
