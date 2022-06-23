@@ -10,9 +10,9 @@ class Lane1ControlFormElements(BaseFormElements):
     """
 
     BUSY_LANE_RADIO = ElementFactory.label(
-       By.XPATH,
+        By.XPATH,
         "//div[contains(@class, 'lane-head-items')]//span",
-       "Занятость полосы",
+        "Занятость полосы",
         )
 
     PLAY = ElementFactory.button(
@@ -20,7 +20,7 @@ class Lane1ControlFormElements(BaseFormElements):
         "Старт упражнения")
 
     STOP = ElementFactory.button(By.XPATH, ".//span[contains(text(),'stop')]",
-                                        "Стоп упражнения")
+                                 "Стоп упражнения")
 
     CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//div[@id='weaponId']//span",
                                           "Поле выбранного оружия")
@@ -59,10 +59,7 @@ class Lane1ControlFormElements(BaseFormElements):
         "Открыть окно Выбор упражнения на полосу 1")
 
     NOTIFICATION = ElementFactory.label(
-        By.CLASS_NAME,
-        "p-toast-summary",
-        "Уведомление"
-        )
+        By.CLASS_NAME, "p-toast-summary", "Уведомление")
 
     NOTIFICATIONS = ElementFactory.label(
         By.XPATH, "//div[contains(@class, 'p-toast-top-right')]",

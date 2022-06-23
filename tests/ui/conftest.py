@@ -28,7 +28,7 @@ def get_auth_admin():
         auth_page.enter_password_admin()
         lanes_control_page = LanesControlForm()
         assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
-    return lanes_control_page
+    yield lanes_control_page
 
 
 @pytest.fixture(scope="function")
@@ -100,8 +100,6 @@ def set_free_lane_and_stopped_ex(get_auth_admin):
         assert lanes_control_page.ex_is_stopped(), "Упражнение не останавливается"
         assert lanes_control_page.lane_is_free(), "Страница не освободилась"
 
-# "url": "http://10.10.72.214"
-
 
 @pytest.fixture(scope="function")
 def get_auth_shooter():
@@ -115,7 +113,8 @@ def get_auth_shooter():
         auth_page.enter_password_shooter()
         lanes_control_page = LanesControlForm()
         assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
-    return lanes_control_page
+    yield lanes_control_page
+
 
 @pytest.fixture(scope="function")
 def get_auth_instuctor():
@@ -129,4 +128,4 @@ def get_auth_instuctor():
         auth_page.enter_password_instuctor()
         lanes_control_page = LanesControlForm()
         assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
-    return lanes_control_page
+    yield lanes_control_page

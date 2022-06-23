@@ -9,7 +9,7 @@ class SideBarFormElements(BaseFormElements):
     Класс, который содержит элементы, используемые при проверке бокового меню
     """
 
-    MENU= ElementFactory.button(
+    MENU = ElementFactory.button(
         By.CLASS_NAME, ". // span[contains(text(), 'menu']",
         "Меню")
 

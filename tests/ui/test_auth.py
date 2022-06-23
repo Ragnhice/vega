@@ -145,10 +145,3 @@ class TestAuth():
         with step("Освободить полосу"):
             if lanes_control_page.lane_is_busy():
                 lanes_control_page.change_busy_lane1()
-
-                changed
-                locators, added
-                ready
-                test
-                auth
-                admin

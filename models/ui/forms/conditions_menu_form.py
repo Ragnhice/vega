@@ -126,17 +126,21 @@ class ConditionsMenuFormElements(BaseFormElements):
         "Занятость полосы"
         )
 
-    CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//div[@id='weaponId']//span",
-                                          "Поле выбранного оружия")
+    CHOSEN_WEAPON = ElementFactory.button(
+        By.XPATH, "//div[@id='weaponId']//span",
+        "Поле выбранного оружия")
 
-    CHOSEN_AMMO = ElementFactory.button(By.XPATH, "//div[@id='ammoId']//span",
-                                        "Поле выбранного боеприпаса")
+    CHOSEN_AMMO = ElementFactory.button(
+        By.XPATH, "//div[@id='ammoId']//span",
+        "Поле выбранного боеприпаса")
 
-    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.button(By.XPATH, "//span[contains(text(),'Закрыть')]",
-                                                   "Закрыть выбор оружия")
+    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.button(
+        By.XPATH, "//span[contains(text(),'Закрыть')]",
+        "Закрыть выбор оружия")
 
-    CONFIRM_CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//span[contains(text(),'Подтвердить')]",
-                                                  "Подтвердить выбор оружия")
+    CONFIRM_CHOSEN_WEAPON = ElementFactory.button(
+        By.XPATH, "//span[contains(text(),'Подтвердить')]",
+        "Подтвердить выбор оружия")
 
     PLAY_button = ElementFactory.button(
         By.XPATH, "//span[contains(text(),'play_arrow')]",

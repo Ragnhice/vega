@@ -29,7 +29,7 @@ class TestBusyLane():
 
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-320")
     def test_busy_on_lane1(self, go_lane1):
-        lane1_control_page = go_lane1
+        pass
 
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-322")
     def test_busy_on_shooters_menu(self, go_lane1):

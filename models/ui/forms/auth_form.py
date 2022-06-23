@@ -9,8 +9,8 @@ class AuthenticationFormElements(BaseFormElements):
     """
 
     LOGIN_INPUT = ElementFactory.text_box(
-        locator_type=By.XPATH, locator_value="//*[@id='login']",
-        element_name="Поле ввода логина")
+        By.XPATH, "//*[@id='login']",
+        "Поле ввода логина")
 
     LOGIN_NAME_ADMIN = 'admin'
     PASSWORD_TAB_ADMIN = ElementFactory.button(

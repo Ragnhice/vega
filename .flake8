@@ -1,0 +1,19 @@
+[flake8]
+ignore = D203,I100,I201,FNE002,FNE004,FNE007
+exclude =
+    .git,
+    __pycache__,
+    docs/source/conf.py,
+    old,
+    build,
+    dist,
+    venv,
+    .venv,
+    allure-results,
+    allure-result,
+    Logs,
+    Temp,
+    Screenshots
+max-complexity = 10
+max-line-length = 120
+inline-quotes = double

@@ -18,9 +18,10 @@ class ShootersChoseFormLocators(BaseFormElements):
         By.XPATH, "//*[@id='newWeaponId']/span",
         "Поле выбранного оружия")
 
-    ADD_WEAPON= ElementFactory.button(By.XPATH,
-                                              "//button[contains(text(),'добавить')]",
-                                              "Добавить выбранное оружия")
+    ADD_WEAPON = ElementFactory.button(
+        By.XPATH,
+                                       "//button[contains(text(),'добавить')]",
+                                       "Добавить выбранное оружия")
 
     EDIT_EXERCISE = ElementFactory.button(
         By.XPATH, "//a[@href='/lines/1/exercises']/div/span",

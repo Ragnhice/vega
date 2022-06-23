@@ -59,8 +59,7 @@ class ExerciseMenuFormElements(BaseFormElements):
     BUSY_LANE_RADIO = ElementFactory.button(
         By.XPATH,
         "//div[contains(@class, 'lane-head-items')]//span[contains(@class, 'p-inputswitch-slider')]",
-        "Занятость полосы"
-        )
+        "Занятость полосы")
 
 
 class ExerciseMenuForm(BaseForm):

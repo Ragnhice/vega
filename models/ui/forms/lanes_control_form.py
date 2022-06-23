@@ -10,9 +10,8 @@ class LanesControlFormElements(BaseFormElements):
     """
     LANE1 = ElementFactory.label(
         By.XPATH,
-       "//tbody/tr[1]/td[1]",
-        "Переход к полосе №1",
-        )
+        "//tbody/tr[1]/td[1]",
+        "Переход к полосе №1")
 
     PLAY_LANE1 = ElementFactory.button(
         By.XPATH,
@@ -20,15 +19,18 @@ class LanesControlFormElements(BaseFormElements):
         "Запустить упражнение на полосе №1")
 
     STOP_LANE1 = ElementFactory.button(
-        By.XPATH, ".//span[@class='p-ml-2'][normalize-space()='1']/span[contains('stop')] ",
+        By.XPATH,
+        ".//span[@class='p-ml-2'][normalize-space()='1']/span[contains('stop')] ",
         "Остановить упражнение на полосе №1")
 
     PAUSE_LANE1 = ElementFactory.button(
-        By.XPATH, ".//span[@class='p-ml-2'][normalize-space()='1']/span[contains('pause')] ",
+        By.XPATH,
+        ".//span[@class='p-ml-2'][normalize-space()='1']/span[contains('pause')] ",
         "Приостановить упражнение на полосе №1")
 
     EDIT_LANE1 = ElementFactory.button(
-        By.XPATH, "//span[@class='p-ml-2'][normalize-space()='1']",
+        By.XPATH,
+        "//span[@class='p-ml-2'][normalize-space()='1']",
         "Редактирвоать 1 полосу")
 
     NOTIFICATIONS = ElementFactory.label(
@@ -38,8 +40,7 @@ class LanesControlFormElements(BaseFormElements):
     NOTIFICATION = ElementFactory.label(
         By.CLASS_NAME,
         "p-toast-summary",
-        "Уведомление"
-        )
+        "Уведомление")
 
     EDIT_LANE2 = ElementFactory.button(
         By.XPATH, "//span[@class='p-ml-2'][normalize-space()='2']",
@@ -48,8 +49,7 @@ class LanesControlFormElements(BaseFormElements):
     BUSY_LANE1_RADIO = ElementFactory.label(
         By.XPATH,
         "//tbody/tr[1]//span[contains(text(),'vpn_key_off')]",
-      "Занятость полосы",
-        )
+        "Занятость полосы")
 
     LANE_IS_FREE = ElementFactory.label(
         By.XPATH,
@@ -75,21 +75,25 @@ class LanesControlFormElements(BaseFormElements):
         By.XPATH, "//tbody/tr[1]//span[contains(text(),'play_arrow')]",
         "Старт упражнения")
 
-    STOP = ElementFactory.button(By.XPATH,
-                                        "//tbody/tr[1]//span[contains(text(),'stop')]",
-                                        "Стоп упражнения")
+    STOP = ElementFactory.button(
+        By.XPATH,
+        "//tbody/tr[1]//span[contains(text(),'stop')]",
+        "Стоп упражнения")
 
-    CHOSEN_WEAPON = ElementFactory.button(By.XPATH,
-                                          "//div[@id='weaponId']//span",
-                                          "Поле выбранного оружия")
+    CHOSEN_WEAPON = ElementFactory.button(
+        By.XPATH,
+        "//div[@id='weaponId']//span",
+        "Поле выбранного оружия")
 
-    CHOSEN_AMMO = ElementFactory.button(By.XPATH,
-                                        "//div[@id='ammoId']//span",
-                                        "Поле выбранного боеприпаса")
+    CHOSEN_AMMO = ElementFactory.button(
+        By.XPATH,
+        "//div[@id='ammoId']//span",
+        "Поле выбранного боеприпаса")
 
-    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.button(By.XPATH,
-                                                   "//span[contains(text(),'Закрыть')]",
-                                                   "Закрыть выбор оружия")
+    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.button(
+        By.XPATH,
+        "//span[contains(text(),'Закрыть')]",
+        "Закрыть выбор оружия")
 
     CONFIRM_CHOSEN_WEAPON = ElementFactory.button(
         By.XPATH,

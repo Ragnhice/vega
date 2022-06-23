@@ -3,6 +3,7 @@ from aqas.utils.step import step
 
 from models.ui.forms.conditions_menu_form import ConditionsMenuForm
 from models.ui.forms.shooters_chose_form import ShootersChoseForm
+from constants import *
 
 
 @pytest.mark.usefixtures("start_browser")
@@ -10,7 +11,7 @@ class TestAutostandWeapon():
     """
     Класс, который содержит действия тестов при проверке автозаполнения полей оружия и боеприса
     при быстром старте;на странице выбора стрелков; на странице управления полосами;
-     на странице выбора условий полосы;
+    на странице выбора условий полосы;
     """
     SEARCH_CONDITION = "Автотесты"
 
@@ -25,16 +26,16 @@ class TestAutostandWeapon():
             lanes_control_page.press_play()
 
         with step("Проверка автозаполнения поля выбора оружия"):
-            assert lanes_control_page.get_chosen_weapon() is not None, \
-                "Поле выбора оружия пустое"
-            assert lanes_control_page.get_chosen_weapon() != 'p - emptylabel', \
-                "Поле выбора оружия пустое"
+            assert (lanes_control_page.get_chosen_weapon() is not None,
+                    "Поле выбора оружия пустое")
+            assert (lanes_control_page.get_chosen_weapon() != EMPTY,
+                    "Поле выбора оружия пустое")
 
         with step("Проверка автозаполнения поля выбора  боеприпаса"):
-            assert lanes_control_page.get_chosen_ammo() is not None, \
-                "Поле выбора боеприпаса пустое"
-            assert lanes_control_page.get_chosen_ammo() != 'p - emptylabel', \
-                "Поле выбора боеприпаса пустое"
+            assert (lanes_control_page.get_chosen_ammo() is not None,
+                    "Поле выбора боеприпаса пустое")
+            assert (lanes_control_page.get_chosen_ammo() != EMPTY,
+                    "Поле выбора боеприпаса пустое")
 
         with step("Закрыть таблицу выбора оружия"):
             lanes_control_page.close_chose_weapon_tab()
@@ -46,16 +47,16 @@ class TestAutostandWeapon():
             lane1_control_page.press_play()
 
         with step("Проверка автозаполнения поля выбора оружия"):
-            assert lane1_control_page.get_chosen_weapon() is not None, \
-                "Поле выбора оружия пустое"
-            assert lane1_control_page.get_chosen_weapon() != 'p - emptylabel', \
-                "Поле выбора оружия пустое"
+            assert (lane1_control_page.get_chosen_weapon() is not None,
+                    "Поле выбора оружия пустое")
+            assert (lane1_control_page.get_chosen_weapon() != EMPTY,
+                    "Поле выбора оружия пустое")
 
         with step("Проверка автозаполнения поля выбора  боеприпаса"):
-            assert lane1_control_page.get_chosen_ammo() is not None, \
-                "Поле выбора боеприпаса пустое"
-            assert lane1_control_page.get_chosen_ammo() != 'p - emptylabel', \
-                "Поле выбора боеприпаса пустое"
+            assert (lane1_control_page.get_chosen_ammo() is not None,
+                    "Поле выбора боеприпаса пустое")
+            assert (lane1_control_page.get_chosen_ammo() != EMPTY,
+                    "Поле выбора боеприпаса пустое")
 
         with step("Закрыть таблицу выбора оружия"):
             lane1_control_page.close_chose_weapon_tab()
@@ -69,16 +70,16 @@ class TestAutostandWeapon():
             assert shooter_chose_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with step("Проверка автозаполнения поля выбора оружия"):
-            assert shooter_chose_page.get_chosen_weapon_2() is not None, \
-                "Поле выбора оружия пустое"
-            assert shooter_chose_page.get_chosen_weapon_2() != 'p - emptylabel', \
-                "Поле выбора оружия пустое"
+            assert (shooter_chose_page.get_chosen_weapon_2() is not None,
+                    "Поле выбора оружия пустое")
+            assert (shooter_chose_page.get_chosen_weapon_2() != EMPTY,
+                    "Поле выбора оружия пустое")
 
         with step("Проверка автозаполнения поля выбора  боеприпаса"):
-            assert shooter_chose_page.get_chosen_ammo_2() is not None, \
-                "Поле выбора боеприпаса пустое"
-            assert shooter_chose_page.get_chosen_ammo_2() != 'p - emptylabel', \
-                "Поле выбора боеприпаса пустое"
+            assert (shooter_chose_page.get_chosen_ammo_2() is not None,
+                    "Поле выбора боеприпаса пустое")
+            assert (shooter_chose_page.get_chosen_ammo_2() != EMPTY,
+                    "Поле выбора боеприпаса пустое")
 
         with step("Вернуться на страницу Управление полосой 1"):
             shooter_chose_page.back_to_lane1()
@@ -95,19 +96,20 @@ class TestAutostandWeapon():
             conditions_menu_page.press_play()
 
         with step("Проверка автозаполнения поля выбора оружия"):
-            assert conditions_menu_page.get_chosen_weapon() is not None, \
-                "Поле выбора оружия пустое"
-            assert conditions_menu_page.get_chosen_weapon() != 'p - emptylabel', \
-                "Поле выбора оружия пустое"
+            assert (conditions_menu_page.get_chosen_weapon() is not None,
+                    "Поле выбора оружия пустое")
+            assert (conditions_menu_page.get_chosen_weapon() != EMPTY,
+                    "Поле выбора оружия пустое")
 
         with step("Проверка автозаполнения поля выбора  боеприпаса"):
-            assert conditions_menu_page.get_chosen_ammo() is not None, \
-                "Поле выбора боеприпаса пустое"
-            assert conditions_menu_page.get_chosen_ammo() != 'p - emptylabel', \
-                "Поле выбора боеприпаса пустое"
+            assert (conditions_menu_page.get_chosen_ammo() is not None,
+                    "Поле выбора боеприпаса пустое")
+            assert (conditions_menu_page.get_chosen_ammo() != EMPTY,
+                    "Поле выбора боеприпаса пустое")
 
         with step("Закрыть таблицу выбора оружия"):
             conditions_menu_page.close_chose_weapon_tab()
 
         with step("Вернуться на страницу Управление полосой 1"):
             conditions_menu_page.back_to_lane1()
+

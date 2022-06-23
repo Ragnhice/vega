@@ -1,0 +1,8 @@
+# Pylint section
+[tool.pylint]
+    [tool.pylint.messages_control]
+        disable=["C0114,C0115,C0116,E0401,R0201,R0801,R0903,W0613,R0904"]
+
+    [tool.pylint."FORMAT"]
+        max-line-length=120
+        max-module-lines=2000
