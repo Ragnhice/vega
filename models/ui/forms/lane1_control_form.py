@@ -1,95 +1,94 @@
-from aqas.element_factory import ElementFactory
-from aqas.forms.base_form import BaseForm, BaseFormElements
-from selenium.common import TimeoutException
+import aqas
 from selenium.webdriver.common.by import By
 
 
-class Lane1ControlFormElements(BaseFormElements):
-    """
-    Класс, который содержит элементы, используемые при проверке управления первой полосой
-    """
+class Lane1ControlFormElements(aqas.BaseFormElements):
+    """Класс, который содержит элементы, используемые при проверке управления первой полосой."""
 
-    BUSY_LANE_RADIO = ElementFactory.label(
-        By.XPATH,
-        "//div[contains(@class, 'lane-head-items')]//span",
-        "Занятость полосы",
-        )
+    BUSY_LANE_RADIO = aqas.element_factory.label(
+        By.XPATH, "//div[contains(@class, 'lane-head-items')]//span",
+        "Занятость полосы")
 
-    PLAY = ElementFactory.button(
+    PLAY = aqas.element_factory.button(
         By.XPATH, "//span[contains(text(),'play_arrow')]",
         "Старт упражнения")
 
-    STOP = ElementFactory.button(By.XPATH, ".//span[contains(text(),'stop')]",
-                                 "Стоп упражнения")
+    STOP = aqas.element_factory.button(
+        By.XPATH, ".//span[contains(text(),'stop')]",
+        "Стоп упражнения")
 
-    CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//div[@id='weaponId']//span",
-                                          "Поле выбранного оружия")
+    CHOSEN_WEAPON = aqas.element_factory.button(
+        By.XPATH, "//div[@id='weaponId']//span",
+        "Поле выбранного оружия")
 
-    CHOSEN_AMMO = ElementFactory.button(By.XPATH, "//div[@id='ammoId']//span",
-                                        "Поле выбранного боеприпаса")
+    CHOSEN_AMMO = aqas.element_factory.button(
+        By.XPATH, "//div[@id='ammoId']//span",
+        "Поле выбранного боеприпаса")
 
-    CLOSE_CHOSE_WEAPON_TAB = ElementFactory.button(By.XPATH, "//span[contains(text(),'Закрыть')]",
-                                                   "Закрыть выбор оружия")
+    CLOSE_CHOSE_WEAPON_TAB = aqas.element_factory.button(
+        By.XPATH, "//span[contains(text(),'Закрыть')]",
+        "Закрыть выбор оружия")
 
-    CONFIRM_CHOSEN_WEAPON = ElementFactory.button(By.XPATH, "//span[contains(text(),'Подтвердить')]",
-                                                  "Подтвердить выбор оружия")
+    CONFIRM_CHOSEN_WEAPON = aqas.element_factory.button(
+        By.XPATH, "//span[contains(text(),'Подтвердить')]",
+        "Подтвердить выбор оружия")
 
-    SHOOTERS_MENU = ElementFactory.button(By.XPATH, "//a[@href='/lines/1/shooters']//span",
-                                          "Переход к  странице выбора стрелков")
+    SHOOTERS_MENU = aqas.element_factory.button(
+        By.XPATH, ".//a[@href='/lines/1/shooters']//span",
+        "Переход к  странице выбора стрелков")
 
-    PAUSE = ElementFactory.button(
+    PAUSE = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'pause')]",
         "Приостановить упражнение")
 
-    TIME = ElementFactory.button(
+    TIME = aqas.element_factory.button(
         By.XPATH, ".//div[contains(text(),'Резульат')/div/div[5]/div[1]",
         "Значение времени от начала")
 
-    CONDITIONS_MENU = ElementFactory.button(
+    CONDITIONS_MENU = aqas.element_factory.button(
         By.XPATH,
         "//a[@href='/lines/1/conditions']",
         "открыть окно Выбор условий полосы 1")
 
-    PRINT_QUICK = ElementFactory.button(
+    PRINT_QUICK = aqas.element_factory.button(
         By.XPATH, "//a[@href='/lines/1/stats']",
         "Распечатать отчет")
 
-    EX_MENU = ElementFactory.button(
+    EX_MENU = aqas.element_factory.button(
         By.XPATH, "//a[@href='/lines/1/exercises']//span",
         "Открыть окно Выбор упражнения на полосу 1")
 
-    NOTIFICATION = ElementFactory.label(
-        By.CLASS_NAME, "p-toast-summary", "Уведомление")
+    NOTIFICATION = aqas.element_factory.label(
+        By.CLASS_NAME, "p-toast-summary",
+        "Уведомление")
 
-    NOTIFICATIONS = ElementFactory.label(
+    NOTIFICATIONS = aqas.element_factory.label(
         By.XPATH, "//div[contains(@class, 'p-toast-top-right')]",
         "Все уведомления")
 
-    LANE_IS_FREE = ElementFactory.label(
+    LANE_IS_FREE = aqas.element_factory.label(
         By.XPATH, "//h2[contains(text(),'свободна')]",
         "Флаг свободной полосы")
 
-    LANE_IS_BUSY = ElementFactory.label(
+    LANE_IS_BUSY = aqas.element_factory.label(
         By.XPATH, "//h2[contains(text(),'занята')]",
         "Флаг занятой полосы")
 
-    STOP_DISABLED = ElementFactory.button(
+    STOP_DISABLED = aqas.element_factory.button(
         By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'stop')]",
         "Кнопка остановки упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
-    PLAY_DISABLED = ElementFactory.button(
+    PLAY_DISABLED = aqas.element_factory.button(
         By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'play_arrow')]",
         "Кнопка запуска упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
-    PAUSED_DISABLED = ElementFactory.button(
+    PAUSE_DISABLED = aqas.element_factory.button(
         By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'pause')]",
-        "Кнопка паузы в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ, упр. либо приостановлено либо оставновлено ")
+        "Кнопка паузы в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ, упр. либо приостановлено либо оставновлено")
 
 
-class Lane1ControlForm(BaseForm):
-    """
-        Класс, который содержит методы, используемые при проверке страницы управления первой полосой
-        """
+class Lane1ControlForm(aqas.BaseForm):
+    """Класс, который содержит методы, используемые при проверке страницы управления первой полосой."""
     elements = Lane1ControlFormElements()
 
     def __init__(self):
@@ -121,35 +120,11 @@ class Lane1ControlForm(BaseForm):
     def press_stop(self):
         self.elements.STOP.click()
 
-    def wait_for_invisible_notification(self):
+    def is_notification_invisible(self):
         return self.elements.NOTIFICATION.state.wait_for_invisible()
 
-    def wait_for_invisible_notifications(self):
+    def is_notifications_invisible(self):
         return self.elements.NOTIFICATIONS.state.wait_for_invisible()
-
-    def ex_is_playing(self):
-        try:
-            return self.elements.PLAY_DISABLED.state.wait_for_located()
-        except TimeoutException:
-            return False
-
-    def ex_is_stopped(self):
-        try:
-            return self.elements.STOP_DISABLED.state.wait_for_located(timeout=3)
-        except TimeoutException:
-            return False
-
-    def lane_is_busy(self):
-        try:
-            return self.elements.LANE_IS_BUSY.state.wait_for_located(timeout=3)
-        except TimeoutException:
-            return False
-
-    def lane_is_free(self):
-        try:
-            return self.elements.LANE_IS_FREE.state.wait_for_located(timeout=3)
-        except TimeoutException:
-            return False
 
     def go_exercise_menu(self):
         self.elements.EX_MENU.click()

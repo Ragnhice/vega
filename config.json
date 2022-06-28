@@ -1,58 +1,36 @@
 {
-  "api":{
-    "url": "http://10.10.72.214",
-    "services": {
-      "StartupApi" : {
-        "port": 5050,
-        "service_name": null
-      }
-    }
-  },
-  "timeouts": {
-    "timeoutImplicit": 0,
-    "timeoutCondition": 20,
-    "timeoutScript": 10,
-    "timeoutPageLoad": 15,
-    "timeoutPollingInterval": 0.1,
-    "timeoutApi": 5
-  },
-  "logger": {
-    "level": "debug",
-    "language": "en",
-    "logPageSource": true,
-    "encoding": "utf-8",
-    "filemode": "w",
-    "format": "[%(asctime)s: %(levelname)s] %(message)s",
-    "lineLength": 100
-  },
-  "jira": {
-    "url": "https://jira.steor.tech",
-    "login": "",
-    "password": ""
-  },
-
-
   "ui": {
     "projectSettings": {
-      "url": "http://10.10.127.22:3002",
-      "login": "admin",
-      "password": "5555",
-      "isBasicAuthorization": false
-
+      "url": "http://10.10.72.214",
+      "login": "",
+      "password": ""
+    },
+    "credentials": {
+      "administrator": {
+        "login": "admin",
+        "password": "5555"
+      },
+      "instructor": {
+        "login": "instuctor",
+        "password": "2222"
+      },
+      "shooter": {
+        "login": "shooter",
+        "password": "1111"
+      }
     },
     "browserSettings": {
       "browserName": "chrome",
-      "githubToken": "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",
+      "githubToken": "",
       "isHeadless": false,
       "windowSize": {
         "width": 1280,
         "height": 1000
       },
-      "maximize": false,
       "isHighlightElement": true,
       "isPrivate": false,
       "chrome": {
-        "webDriverVersion": "102.0.5005.61",
+        "webDriverVersion": "latest",
         "capabilities": {
           "enableVNC": true,
           "unhandledPromptBehavior": "accept",
@@ -77,12 +55,6 @@
           "--disable-extensions"
         ]
       },
-       "chrome_settings": {
-      "driver_path": "C:\\Users\\tativa\\PycharmProjects\\chromedriver.exe",
-      "binary_path": "C:\\Users\\tativa\\PycharmProjects\\chromedriver.exe",
-      "log_path": null
-    }
-  },
       "firefox": {
         "webDriverVersion": "latest",
         "capabilities": {
@@ -91,11 +63,6 @@
           "pageLoadStrategy": "eager",
           "acceptInsecureCerts": true
         },
-        "firefox_settings": {
-      "driver_path": "C:\\Users\\tativa\\PycharmProjects\\geckodriver.exe",
-      "binary_path": "C:\\Users\\tativa\\PycharmProjects\\geckodriver.exe",
-      "log_path": null
-    },
         "options": {
           "intl.accept_languages": "en",
           "browser.download.dir": "./downloads",
@@ -114,14 +81,14 @@
         },
         "startArguments": []
       }
-    },
-
+    }
+  },
   "api":{
-    "url": "https://graphqlzero.almansi.me",
+    "url": "http://10.10.72.214",
     "services": {
-      "api": {
-        "port": null,
-        "service_name": "api"
+      "StartupApi": {
+        "port": 5050,
+        "service_name": null
       }
     }
   },
@@ -134,7 +101,7 @@
     "timeoutApi": 5
   },
   "logger": {
-    "level": "debug",
+    "level": "info",
     "language": "en",
     "logPageSource": true,
     "encoding": "utf-8",
@@ -143,8 +110,14 @@
     "lineLength": 100
   },
   "jira": {
-    "url": "https://jira.steor.tech/projects/VEGA2/",
-    "login": "tativa",
-    "password": ""
+    "url": "https://jira.steor.tech",
+    "login": "",
+    "password": "",
+    "zephyr": {
+      "projectKey": "",
+      "release": "latest",
+      "cycle": "new",
+      "apiVersion": "latest"
+    }
   }
 }

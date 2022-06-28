@@ -69,6 +69,11 @@ class TestAuth():
         with step("Подождать, пока не исчезнут Уведомления"):
             lanes_control_page.wait_for_invisible_notifications()
 
+        with step("Проверить отсутствие доступа к изменению режима упражнения "):
+            assert lanes_control_page.find_play_disabled(), "Стрелку доступен запуск упражнения"
+            assert lanes_control_page.find_stop_disabled(), "Стрелку доступна остановка упражнения"
+            assert lanes_control_page.find_pause_disabled(), "Стрелку доступен приостановка упражнения"
+
         with step("Переход к шапке страницы"):
             header_page = HeaderForm()
             assert header_page.is_wait_for_form_load(), "Страница не загрузилась"
@@ -88,7 +93,7 @@ class TestAuth():
             assert sidebar_page.find_ex_editor(), "Администратору недоступен редактор"
 
         with step("Проверить доступ к работе с базой пользователей"):
-            assert sidebar_page.find_staff(), "Администратору недоступен список пользователей"
+            assert sidebar_page.find_staff(), "Стрелку доступен список пользователей"
 
         with step("Проверить доступ к Установке параметров работы оборудования"):
             assert sidebar_page.find_camera_settings(), "Администратору недоступны насройки камеры"
@@ -98,9 +103,7 @@ class TestAuth():
             sidebar_page.close_settings()
             lanes_control_page = LanesControlForm()
 
-        with step("Освободить полосу"):
-            if lanes_control_page.lane_is_busy():
-                lanes_control_page.change_busy_lane1()
+
 
 
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-333")

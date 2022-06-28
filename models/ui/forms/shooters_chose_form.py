@@ -1,72 +1,68 @@
-from aqas.element_factory import ElementFactory
-from aqas.forms.base_form import BaseForm, BaseFormElements
-from selenium.common import TimeoutException
+import aqas
+
 from selenium.webdriver.common.by import By
 
 
-class ShootersChoseFormLocators(BaseFormElements):
+class ShootersChoseFormLocators(aqas.BaseFormElements):
     """
-    Класс, который содержит элементы, используемые при проверке появления уведомления о неуспешном сохранении без оружия на
-    странице выбора стрелков
+    Класс, который содержит элементы, используемые при проверке появления уведомления о неуспешном сохранении
+    без оружия на странице выбора стрелков.
     """
 
-    CHOSEN_AMMO_2 = ElementFactory.button(
+    CHOSEN_AMMO_2 = aqas.element_factory.button(
         By.XPATH, "//*[@id='newAmmoId']/span",
         "Поле выбранного боеприпаса")
 
-    CHOSEN_WEAPON_2 = ElementFactory.button(
+    CHOSEN_WEAPON_2 = aqas.element_factory.button(
         By.XPATH, "//*[@id='newWeaponId']/span",
         "Поле выбранного оружия")
 
-    ADD_WEAPON = ElementFactory.button(
+    ADD_WEAPON = aqas.element_factory.button(
         By.XPATH,
-                                       "//button[contains(text(),'добавить')]",
-                                       "Добавить выбранное оружия")
+        "//button[contains(text(),'добавить')]",
+        "Добавить выбранное оружия")
 
-    EDIT_EXERCISE = ElementFactory.button(
+    EDIT_EXERCISE = aqas.element_factory.button(
         By.XPATH, "//a[@href='/lines/1/exercises']/div/span",
         "Открыть окно  Выбора упражнения на полосу")
 
-    BACK = ElementFactory.button(
+    BACK = aqas.element_factory.button(
         By.XPATH, "//a[@href='/lines/1']",
         "Стрелка - Врнуться назад")
 
-    ADD_SHOOTER = ElementFactory.button(
+    ADD_SHOOTER = aqas.element_factory.button(
         By.XPATH, ".//div[@class='section-block__content']//button",
         "Добавить стрелка")
 
-    SHOOTER_TO_CHOSE_LIST_1 = ElementFactory.button(
+    SHOOTER_TO_CHOSE_LIST_1 = aqas.element_factory.button(
         By.XPATH, ".//div[@id='shooterId']",
         "Открыть список для выбора 1-го стрелка")
 
-    NOTIFICATIONS = ElementFactory.label(
+    NOTIFICATIONS = aqas.element_factory.label(
         By.XPATH, "//div[contains(@class, 'p-toast-top-right')]",
         "Все уведомления")
 
-    NOTIFICATION = ElementFactory.label(
-        By.CLASS_NAME,
-        "p-toast-summary",
-        "Уведомление"
-        )
+    NOTIFICATION = aqas.element_factory.label(
+        By.CLASS_NAME, "p-toast-summary",
+        "Уведомление")
 
-    LANE_IS_FREE = ElementFactory.label(
+    LANE_IS_FREE = aqas.element_factory.label(
         By.XPATH, "//h2[contains(text(),'свободна')]",
         "Флаг свободной полосы")
 
-    LANE_IS_BUSY = ElementFactory.label(
+    LANE_IS_BUSY = aqas.element_factory.label(
         By.XPATH, "//h2[contains(text(),'занята')]",
         "Флаг занятой полосы")
 
-    BUSY_LANE_RADIO = ElementFactory.label(
-        By.XPATH,
-        "//div[contains(@class, 'lane-head-items')]//span",
-        "Занятость полосы",
-        )
+    BUSY_LANE_RADIO = aqas.element_factory.label(
+        By.XPATH, "//div[contains(@class, 'lane-head-items')]//span",
+        "Занятость полосы")
 
 
-class ShootersChoseForm(BaseForm):
-    """Класс методов для проверки появления уведомления о неуспешном сохранении без оружия на
-    странице выбора стрелков"""
+class ShootersChoseForm(aqas.BaseForm):
+    """
+    Класс методов для проверки появления уведомления о неуспешном сохранении без оружия на странице выбора стрелков.
+    """
     elements = ShootersChoseFormLocators()
 
     def __init__(self):
@@ -82,23 +78,11 @@ class ShootersChoseForm(BaseForm):
     def back_to_lane1(self):
         self.elements.BACK.click()
 
-    def wait_for_invisible_notification(self):
+    def is_notification_invisible(self):
         return self.elements.NOTIFICATION.state.wait_for_invisible()
 
-    def wait_for_invisible_notifications(self):
+    def is_notifications_invisible(self):
         return self.elements.NOTIFICATIONS.state.wait_for_invisible()
-
-    def lane_is_busy(self):
-        try:
-            return self.elements.LANE_IS_BUSY.state.wait_for_located(timeout=3)
-        except TimeoutException:
-            return False
-
-    def lane_is_free(self):
-        try:
-            return self.elements.LANE_IS_FREE.state.wait_for_located(timeout=3)
-        except TimeoutException:
-            return False
 
     def change_busy_lane(self):
         self.elements.BUSY_LANE_RADIO.click()

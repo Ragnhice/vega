@@ -1,60 +1,51 @@
-from aqas.element_factory import ElementFactory
-from aqas.forms.base_form import BaseForm, BaseFormElements  # подгрузка из базового класса элементов
+import aqas
 from selenium.webdriver.common.by import By
+from models.ui.forms import *
+from utils.enums import UserTypeEnum
 
 
-class AuthenticationFormElements(BaseFormElements):
-    """
-    Класс, который содержит элементы, используемые на странице аутентификации
-    """
+class AuthenticationFormElements(aqas.BaseFormElements):
+    """Класс, который содержит элементы, используемые на странице аутентификации."""
 
-    LOGIN_INPUT = ElementFactory.text_box(
+    LOGIN_INPUT = aqas.element_factory.text_box(
         By.XPATH, "//*[@id='login']",
         "Поле ввода логина")
 
-    LOGIN_NAME_ADMIN = 'admin'
-    PASSWORD_TAB_ADMIN = ElementFactory.button(
-        locator_type=By.XPATH, locator_value="//div[contains(text(),'5')]",
-        element_name="Кнопка пароля администратора")
 
-    LOGIN_NAME_INSTRUCTOR = 'instuctor'
-    PASSWORD_TAB_INSTRUCTOR = ElementFactory.button(
-        locator_type=By.XPATH, locator_value="//div[contains(text(),'2')]",
-        element_name="Кнопка пароля инструктора")
-
-    LOGIN_NAME_SHOOTER = 'shooter'
-    PASSWORD_TAB_SHOOTER = ElementFactory.button(
-        locator_type=By.XPATH, locator_value="//div[contains(text(),'1')]",
-        element_name="Кнопка пароля стрелка")
-
-
-class AuthenticationForm(BaseForm):
-    """
-    Класс, который содержит методы, используемые на странице аутентификации
-    """
-    elements = AuthenticationFormElements()  # подгрузка в аргумент из данного  класса
+class AuthenticationForm(aqas.BaseForm):
+    """Класс, который содержит методы, используемые на странице аутентификации."""
+    elements = AuthenticationFormElements()
 
     def __init__(self):
         super().__init__(By.CLASS_NAME, "login-page", "Страница аутентификации")
-        # элемент проверки,что мы в этой форме
+        self.password_locator = "//div[contains(text(),'{number}')]"
 
-    def enter_login_admin(self):
-        self.elements.LOGIN_INPUT.send_keys(self.elements.LOGIN_NAME_ADMIN)
+    def login(self, user_type: UserTypeEnum):
+        login, password = self.__get_credentials_for_login(user_type)
+        self.enter_login(login)
+        self.enter_password(password)
 
-    def enter_password_admin(self):
-        for _ in range(4):
-            self.elements.PASSWORD_TAB_ADMIN.click()
+    def enter_login(self, login_: str):
+        self.elements.LOGIN_INPUT.send_keys(login_)
 
-    def enter_login_instuctor(self):
-        self.elements.LOGIN_INPUT.send_keys(self.elements.LOGIN_NAME_INSTRUCTOR)
+    def enter_password(self, password_: str):
+        for number in password_:
+            aqas.element_factory.button(By.XPATH, self.password_locator.format(number=number), f"<{number}>").click()
 
-    def enter_password_instuctor(self):
-        for _ in range(4):
-            self.elements.PASSWORD_TAB_INSTRUCTOR.click()
+    def __get_credentials_for_login(self, user_type: UserTypeEnum):
+        if user_type == UserTypeEnum.ADMINISTRATOR:
+            login = aqas.config.get_property("ui.credentials.administrator.login")
+            password = aqas.config.get_property("ui.credentials.administrator.password")
+        elif user_type == UserTypeEnum.INSTRUCTOR:
+            login = aqas.config.get_property("ui.credentials.instructor.login")
+            password = aqas.config.get_property("ui.credentials.instructor.password")
+        elif user_type == UserTypeEnum.SHOOTER:
+            login = aqas.config.get_property("ui.credentials.shooter.login")
+            password = aqas.config.get_property("ui.credentials.shooter.password")
+        else:
+            raise NotImplementedError(f"Нет возможности залогиниться с данным типом пользователя: {user_type.value}")
 
-    def enter_login_shooter(self):
-        self.elements.LOGIN_INPUT.send_keys(self.elements.LOGIN_NAME_SHOOTER)
+        if not login or not password:
+            raise NotImplementedError(f"Задайте логин/пароль для пользователя с типом {user_type.value}")
 
-    def enter_password_shooter(self):
-        for _ in range(4):
-            self.elements.PASSWORD_TAB_SHOOTER.click()
+        return login, password
