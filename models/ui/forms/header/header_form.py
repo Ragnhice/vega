@@ -1,16 +1,13 @@
 import aqas
 from selenium.webdriver.common.by import By
+from models.ui.forms.common_elements import CommonFormElements, CommonForm
 
 
-class HeaderFormElements(aqas.BaseFormElements):
+class HeaderFormElements(aqas.BaseFormElements,CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке кнопок шапки страницы."""
 
-    MENU = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//span",
-        "Меню")
 
-
-class HeaderForm(aqas.BaseForm):
+class HeaderForm(aqas.BaseForm, CommonForm):
     """Класс, который содержит методы, используемые при проверке кнопок шапки страницы."""
 
     elements = HeaderFormElements()

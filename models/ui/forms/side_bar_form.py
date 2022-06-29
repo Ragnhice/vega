@@ -1,56 +1,53 @@
 import aqas
 from selenium.webdriver.common.by import By
+from models.ui.forms.common_elements import CommonFormElements, CommonForm
 
 
-class SideBarFormElements(aqas.BaseFormElements):
+class SideBarFormElements(aqas.BaseFormElements,CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
-    MENU = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//span",
-        "Меню")
-
-    SETTINGS = aqas.element_factory.button(
+    SETTINGS_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(@class,'p-panelmenu-icon')]",
         "Настройки")
 
-    LINES_CONTROLLING = aqas.element_factory.button(
+    LANES_CONTROLLING_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'Управление полосами')]",
         "Управление полосами")
 
-    EX_EDITOR = aqas.element_factory.button(
+    EX_EDITOR_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'Редактор упражнений')]",
         "Редактор упражнения")
 
-    STAFF = aqas.element_factory.button(
+    USERS_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'Пользователи')]",
         "Пользователи")
 
-    STATISTIC = aqas.element_factory.button(
+    STATISTIC_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'Статистика')]",
         "Статистика")
 
-    SHOOTING_MODE = aqas.element_factory.button(
+    SHOOTING_MODE_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'Настройки')]",
         "Настройки тира")
 
-    CAMERA_SETTINGS = aqas.element_factory.button(
+    CAMERA_SETTINGS_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'Настройка камеры визуализатора')]",
         "Настройка камеры визуализатора")
 
-    SERVICE = aqas.element_factory.button(
+    SERVICE_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'Сервисные функции')]",
         "Сервисные функции")
 
-    ORGANISATIONS = aqas.element_factory.button(
+    ORGANISATIONS_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(text(),'Организации')]",
         "Организации")
 
-    CLOSE = aqas.element_factory.button(
+    CLOSE_BTN = aqas.element_factory.button(
         By.XPATH, ".//span[contains(@class,'p-sidebar-close-icon')]",
         "Закрыть боковое меню")
 
 
-class SideBarForm(aqas.BaseForm):
+class SideBarForm(aqas.BaseForm, CommonForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
     elements = SideBarFormElements()
 
@@ -58,7 +55,7 @@ class SideBarForm(aqas.BaseForm):
         super().__init__(By.CLASS_NAME, "p-sidebar-header", "Страница бокового меню")
 
     def open_settings(self):
-        self.elements.SETTINGS.click()
+        self.elements.SETTINGS_BTN.click()
 
     def close_settings(self):
-        self.elements.CLOSE.click()
+        self.elements.CLOSE_BTN.click()

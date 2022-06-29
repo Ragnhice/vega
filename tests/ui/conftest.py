@@ -24,6 +24,7 @@ def get_auth_admin():
 
     with aqas.pre_step("Переход на страницу аутентификации"):
         auth_page = AuthenticationForm()
+        auth_page.open_full_screen()
         assert auth_page.is_wait_for_form_load(), "Страница не загрузилась"
 
     with aqas.pre_step("Переход на страницу управления полосами"):
@@ -142,3 +143,5 @@ def get_auth_instructor():
         assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
 
     yield lanes_control_page
+
+#(By.TagName("html")).SendKeys(Keys.F11);

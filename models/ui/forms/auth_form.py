@@ -7,10 +7,13 @@ from utils.enums import UserTypeEnum
 class AuthenticationFormElements(aqas.BaseFormElements):
     """Класс, который содержит элементы, используемые на странице аутентификации."""
 
-    LOGIN_INPUT = aqas.element_factory.text_box(
+    LOGIN_INPUT_TBX = aqas.element_factory.text_box(
         By.XPATH, "//*[@id='login']",
         "Поле ввода логина")
 
+    FULL_TBX = aqas.element_factory.text_box(
+        By.XPATH, "/html/body",
+        "Полный экран")
 
 class AuthenticationForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые на странице аутентификации."""
@@ -26,7 +29,7 @@ class AuthenticationForm(aqas.BaseForm):
         self.enter_password(password)
 
     def enter_login(self, login_: str):
-        self.elements.LOGIN_INPUT.send_keys(login_)
+        self.elements.LOGIN_INPUT_TBX.send_keys(login_)
 
     def enter_password(self, password_: str):
         for number in password_:
@@ -47,5 +50,7 @@ class AuthenticationForm(aqas.BaseForm):
 
         if not login or not password:
             raise NotImplementedError(f"Задайте логин/пароль для пользователя с типом {user_type.value}")
-
         return login, password
+
+    def open_full_screen(self):
+        return self.elements.FULL_TBX.send_keys('\ue03b')

@@ -1,65 +1,41 @@
 import aqas
 
 from selenium.webdriver.common.by import By
+from models.ui.forms.common_elements import CommonFormElements, CommonForm
 
 
-class ShootersChoseFormLocators(aqas.BaseFormElements):
+class ShootersChoseFormLocators(aqas.BaseFormElements,CommonFormElements):
     """
     Класс, который содержит элементы, используемые при проверке появления уведомления о неуспешном сохранении
     без оружия на странице выбора стрелков.
     """
 
-    CHOSEN_AMMO_2 = aqas.element_factory.button(
+    CHOSEN_AMMO_2_DRDW = aqas.element_factory.dropdown(
         By.XPATH, "//*[@id='newAmmoId']/span",
         "Поле выбранного боеприпаса")
 
-    CHOSEN_WEAPON_2 = aqas.element_factory.button(
+    CHOSEN_WEAPON_2_DRDW  = aqas.element_factory.dropdown(
         By.XPATH, "//*[@id='newWeaponId']/span",
         "Поле выбранного оружия")
 
-    ADD_WEAPON = aqas.element_factory.button(
+    ADD_WEAPON_DRDW = aqas.element_factory.button(
         By.XPATH,
         "//button[contains(text(),'добавить')]",
         "Добавить выбранное оружия")
 
-    EDIT_EXERCISE = aqas.element_factory.button(
+    EDIT_EXERCISE_BTN = aqas.element_factory.button(
         By.XPATH, "//a[@href='/lines/1/exercises']/div/span",
         "Открыть окно  Выбора упражнения на полосу")
 
-    BACK = aqas.element_factory.button(
-        By.XPATH, "//a[@href='/lines/1']",
-        "Стрелка - Врнуться назад")
-
-    ADD_SHOOTER = aqas.element_factory.button(
+    ADD_SHOOTER_BTN = aqas.element_factory.button(
         By.XPATH, ".//div[@class='section-block__content']//button",
         "Добавить стрелка")
 
-    SHOOTER_TO_CHOSE_LIST_1 = aqas.element_factory.button(
+    SHOOTER_TO_CHOSE_LIST_1_BTN = aqas.element_factory.button(
         By.XPATH, ".//div[@id='shooterId']",
         "Открыть список для выбора 1-го стрелка")
 
-    NOTIFICATIONS = aqas.element_factory.label(
-        By.XPATH, "//div[contains(@class, 'p-toast-top-right')]",
-        "Все уведомления")
-
-    NOTIFICATION = aqas.element_factory.label(
-        By.CLASS_NAME, "p-toast-summary",
-        "Уведомление")
-
-    LANE_IS_FREE = aqas.element_factory.label(
-        By.XPATH, "//h2[contains(text(),'свободна')]",
-        "Флаг свободной полосы")
-
-    LANE_IS_BUSY = aqas.element_factory.label(
-        By.XPATH, "//h2[contains(text(),'занята')]",
-        "Флаг занятой полосы")
-
-    BUSY_LANE_RADIO = aqas.element_factory.label(
-        By.XPATH, "//div[contains(@class, 'lane-head-items')]//span",
-        "Занятость полосы")
-
-
-class ShootersChoseForm(aqas.BaseForm):
+class ShootersChoseForm(aqas.BaseForm, CommonForm):
     """
     Класс методов для проверки появления уведомления о неуспешном сохранении без оружия на странице выбора стрелков.
     """
@@ -70,19 +46,19 @@ class ShootersChoseForm(aqas.BaseForm):
                          "Выбор стрелков на полосу 1")
 
     def get_chosen_weapon_2(self):
-        return self.elements.CHOSEN_WEAPON_2.text
+        return self.elements.CHOSEN_WEAPON_2_DRDW.text
 
     def get_chosen_ammo_2(self):
-        return self.elements.CHOSEN_AMMO_2.text
+        return self.elements.CHOSEN_AMMO_2_DRDW.text
 
     def back_to_lane1(self):
-        self.elements.BACK.click()
+        self.elements.BACK_BTN.click()
 
     def is_notification_invisible(self):
-        return self.elements.NOTIFICATION.state.wait_for_invisible()
+        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
     def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS.state.wait_for_invisible()
+        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
 
     def change_busy_lane(self):
-        self.elements.BUSY_LANE_RADIO.click()
+        self.elements.BUSY_LANE_DRDN.click()

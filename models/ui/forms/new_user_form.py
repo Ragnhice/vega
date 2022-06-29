@@ -1,8 +1,9 @@
 import aqas
 from selenium.webdriver.common.by import By
+from models.ui.forms.common_elements import CommonFormElements, CommonForm
 
 
-class NewUserFormElements(aqas.BaseFormElements):
+class NewUserFormElements(aqas.BaseFormElements,CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
     MENU = aqas.element_factory.button(
@@ -54,7 +55,7 @@ class NewUserFormElements(aqas.BaseFormElements):
         " ")
 
 
-class NewUserFormElements(aqas.BaseForm):
+class NewUserFormElements(aqas.BaseForm, CommonForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
     elements = UsersFormElements()
 
