@@ -1,66 +1,65 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class NewUserFormElements(aqas.BaseFormElements,CommonFormElements):
+class NewUserFormElements(CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
-    MENU = aqas.element_factory.button(
+    MENU_BTN = aqas.element_factory.button(
         By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//span",
         "Меню")
 
-    LOGIN = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    LASTNAME_BTN = aqas.element_factory.button(
+        By.XPATH, " .//input[@id='lastName']",
+        "Фамилия")
 
-    PASSWORD = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    LOGIN_BTN = aqas.element_factory.button(
+        By.XPATH, " .//input[@id='login']",
+        "Логин")
 
-    NAME = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    PASSWORD_TBX = aqas.element_factory.text_box(
+        By.XPATH, ".//input[@id='password']",
+        "Пароль")
 
-    SURNAME = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    FIRSTNAME_BTN = aqas.element_factory.button(
+        By.XPATH, ".//input[@id='firstName']",
+        "Имя")
 
-    PATRONYMIC = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    MIDDLENAME_BTN = aqas.element_factory.button(
+        By.XPATH, ".//input[@id='middleName']",
+        "Отчество")
 
-    GROWTH = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    GROWTH_TBX = aqas.element_factory.text_box(
+        By.XPATH, ".//input[@id='height']",
+        "Рост")
 
-    ROLE_OPEN_LIST = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    ROLE_OPEN_LIST_BTN = aqas.element_factory.button(
+        By.XPATH, "//span[contains(class(), 'p-dropdown-trigger-icon')]",
+        "Открыть список ролей для выбора")
 
-    ROLE_TO_CHOSE = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    ROLE_IN_LIST_BTN = aqas.element_factory.button(
+        By.XPATH, ".//li[@aria-label='Администратор']",
+        "Выбрать роль в списке")
 
-    SAVE = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    SAVE_BTN = aqas.element_factory.button(
+        By.XPATH, "//button[contains(text(), 'сохранить')]",
+        "Кнопка сохранить")
 
-    EXIT_WITHOUT_SAVING = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    EXIT_WITHOUT_SAVING_BTN = aqas.element_factory.button(
+        By.XPATH, "//button[contains(text(), 'выйти без сохранения')]",
+        "Выйти без сохранения")
 
-    BACK = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
-
-
-class NewUserFormElements(aqas.BaseForm, CommonForm):
+class NewUserForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
-    elements = UsersFormElements()
+    elements = NewUserFormElements()
 
     def __init__(self):
-        super().__init__(By.XPATH, ".//div[@class='title'][contains(text(),' Пользователи')]")
+        super().__init__(By.XPATH, ".//div[@class='title'][contains(text(),'Новый пользователь')]")
 
-    def save(self):
-        self.elements.SAVE.click()
+    def is_notification_invisible(self):
+        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+
+    def is_notifications_invisible(self):
+        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

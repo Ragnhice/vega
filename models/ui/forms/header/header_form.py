@@ -1,19 +1,17 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class HeaderFormElements(aqas.BaseFormElements,CommonFormElements):
+class HeaderFormElements(CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке кнопок шапки страницы."""
 
 
-class HeaderForm(aqas.BaseForm, CommonForm):
+class HeaderForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке кнопок шапки страницы."""
 
     elements = HeaderFormElements()
 
     def __init__(self):
         super().__init__(By.XPATH, "//div[contains(@role,'toolbar')]", "Шапка страницы")
-
-    def go_to_menu(self):
-        self.elements.MENU.click()

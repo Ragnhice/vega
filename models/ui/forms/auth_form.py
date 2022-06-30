@@ -1,6 +1,6 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms import *
+
 from utils.enums import UserTypeEnum
 
 
@@ -14,6 +14,7 @@ class AuthenticationFormElements(aqas.BaseFormElements):
     FULL_TBX = aqas.element_factory.text_box(
         By.XPATH, "/html/body",
         "Полный экран")
+
 
 class AuthenticationForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые на странице аутентификации."""
@@ -51,6 +52,3 @@ class AuthenticationForm(aqas.BaseForm):
         if not login or not password:
             raise NotImplementedError(f"Задайте логин/пароль для пользователя с типом {user_type.value}")
         return login, password
-
-    def open_full_screen(self):
-        return self.elements.FULL_TBX.send_keys('\ue03b')

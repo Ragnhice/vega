@@ -1,16 +1,17 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class Lane1ControlFormElements(aqas.BaseFormElements,CommonFormElements):
+class Lane1ControlFormElements(CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке управления первой полосой."""
 
-    CHOSEN_WEAPON_LBL = aqas.element_factory.label(
+    CHOSEN_WEAPON_DRDN = aqas.element_factory.dropdown(
         By.XPATH, "//div[@id='weaponId']//span",
         "Поле выбранного оружия")
 
-    CHOSEN_AMMO_LBL = aqas.element_factory.label(
+    CHOSEN_AMMO_DRDN = aqas.element_factory.dropdown(
         By.XPATH, "//div[@id='ammoId']//span",
         "Поле выбранного боеприпаса")
 
@@ -43,7 +44,7 @@ class Lane1ControlFormElements(aqas.BaseFormElements,CommonFormElements):
         "Кнопка паузы в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ, упр. либо приостановлено либо оставновлено")
 
 
-class Lane1ControlForm(aqas.BaseForm, CommonForm):
+class Lane1ControlForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке страницы управления первой полосой."""
     elements = Lane1ControlFormElements()
 
@@ -51,33 +52,8 @@ class Lane1ControlForm(aqas.BaseForm, CommonForm):
         super().__init__(By.XPATH, "//div[contains(text(),'Управление полосой')]",
                          "Страница управления первой полосой")
 
-    def change_busy_lane(self):
-        self.elements.BUSY_LANE_BTN.click()
+    def is_notification_invisible(self):
+        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def go_shooters_menu(self):
-        self.elements.SHOOTERS_MENU_BTN.state.wait_for_visible()
-        self.elements.SHOOTERS_MENU_BTN.click()
-
-    def press_play(self):
-        self.elements.PLAY_BTN.click()
-
-    def get_chosen_weapon(self):
-        return self.elements.CHOSEN_WEAPON_LBL.text
-
-    def get_chosen_ammo(self):
-        return self.elements.CHOSEN_AMMO_LBL.text
-
-    def close_chose_weapon_tab(self):
-        self.elements.CLOSE_CHOSE_WEAPON_BTN.click()
-
-    def confirm_chosen_weapon(self):
-        self.elements.CONFIRM_CHOSEN_WEAPON_BTN.click()
-
-    def press_stop(self):
-        self.elements.STOP_BTN.click()
-
-    def go_exercise_menu(self):
-        self.elements.EX_MENU_BTN.click()
-
-    def go_conditions_menu(self):
-        self.elements.CONDITIONS_MENU_BTN.click()
+    def is_notifications_invisible(self):
+        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

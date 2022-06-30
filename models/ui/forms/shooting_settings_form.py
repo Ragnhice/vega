@@ -1,10 +1,10 @@
 import aqas
-
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class ShootingSettingsFormElements(aqas.BaseFormElements,CommonFormElements):
+class ShootingSettingsFormElements(CommonFormElements):
     """
     Класс, который содержит элементы, используемые при проверке страницы настроек тира
     """
@@ -26,11 +26,11 @@ class ShootingSettingsFormElements(aqas.BaseFormElements,CommonFormElements):
         "Режим Дуэль")
 
     LANE_COUNTS_BTN = aqas.element_factory.button(
-        By.XPATH, " //*[@id='linesCount']/span]",
+        By.XPATH, "//*[@id='linesCount']/span]",
         "Поле выбора количества полос")
 
 
-class ShootingSettingsForm(aqas.BaseForm, CommonForm):
+class ShootingSettingsForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке страницы настроек тира."""
 
     elements = ShootingSettingsFormElements()
@@ -38,3 +38,9 @@ class ShootingSettingsForm(aqas.BaseForm, CommonForm):
     def __init__(self):
         super().__init__(By.XPATH, "//div[ contains(text(),'Управление полосами')]",
                          "Главная страница настроек тира")
+
+    def is_notification_invisible(self):
+        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+
+    def is_notifications_invisible(self):
+        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

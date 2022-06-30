@@ -1,9 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class ConditionsMenuFormElements(aqas.BaseFormElements,CommonFormElements):
+class ConditionsMenuFormElements(CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке страницы с условиями."""
 
     BUSY_LANE_BTN = aqas.element_factory.button(
@@ -82,11 +83,11 @@ class ConditionsMenuFormElements(aqas.BaseFormElements,CommonFormElements):
         By.XPATH, ".//h3[contains(text(),'Интенсивность осадков')]  ",
         "Интенсивность осадков:")
 
-    CHOSEN_WEAPON_BTN = aqas.element_factory.button(
+    CHOSEN_WEAPON_DRDN = aqas.element_factory.dropdown(
         By.XPATH, "//div[@id='weaponId']//span",
         "Поле выбранного оружия")
 
-    CHOSEN_AMMO_BTN = aqas.element_factory.button(
+    CHOSEN_AMMO_DRDN = aqas.element_factory.dropdown(
         By.XPATH, "//div[@id='ammoId']//span",
         "Поле выбранного боеприпаса")
 
@@ -98,8 +99,12 @@ class ConditionsMenuFormElements(aqas.BaseFormElements,CommonFormElements):
         By.XPATH, "//span[contains(text(),'Подтвердить')]",
         "Подтвердить выбор оружия")
 
+    BUSY_LANE_BTN_COND_MENU = aqas.element_factory.button(
+        By.XPATH, "//div[contains(@class, 'p-col-2')]//span",
+        "Сменить занятость полосы")
 
-class ConditionsMenuForm(aqas.BaseForm, CommonForm):
+
+class ConditionsMenuForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке страницы с условиями."""
     elements = ConditionsMenuFormElements()
 
@@ -107,8 +112,8 @@ class ConditionsMenuForm(aqas.BaseForm, CommonForm):
         super().__init__(By.XPATH, ".//div[contains(text(),'Выбор условий полосы 1')]",
                          "Страница Выбор условий полосы 1")
 
-    def back_to_lane1(self):
-        self.elements.BACK_BTN.click()
+    def go_to_menu(self):
+        self.elements.MENU_BTN.click()
 
     def is_notification_invisible(self):
         return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
@@ -116,20 +121,8 @@ class ConditionsMenuForm(aqas.BaseForm, CommonForm):
     def is_notifications_invisible(self):
         return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
 
-    def change_busy_lane(self):
-        self.elements.BUSY_LANE_BTN.click()
+    def go_exercise_menu(self):
+        self.elements.EX_MENU_BTN.click()
 
-    def get_chosen_weapon(self):
-        return self.elements.CHOSEN_WEAPON_BTN.text
-
-    def get_chosen_ammo(self):
-        return self.elements.CHOSEN_AMMO_BTN.text
-
-    def close_chose_weapon_tab(self):
-        self.elements.CLOSE_CHOSE_WEAPON_BTN.click()
-
-    def confirm_chosen_weapon(self):
-        self.elements.CONFIRM_CHOSEN_WEAPON_BTN.click()
-
-    def press_play(self):
-        self.elements.PLAY_BTN.click()
+    def go_conditions_menu(self):
+        self.elements.CONDITIONS_MENU_BTN.click()

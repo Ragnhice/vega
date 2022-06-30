@@ -1,9 +1,8 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
 
 
-class CommonFormElements(aqas.BaseFormElements,CommonFormElements):
+class CommonFormElements(aqas.BaseFormElements):
     """Класс, который содержит элементы, используемые в 2+ разных формах."""
 
     BACK_BTN = aqas.element_factory.button(
@@ -15,7 +14,7 @@ class CommonFormElements(aqas.BaseFormElements,CommonFormElements):
         "Стрелка Вернуться назад")
 
     BUSY_LANE_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'lane-head-items')]//span",
+        By.XPATH, "//div[contains(@class, 'p-col-2')]//span",
         "Сменить занятость полосы")
 
     SHOOTERS_MENU_DRDN = aqas.element_factory.button(
@@ -71,12 +70,8 @@ class CommonFormElements(aqas.BaseFormElements,CommonFormElements):
         By.XPATH, ".//button[contains(text(),'Сохранить ']",
         "Сохранить ")
 
-    EX_MENU_BTN = aqas.element_factory.button(
-        By.XPATH, "//a[@href='/lines/1/exercises']//span",
-        "Открыть окно Выбор упражнения на полосу 1")
 
-
-class CommonForm(aqas.BaseForm, CommonForm):
+class CommonForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые в 2+ разных формах."""
     elements = CommonFormElements()
 

@@ -1,10 +1,10 @@
 import aqas
-
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class ShootersChoseFormLocators(aqas.BaseFormElements,CommonFormElements):
+class ShootersChoseFormLocators(CommonFormElements):
     """
     Класс, который содержит элементы, используемые при проверке появления уведомления о неуспешном сохранении
     без оружия на странице выбора стрелков.
@@ -14,7 +14,7 @@ class ShootersChoseFormLocators(aqas.BaseFormElements,CommonFormElements):
         By.XPATH, "//*[@id='newAmmoId']/span",
         "Поле выбранного боеприпаса")
 
-    CHOSEN_WEAPON_2_DRDW  = aqas.element_factory.dropdown(
+    CHOSEN_WEAPON_2_DRDW = aqas.element_factory.dropdown(
         By.XPATH, "//*[@id='newWeaponId']/span",
         "Поле выбранного оружия")
 
@@ -35,7 +35,8 @@ class ShootersChoseFormLocators(aqas.BaseFormElements,CommonFormElements):
         By.XPATH, ".//div[@id='shooterId']",
         "Открыть список для выбора 1-го стрелка")
 
-class ShootersChoseForm(aqas.BaseForm, CommonForm):
+
+class ShootersChoseForm(aqas.BaseForm):
     """
     Класс методов для проверки появления уведомления о неуспешном сохранении без оружия на странице выбора стрелков.
     """
@@ -45,20 +46,8 @@ class ShootersChoseForm(aqas.BaseForm, CommonForm):
         super().__init__(By.XPATH, "//div[contains(text(),'Выбор стрелков на полосу 1')]",
                          "Выбор стрелков на полосу 1")
 
-    def get_chosen_weapon_2(self):
-        return self.elements.CHOSEN_WEAPON_2_DRDW.text
-
-    def get_chosen_ammo_2(self):
-        return self.elements.CHOSEN_AMMO_2_DRDW.text
-
-    def back_to_lane1(self):
-        self.elements.BACK_BTN.click()
-
     def is_notification_invisible(self):
         return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
     def is_notifications_invisible(self):
         return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
-
-    def change_busy_lane(self):
-        self.elements.BUSY_LANE_DRDN.click()

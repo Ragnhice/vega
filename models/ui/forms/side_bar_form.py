@@ -1,9 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class SideBarFormElements(aqas.BaseFormElements,CommonFormElements):
+class SideBarFormElements(CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
     SETTINGS_BTN = aqas.element_factory.button(
@@ -47,15 +48,15 @@ class SideBarFormElements(aqas.BaseFormElements,CommonFormElements):
         "Закрыть боковое меню")
 
 
-class SideBarForm(aqas.BaseForm, CommonForm):
+class SideBarForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
     elements = SideBarFormElements()
 
     def __init__(self):
         super().__init__(By.CLASS_NAME, "p-sidebar-header", "Страница бокового меню")
 
-    def open_settings(self):
-        self.elements.SETTINGS_BTN.click()
+    def is_notification_invisible(self):
+        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def close_settings(self):
-        self.elements.CLOSE_BTN.click()
+    def is_notifications_invisible(self):
+        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

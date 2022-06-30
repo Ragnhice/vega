@@ -1,9 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class ExerciseMenuFormElements(aqas.BaseFormElements,CommonFormElements):
+class ExerciseMenuFormElements(CommonFormElements):
     """
        Класс, который содержит элементы, используемые при проверке страницы установки упражнения
     """
@@ -24,8 +25,11 @@ class ExerciseMenuFormElements(aqas.BaseFormElements,CommonFormElements):
         By.XPATH, ".//button[contains(text(),'Выйти без сохранения']",
         "Выйти без сохранения")
 
+    BUSY_LANE_BTN_EX_MENU = aqas.element_factory.button(
+        By.XPATH, "//div[contains(@class, 'p-col-2')]//span",
+        "Сменить занятость полосы")
 
-class ExerciseMenuForm(aqas.BaseForm, CommonForm):
+class ExerciseMenuForm(aqas.BaseForm):
     """
           Класс, который содержит методы, используемые при проверке страницы установки упражнения
        """
@@ -35,14 +39,8 @@ class ExerciseMenuForm(aqas.BaseForm, CommonForm):
         super().__init__(By.CLASS_NAME, ".//div[contains(text(),'Выбор упражнения на полосу')]",
                          "Страница Выбор упражнения на полосу")
 
-    def back_to_lane1(self):
-        self.elements.BACK_BTN.click()
-
     def is_notification_invisible(self):
         return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
     def is_notifications_invisible(self):
         return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
-
-    def change_busy_lane(self):
-        self.elements.BUSY_LANE_BTN.click()

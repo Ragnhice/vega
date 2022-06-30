@@ -1,9 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class StatisticFormElements(aqas.BaseFormElements,CommonFormElements):
+class StatisticFormElements(CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке страницы Статистика."""
 
     MENU_BTN = aqas.element_factory.button(
@@ -11,32 +12,26 @@ class StatisticFormElements(aqas.BaseFormElements,CommonFormElements):
         "Меню")
 
     USER_1_IN_LIST_BTN = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+        By.XPATH, "tbody[contains( @class = 'p-datatable-tbody')][1]//tr[contains( @class = 'p-selectable-row')][1]",
+        "Выбрать первое пользователя в списке")
 
-    EX1_IN_LIST_BTN = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
-
-    SHOTS_BTN = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
-
-    OPEN_ROLES_LIST_BTN = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+    EX_1_IN_LIST_BTN = aqas.element_factory.button(
+        By.XPATH, "tbody[contains( @class = 'p-datatable-tbody')][2]//tr[contains( @class = 'p-selectable-row')][1]",
+        "Выбрать первое упражнение в списке")
 
     MAKE_REPORT_BTN = aqas.element_factory.button(
-        By.XPATH, " ",
-        " ")
+        By.XPATH, ".//button[contains(text(),'Сформировать отчет')]",
+        "Сформировать отчет")
 
-
-class UsersForm(aqas.BaseForm, CommonForm):
+class StatisticForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
-    elements = UsersFormElements()
+    elements = StatisticFormElements()
 
     def __init__(self):
-        super().__init__(By.XPATH, ".//div[@class='title'][contains(text(),' Пользователи')]")
+        super().__init__(By.XPATH, ".//div[@class='title'][contains(text(),' Статистика')]")
 
-    def save(self):
-        self.elements.SAVE_BTN.click()
+    def is_notification_invisible(self):
+        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+
+    def is_notifications_invisible(self):
+        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

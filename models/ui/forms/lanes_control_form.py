@@ -1,10 +1,10 @@
 import aqas
-
 from selenium.webdriver.common.by import By
-from models.ui.forms.common_elements import CommonFormElements, CommonForm
+
+from models.ui.forms.common_elements import CommonFormElements
 
 
-class LanesControlFormElements(aqas.BaseFormElements,CommonFormElements):
+class LanesControlFormElements(CommonFormElements):
     """Класс, который содержит элементы, используемые при проверке страницы управления полосами."""
 
     LANE1_LBL = aqas.element_factory.label(
@@ -23,13 +23,13 @@ class LanesControlFormElements(aqas.BaseFormElements,CommonFormElements):
         By.XPATH, "//span[@class='p-ml-2'][normalize-space()='2']",
         "Редактировать 2 полосу")
 
-    BUSY_LANE1_ADMIN_LBL = aqas.element_factory.label(
+    BUSY_LANE1_ADMIN_BTN = aqas.element_factory.button(
         By.XPATH, "//tbody/tr[1]//span[contains(text(),'vpn_key_off')]",
-        "Статус занятость полосы в роли администратора")
+        "Сменить статус занятость полосы в роли администратора")
 
-    BUSY_LANE1_INSTRUCTOR_LBL = aqas.element_factory.label(
+    BUSY_LANE1_INSTRUCTOR_BTN = aqas.element_factory.button(
         By.XPATH, "//tbody/tr[1]//span[contains(text(),'vpn_key')]",
-        "Статус занятость полосы в роли инструктора")
+        "Сменить статус занятость полосы в роли инструктора")
 
     LANE1_IS_FREE_LBL = aqas.element_factory.label(
         By.XPATH, "//tbody/tr[1]//div[contains(text(),'не назначен')]",
@@ -80,43 +80,17 @@ class LanesControlFormElements(aqas.BaseFormElements,CommonFormElements):
         "Кнопка занятия полосы в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ, упр. либо приостановлено либо остановлено")
 
 
-class LanesControlForm(aqas.BaseForm, CommonForm):
+class LanesControlForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке страницы управления полосами."""
 
     elements = LanesControlFormElements()
 
     def __init__(self):
-        super().__init__(By.XPATH, "//div[contains(text(),'Управление полосами')]", "Страница управления полосами")
-
-    def go_to_lane1(self):
-        self.elements.LANE1_LBL.wait_and_click()
-
-    def change_busy_lane1_instructor(self):
-        self.elements.BUSY_LANE1_RADIO_INSTRUCTOR_LBL.click()
-
-    def change_busy_lane1_admin(self):
-        self.elements.BUSY_LANE1_RADIO_ADMIN_LBL.click()
-
-    def press_stop(self):
-        self.elements.STOP_LANE1_BTN.click()
+        super().__init__(By.XPATH, "//div[contains(text(),'Управление полосами')]",
+                         "Страница управления полосами")
 
     def is_notification_invisible(self):
         return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
     def is_notifications_invisible(self):
         return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
-
-    def press_play(self):
-        self.elements.PLAY_LANE1_BTN.click()
-
-    def get_chosen_weapon(self):
-        return self.elements.CHOSEN_WEAPON_DRDN.text
-
-    def get_chosen_ammo(self):
-        return self.elements.CHOSEN_AMMO_DRDN.text
-
-    def close_chose_weapon_tab(self):
-        self.elements.CLOSE_CHOSE_WEAPON_BTN.click()
-
-    def confirm_chosen_weapon(self):
-        self.elements.CONFIRM_CHOSEN_WEAPON_BTN.click()

@@ -14,6 +14,7 @@ from utils.enums import UserTypeEnum
 def start_browser():
     aqas.browser.start()
     aqas.browser.navigation.go_to(aqas.config.project_settings.url)
+    aqas.browser.driver.fullscreen_window()
     yield
     aqas.browser.stop()
 
@@ -24,7 +25,6 @@ def get_auth_admin():
 
     with aqas.pre_step("Переход на страницу аутентификации"):
         auth_page = AuthenticationForm()
-        auth_page.open_full_screen()
         assert auth_page.is_wait_for_form_load(), "Страница не загрузилась"
 
     with aqas.pre_step("Переход на страницу управления полосами"):
@@ -45,33 +45,37 @@ def go_lane1(get_auth_admin):
         lanes_control_page.is_notifications_invisible()
 
     with aqas.pre_step("Переход на страницу управления 1 полосой"):
-        lanes_control_page.go_to_lane1()
+        lanes_control_page.elements.LANE1_LBL.wait_and_click()
         lane1_control_page = Lane1ControlForm()
         assert lane1_control_page.is_wait_for_form_load(), "Страница не загрузилась"
 
     with aqas.pre_step("Занять полосу, если она освобождена"):
-        if is_located(lane1_control_page.elements.LANE_IS_FREE):
-            lane1_control_page.change_busy_lane()
+        if is_located(lane1_control_page.elements.LANE_IS_FREE_LBL):
+            lane1_control_page.elements.BUSY_LANE_BTN.click()
 
     with aqas.pre_step("Остановить упражнение, если оно запущено"):
-        if not is_located(lane1_control_page.elements.STOP_DISABLED):
-            lane1_control_page.press_stop()  # остановить
+        if not is_located(lane1_control_page.elements.STOP_DISABLED_LBL):
+            lane1_control_page.elements.STOP_BTN.click()  # остановить
 
     with aqas.pre_step("Подождать, пока не исчезнут Уведомления"):
         lane1_control_page.is_notification_invisible()
 
     yield lane1_control_page
 
+    with aqas.post_step("Подождать, пока не исчезнут Уведомления"):
+        lane1_control_page.is_notifications_invisible()
+
     with aqas.post_step("Остановить упражнение, если оно запущено"):
-        if not is_located(lane1_control_page.elements.STOP_DISABLED):
-            lane1_control_page.press_stop()
+        if not is_located(lane1_control_page.elements.STOP_DISABLED_LBL):
+            lane1_control_page.elements.STOP_BTN.click()
 
     with aqas.post_step("Подождать, пока не исчезнут Уведомления"):
         lane1_control_page.is_notifications_invisible()
 
     with aqas.post_step("Освободить полосу, если она занята"):
-        if is_located(lane1_control_page.elements.LANE_IS_BUSY):
-            lane1_control_page.change_busy_lane()
+        if is_located(lane1_control_page.elements.LANE_IS_BUSY_LBL):
+            lane1_control_page.elements.BUSY_LANE_BTN.state.wait_for_clickable()
+            lane1_control_page.elements.BUSY_LANE_BTN.click()
 
         with aqas.post_step("Подождать, пока не исчезнут Уведомления"):
             lane1_control_page.is_notifications_invisible()
@@ -87,12 +91,12 @@ def set_free_lane_and_stopped_ex(get_auth_admin):
         lanes_control_page.is_notifications_invisible()
 
     with aqas.pre_step("Освободить полосу, если она занята"):
-        if is_located(lanes_control_page.elements.LANE1_IS_BUSY):
-            lanes_control_page.change_busy_lane1_admin()
+        if is_located(lanes_control_page.elements.LANE1_IS_BUSY_LBL):
+            lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
 
     with aqas.pre_step("Остановить упражнение, если оно запущено"):
-        if not is_located(lanes_control_page.elements.STOP_LANE1_DISABLED):
-            lanes_control_page.press_stop()
+        if not is_located(lanes_control_page.elements.STOP_LANE1_DISABLED_LBL):
+            lanes_control_page.elements.STOP_LANE1_BTN.click()
 
     with aqas.pre_step("Подождать, пока не исчезнут Уведомления"):
         lanes_control_page.is_notifications_invisible()
@@ -100,17 +104,17 @@ def set_free_lane_and_stopped_ex(get_auth_admin):
     yield lanes_control_page
 
     with aqas.post_step("Освободить полосу, если она занята"):
-        if is_located(lanes_control_page.elements.LANE1_IS_BUSY):
-            lanes_control_page.change_busy_lane1_admin()
+        if is_located(lanes_control_page.elements.LANE1_IS_BUSY_LBL):
+            lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
 
     with aqas.post_step("Остановить упражнение, если оно запущено"):
-        if not is_located(lanes_control_page.elements.STOP_LANE1_DISABLED):
-            lanes_control_page.press_stop()
+        if not is_located(lanes_control_page.elements.STOP_LANE1_DISABLED_LBL):
+            lanes_control_page.elements.STOP_LANE1_BTN.click()
 
     with aqas.post_step("Подождать, пока не исчезнут Уведомления"):
         lanes_control_page.is_notifications_invisible()
-        assert is_located(lanes_control_page.elements.STOP_LANE1_DISABLED), "Упражнение не останавливается"
-        assert is_located(lanes_control_page.elements.LANE1_IS_FREE), "Страница не освободилась"
+        assert is_located(lanes_control_page.elements.STOP_LANE1_DISABLED_LBL), "Упражнение не останавливается"
+        assert is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL), "Страница не освободилась"
 
 
 @pytest.fixture(scope="function")
@@ -143,5 +147,3 @@ def get_auth_instructor():
         assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
 
     yield lanes_control_page
-
-#(By.TagName("html")).SendKeys(Keys.F11);
