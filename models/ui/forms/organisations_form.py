@@ -1,15 +1,16 @@
 import aqas
 from selenium.webdriver.common.by import By
 
-from models.ui.forms.common_elements import CommonFormElements
+from models.ui.common_elements import CommonElements
 
 
-class OrganisationsFormElements(CommonFormElements):
+class OrganisationsFormElements(CommonElements):
     """Класс, который содержит элементы, используемые при проверке работы с организциями."""
 
     ADD_BTN = aqas.element_factory.button(
-        By.XPATH, "//button[contains(text(),'ДОБАВИТЬ')]",
+        By.XPATH, "div[contains(@class,'section - block__content')]//button",
         "Добавить")
+   # section - block__content
 
     EDIT_BTN = aqas.element_factory.button(
         By.XPATH, "//button[contains(text(),'РЕДАКТИРОВАТЬ')]",
@@ -28,8 +29,16 @@ class OrganisationsFormElements(CommonFormElements):
         "Кнопка сохранить")
 
     CANCEL_BTN = aqas.element_factory.button(
-        By.XPATH, "//button[contains(text(),'ОТМЕНИТЬ')] ",
-        "Отменить создание организации")
+        By.XPATH, "div[contains(@class,'p-dialog-footer')]//button[2]",
+        "Отменить")
+
+    CONFIRM_DELETE_BTN = aqas.element_factory.button(
+        By.XPATH, "div[contains(@class,'p-dialog-footer')]//button[1]",
+        "Подтвердить удаление")
+
+    NEW_ORG_LBL = aqas.element_factory.label(
+        By.XPATH, "//p[contains(text(),'Организация_тест')]",
+        "Поле с только что созданной организацией")
 
 
 class OrganisationsForm(aqas.BaseForm):
@@ -39,8 +48,8 @@ class OrganisationsForm(aqas.BaseForm):
     def __init__(self):
         super().__init__(By.XPATH, ".//div[@class='title'][contains(text(),'Организации')]")
 
-    def is_notification_invisible(self):
-        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+    def wait_for_notification_invisible(self):
+        self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
+    def wait_for_notifications_invisible(self):
+        self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

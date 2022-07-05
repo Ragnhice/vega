@@ -46,6 +46,7 @@ class CommonFormElements(aqas.BaseFormElements):
         By.XPATH, ".//a[@href='/lines/1/shooters']//span",
         "открыть окно выбора стрелков")
 
+lane_status_
     LANE_IS_FREE_LBL = aqas.element_factory.label(
         By.XPATH, "//h2[contains(text(),'свободна')]",
         "Флаг свободной полосы")
@@ -54,6 +55,8 @@ class CommonFormElements(aqas.BaseFormElements):
         By.XPATH, "//h2[contains(text(),'занята')]",
         "Флаг занятой полосы")
 
+
+ex_state_
     PLAY_BTN = aqas.element_factory.button(
         By.XPATH, "//span[contains(text(),'play_arrow')]",
         "Старт упражнения")
@@ -70,25 +73,3 @@ class CommonFormElements(aqas.BaseFormElements):
         By.XPATH, ".//button[contains(text(),'Сохранить ']",
         "Сохранить ")
 
-
-class CommonForm(aqas.BaseForm):
-    """Класс, который содержит методы, используемые в 2+ разных формах."""
-    elements = CommonFormElements()
-
-    def __init__(self):
-        super().__init__(By.XPATH, "//div[contains(@role,'toolbar')]", "Шапка страницы")
-
-    def go_to_menu(self):
-        self.elements.MENU_BTN.click()
-
-    def is_notification_invisible(self):
-        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
-
-    def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
-
-    def go_exercise_menu(self):
-        self.elements.EX_MENU_BTN.click()
-
-    def go_conditions_menu(self):
-        self.elements.CONDITIONS_MENU_BTN.click()

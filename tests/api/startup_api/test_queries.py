@@ -156,7 +156,6 @@ class TestStartupApiQueries:
         screen_sizes = StartupApiAdapter().get_query("screenSizes")
         assert isinstance(screen_sizes[0]["id"], str), "Ошибка тип не равен str"
 
-
     @pytest.mark.skip(reason="no way of currently testing this")
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-359")
     @pytest.mark.jira_issue("https://jira.steor.tech/browse/VEGA2-341")

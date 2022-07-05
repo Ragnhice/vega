@@ -1,10 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
 
-from models.ui.forms.common_elements import CommonFormElements
+from models.ui.common_elements import CommonElements
 
 
-class SideBarFormElements(CommonFormElements):
+class SideBarFormElements(CommonElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
     SETTINGS_BTN = aqas.element_factory.button(
@@ -28,7 +28,7 @@ class SideBarFormElements(CommonFormElements):
         "Статистика")
 
     SHOOTING_MODE_BTN = aqas.element_factory.button(
-        By.XPATH, ".//span[contains(text(),'Настройки')]",
+        By.XPATH, ".//span[contains(text(),'Настройки тира')]",
         "Настройки тира")
 
     CAMERA_SETTINGS_BTN = aqas.element_factory.button(
@@ -55,8 +55,8 @@ class SideBarForm(aqas.BaseForm):
     def __init__(self):
         super().__init__(By.CLASS_NAME, "p-sidebar-header", "Страница бокового меню")
 
-    def is_notification_invisible(self):
-        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+    def wait_for_notification_invisible(self):
+        self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
+    def wait_for_notifications_invisible(self):
+        self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

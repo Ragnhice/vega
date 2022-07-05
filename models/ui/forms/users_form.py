@@ -1,18 +1,18 @@
 import aqas
 from selenium.webdriver.common.by import By
 
-from models.ui.forms.common_elements import CommonFormElements
+from models.ui.common_elements import CommonElements
 
 
-class UsersFormElements(CommonFormElements):
+class UsersFormElements(CommonElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
-    MENU_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//span",
+    MENU_USERS_BTN = aqas.element_factory.button(
+        By.XPATH, "//span[contains(text(),'menu')]",
         "Меню")
 
     ADD_BTN = aqas.element_factory.button(
-        By.XPATH, "//button[contains(text(),'добавить')]",
+        By.XPATH, "//div[contains(@class, 'p-grid p-mt-4')]//button",
         "Добавить")
 
     DELETE_BTN = aqas.element_factory.button(
@@ -24,7 +24,7 @@ class UsersFormElements(CommonFormElements):
         "Кнопка удаления в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
     SAVE_BTN = aqas.element_factory.button(
-        By.XPATH, "//button[contains(text(),'сохранить')]",
+        By.XPATH, "//button[contains(@class,'p-mr-4')][1]",
         "Кнопка сохранить")
 
     CHECKBOX_1_BTN = aqas.element_factory.button(
@@ -59,6 +59,10 @@ class UsersFormElements(CommonFormElements):
         By.XPATH, "//button[contains(text(),'ОТМЕНИТЬ')] ",
         "Отменить удаление пользователя")
 
+    NEW_USER_LBL = aqas.element_factory.button(
+        By.XPATH, "//span[contains(text(),'Фамилиятест')]",
+        "Поле только что созданного пользователя")
+
 
 class UsersForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
@@ -67,8 +71,8 @@ class UsersForm(aqas.BaseForm):
     def __init__(self):
         super().__init__(By.XPATH, ".//div[@class='title'][contains(text(),' Пользователи')]")
 
-    def is_notification_invisible(self):
-        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+    def wait_for_notification_invisible(self):
+        self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
+    def wait_for_notifications_invisible(self):
+        self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

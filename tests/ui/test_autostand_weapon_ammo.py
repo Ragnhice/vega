@@ -5,7 +5,7 @@ import pytest
 from models.ui.forms.conditions_menu_form import ConditionsMenuForm
 from models.ui.forms.shooters_chose_form import ShootersChoseForm
 from utils.constants import UI
-from utils.element_utils import *
+from utils.element_utils import is_located
 
 
 @allure.parent_suite("ui")
@@ -68,7 +68,7 @@ class TestAutostandWeapon:
         lane1_control_page = go_lane1
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lane1_control_page.is_notifications_invisible()
+            lane1_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Переход на страницу выбора стрелков на полосу"):
             lane1_control_page.elements.SHOOTERS_MENU_BTN.click()

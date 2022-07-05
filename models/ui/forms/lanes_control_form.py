@@ -1,10 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
 
-from models.ui.forms.common_elements import CommonFormElements
+from models.ui.common_elements import CommonElements, StateLaneElements
 
 
-class LanesControlFormElements(CommonFormElements):
+class LanesControlFormElements(CommonElements, StateLaneElements):
     """Класс, который содержит элементы, используемые при проверке страницы управления полосами."""
 
     LANE1_LBL = aqas.element_factory.label(
@@ -89,8 +89,8 @@ class LanesControlForm(aqas.BaseForm):
         super().__init__(By.XPATH, "//div[contains(text(),'Управление полосами')]",
                          "Страница управления полосами")
 
-    def is_notification_invisible(self):
-        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+    def wait_for_notification_invisible(self):
+        self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
+    def wait_for_notifications_invisible(self):
+        self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

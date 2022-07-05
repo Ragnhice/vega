@@ -1,10 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
 
-from models.ui.forms.common_elements import CommonFormElements
+from models.ui.common_elements import CommonElements, SettingsElements, StateLaneElements
 
 
-class ExerciseMenuFormElements(CommonFormElements):
+class ExerciseMenuFormElements(CommonElements, SettingsElements, StateLaneElements):
     """
        Класс, который содержит элементы, используемые при проверке страницы установки упражнения
     """
@@ -29,6 +29,7 @@ class ExerciseMenuFormElements(CommonFormElements):
         By.XPATH, "//div[contains(@class, 'p-col-2')]//span",
         "Сменить занятость полосы")
 
+
 class ExerciseMenuForm(aqas.BaseForm):
     """
           Класс, который содержит методы, используемые при проверке страницы установки упражнения
@@ -39,8 +40,8 @@ class ExerciseMenuForm(aqas.BaseForm):
         super().__init__(By.CLASS_NAME, ".//div[contains(text(),'Выбор упражнения на полосу')]",
                          "Страница Выбор упражнения на полосу")
 
-    def is_notification_invisible(self):
-        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+    def wait_for_notification_invisible(self):
+        self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
+    def wait_for_notifications_invisible(self):
+        self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

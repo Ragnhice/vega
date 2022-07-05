@@ -1,10 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
 
-from models.ui.forms.common_elements import CommonFormElements
+from models.ui.common_elements import CommonElements, SettingsElements, StateLaneElements
 
 
-class Lane1ControlFormElements(CommonFormElements):
+class Lane1ControlFormElements(CommonElements, SettingsElements, StateLaneElements):
     """Класс, который содержит элементы, используемые при проверке управления первой полосой."""
 
     CHOSEN_WEAPON_DRDN = aqas.element_factory.dropdown(
@@ -52,8 +52,8 @@ class Lane1ControlForm(aqas.BaseForm):
         super().__init__(By.XPATH, "//div[contains(text(),'Управление полосой')]",
                          "Страница управления первой полосой")
 
-    def is_notification_invisible(self):
-        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+    def wait_for_notification_invisible(self):
+        self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
+    def wait_for_notifications_invisible(self):
+        self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()

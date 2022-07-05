@@ -1,10 +1,10 @@
 import aqas
 from selenium.webdriver.common.by import By
 
-from models.ui.forms.common_elements import CommonFormElements
+from models.ui.common_elements import CommonElements, SettingsElements, StateLaneElements
 
 
-class ConditionsMenuFormElements(CommonFormElements):
+class ConditionsMenuFormElements(CommonElements, SettingsElements, StateLaneElements):
     """Класс, который содержит элементы, используемые при проверке страницы с условиями."""
 
     BUSY_LANE_BTN = aqas.element_factory.button(
@@ -115,11 +115,11 @@ class ConditionsMenuForm(aqas.BaseForm):
     def go_to_menu(self):
         self.elements.MENU_BTN.click()
 
-    def is_notification_invisible(self):
-        return self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
+    def wait_for_notification_invisible(self):
+        self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
-    def is_notifications_invisible(self):
-        return self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
+    def wait_for_notifications_invisible(self):
+        self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
 
     def go_exercise_menu(self):
         self.elements.EX_MENU_BTN.click()
