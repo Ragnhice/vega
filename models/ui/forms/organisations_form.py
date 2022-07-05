@@ -8,32 +8,31 @@ class OrganisationsFormElements(CommonElements):
     """Класс, который содержит элементы, используемые при проверке работы с организциями."""
 
     ADD_BTN = aqas.element_factory.button(
-        By.XPATH, "div[contains(@class,'section - block__content')]//button",
+        By.XPATH, "//div[contains( @ class, 'section-block__content')]// button[contains(@class,'custom_btn')]",
         "Добавить")
-   # section - block__content
 
     EDIT_BTN = aqas.element_factory.button(
-        By.XPATH, "//button[contains(text(),'РЕДАКТИРОВАТЬ')]",
+        By.XPATH, "//div[contains( @ class, 'section-block__content')]// button[contains(@class,'custom_btn')][2]",
         "Редактировать")
 
     DELETE_BTN = aqas.element_factory.button(
-        By.XPATH, "//button[contains(text(),'УДАЛИТЬ')]",
+        By.XPATH, "//div[contains( @ class, 'section-block__content')]// button[contains(@class,'custom_btn')][3]",
         "Удалить")
 
     INPUT_NAME_TBX = aqas.element_factory.text_box(
-        By.XPATH, "//input[contains(@class, 'p-inputtext')]",
+        By.XPATH, "//span[contains(@class,'p-treenode-label')]//input[contains(@class, 'p-inputtext')]",
         "Поле ввода названия новой организации")
 
     SAVE_BTN = aqas.element_factory.button(
-        By.XPATH, "//button[contains(text(),'СОХРАНИТЬ')]",
+        By.XPATH, "//div[contains( @ class, 'section-block__content')]// button[contains(@class,'custom_btn')]",
         "Кнопка сохранить")
 
     CANCEL_BTN = aqas.element_factory.button(
-        By.XPATH, "div[contains(@class,'p-dialog-footer')]//button[2]",
+        By.XPATH, "//div[contains(@class,'p-dialog-footer')]//button[contains(@class,'custom_btn')][2]",
         "Отменить")
 
     CONFIRM_DELETE_BTN = aqas.element_factory.button(
-        By.XPATH, "div[contains(@class,'p-dialog-footer')]//button[1]",
+        By.XPATH, "//div[contains(@class,'p-dialog-footer')]//button[contains(@class,'custom_btn')]",
         "Подтвердить удаление")
 
     NEW_ORG_LBL = aqas.element_factory.label(

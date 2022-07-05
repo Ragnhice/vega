@@ -14,7 +14,6 @@ from utils.enums import UserTypeEnum
 def start_browser():
     aqas.browser.start()
     aqas.browser.navigation.go_to(aqas.config.project_settings.url)
-    aqas.browser.driver.fullscreen_window()
     yield
     aqas.browser.stop()
 

@@ -39,8 +39,8 @@ class TestAuthRoles:
             lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
-            sidebar_page = SideBarForm()
             lanes_control_page.elements.MENU_BTN.click()
+            sidebar_page = SideBarForm()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Поиск доступных сервисов для роли администратора"):
@@ -87,8 +87,8 @@ class TestAuthRoles:
                 lanes_control_page.elements.PAUSE_LANE1_DISABLED_LBL), "Стрелку доступен приостановка упражнения"
 
         with aqas.step("Открыть боковое меню"):
-            sidebar_page = SideBarForm()
             lanes_control_page.elements.MENU_BTN.click()
+            sidebar_page = SideBarForm()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Проверить доступ к настройкам"):
@@ -112,10 +112,9 @@ class TestAuthRoles:
 
         with aqas.step("Закрыть боковое меню"):
             sidebar_page.elements.CLOSE_BTN.click()
-            lanes_control_page = LanesControlForm()
 
     @allure.title("auth_instructor_view_buttons")
-    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-333")
+    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-359")
     def test_auth_instructor(self, get_auth_instructor):
         lanes_control_page = get_auth_instructor
 
@@ -134,8 +133,8 @@ class TestAuthRoles:
                 lanes_control_page.elements.PLAY_LANE1_DISABLED_LBL), "Инструктору не доступен запуск упражнения"
 
         with aqas.step("Открыть боковое меню"):
-            sidebar_page = SideBarForm()
             lanes_control_page.elements.MENU_BTN.click()
+            sidebar_page = SideBarForm()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Проверить доступ к работе с базой пользователей"):
@@ -162,7 +161,6 @@ class TestAuthRoles:
 
         with aqas.step("Закрыть боковое меню"):
             sidebar_page.elements.CLOSE_BTN.click()
-            lanes_control_page = LanesControlForm()
 
         with aqas.step("Освободить полосу"):
             if is_located(lanes_control_page.elements.LANE1_IS_BUSY_LBL):
@@ -172,7 +170,7 @@ class TestAuthRoles:
             lanes_control_page.wait_for_notifications_invisible()
 
     @allure.title("auth_instructor_functional")
-    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-334")
+    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-359")
     def test_auth_instructor_functional(self, get_auth_instructor):
         lanes_control_page = get_auth_instructor
 
@@ -180,8 +178,8 @@ class TestAuthRoles:
             lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
-            sidebar_page = SideBarForm()
             lanes_control_page.elements.MENU_BTN.click()
+            sidebar_page = SideBarForm()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Открыть базу пользователей"):
@@ -206,8 +204,7 @@ class TestAuthRoles:
             new_user_page.elements.SAVE_BTN.click()
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
-            users_page = UsersForm()
+            users_page.wait_for_notifications_invisible()
 
         with aqas.step("Изменить только что созданного стрелка"):
             users_page.elements.NEW_USER_LBL.click()
@@ -215,20 +212,18 @@ class TestAuthRoles:
             users_page.elements.SAVE_BTN.click()
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
+            users_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
-            sidebar_page = SideBarForm()
-            lanes_control_page.elements.MENU_BTN.click()
+            users_page.elements.MENU_USERS_BTN.click()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Открыть окно управлени полосами"):
             sidebar_page.elements.LANES_CONTROLLING_BTN.click()
-            lanes_control_page = LanesControlForm()
             assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
 
     @allure.title("auth_admin_functional")
-    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-335")
+    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-357")
     def test_auth_admin_functional(self, get_auth_admin):
         lanes_control_page = get_auth_admin
 
@@ -243,86 +238,83 @@ class TestAuthRoles:
             lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
-            sidebar_page = SideBarForm()
             lanes_control_page.elements.MENU_BTN.click()
+            sidebar_page = SideBarForm()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
-#       with aqas.step("Открыть базу пользователей"):
-#           users_page = UsersForm()
-        #   sidebar_page.elements.USERS_BTN.click()
-#           assert users_page.is_wait_for_form_load(), "Страница не загрузилась"
-#
-#       with aqas.step("Перейти на страницу добавления пользователя"):
-#           users_page.elements.ADD_BTN.click()
-#           new_user_page = NewUserForm()
-#           assert new_user_page.is_wait_for_form_load(), "Страница не загрузилась"
-#
-#       with aqas.step("Ввести данные нового пользователя"):
-#           new_user_page.elements.LASTNAME_TBX.send_keys('Фамилия_тест')
-#           new_user_page.elements.LOGIN_TBX.send_keys('Логин_тест')
-#           new_user_page.elements.PASSWORD_TBX.send_keys('Пароль_тест')
-#           new_user_page.elements.FIRSTNAME_TBX.send_keys('Имя_тест')
-#           new_user_page.elements.MIDDLENAME_TBX.send_keys('Отчество_тест')
-#           new_user_page.elements.SAVE_BTN.click()
-#
-#       with aqas.step("Подождать, пока не исчезнут Уведомления"):
-#           lanes_control_page.wait_for_notifications_invisible()
-#           users_page = UsersForm()
-#
-#       with aqas.step("Проверить, что есть кнопка удаления в некликабельном состоянии"):
-#           assert (is_located(users_page.elements.DELETE_DISABLED_LBL),
-#                   "Администратор не видит кнопки удаления")
-#
-#       with aqas.step("Изменить только что созданного стрелка"):
-#           users_page.elements.NEW_USER_LBL.click()
-#           users_page.elements.PASSWORD_TBX.send_keys('Пароль_тест')
-#           users_page.elements.SAVE_BTN.click()
-#
-#       with aqas.step("Подождать, пока не исчезнут Уведомления"):
-#           users_page.wait_for_notifications_invisible()
-#
-#       with aqas.step("Открыть боковое меню"):
-#           sidebar_page = SideBarForm()
-#           users_page.elements.MENU_USERS_BTN.wait_and_click()
-#           assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
-#
-#       with aqas.step("Открыть окно установки режима работы тира"):
-#           sidebar_page.elements.SETTINGS_BTN.click()
-#           shooting_settings_page = ShootingSettingsForm()
-#           sidebar_page.elements.SHOOTING_MODE_BTN.click()
-#           assert shooting_settings_page.is_wait_for_form_load(), "Страница не загрузилась"
-#
-#       with aqas.step("Сменить режим работы тира на узкий экран"):
-#           shooting_settings_page.elements.TIDE_BTN.click()
-#           shooting_settings_page.elements.APPLY_BTN.click()
-#           shooting_settings_page.elements.CONFIRM_BTN.click()
-#
-#       with aqas.step("Сменить режим работы тира на полный экран"):
-#           shooting_settings_page.elements.FULL_BTN.click()
-#           shooting_settings_page.elements.APPLY_BTN.click()
-#           shooting_settings_page.elements.CONFIRM_BTN_2.wait_and_click()
-#
-#       with aqas.step("Подождать, пока не исчезнут Уведомления"):
-#           shooting_settings_page.wait_for_notifications_invisible()
-#
-#       with aqas.step("Сменить режим работы тира на широкий экран"):
-#           shooting_settings_page.elements.WIDE_BTN.click()
-#           shooting_settings_page.elements.AMOUNT_LANE_BTN.click()
-#           shooting_settings_page.elements.TWO_LANES_LBL.click()
-#           shooting_settings_page.elements.APPLY_BTN.wait_and_click()
-#           shooting_settings_page.elements.CONFIRM_BTN_3.click()
-#
-#       with aqas.step("Подождать, пока не исчезнут Уведомления"):
-#           shooting_settings_page.wait_for_notifications_invisible()
-#
-#       with aqas.step("Открыть боковое меню"):
-#           sidebar_page = SideBarForm()
-#           shooting_settings_page.elements.MENU_BTN.click()
-#           assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
+        with aqas.step("Открыть базу пользователей"):
+            sidebar_page.elements.USERS_BTN.click()
+            users_page = UsersForm()
+            assert users_page.is_wait_for_form_load(), "Страница не загрузилась"
+
+        with aqas.step("Перейти на страницу добавления пользователя"):
+            users_page.elements.ADD_BTN.click()
+            new_user_page = NewUserForm()
+            assert new_user_page.is_wait_for_form_load(), "Страница не загрузилась"
+
+        with aqas.step("Ввести данные нового пользователя"):
+            new_user_page.elements.LASTNAME_TBX.send_keys('Фамилия_тест')
+            new_user_page.elements.LOGIN_TBX.send_keys('Логин_тест')
+            new_user_page.elements.PASSWORD_TBX.send_keys('Пароль_тест')
+            new_user_page.elements.FIRSTNAME_TBX.send_keys('Имя_тест')
+            new_user_page.elements.MIDDLENAME_TBX.send_keys('Отчество_тест')
+            new_user_page.elements.SAVE_BTN.click()
+
+        with aqas.step("Подождать, пока не исчезнут Уведомления"):
+            users_page.wait_for_notifications_invisible()
+
+        with aqas.step("Проверить, что есть кнопка удаления в некликабельном состоянии"):
+            assert (is_located(users_page.elements.DELETE_DISABLED_LBL),
+                    "Администратор не видит кнопки удаления")
+
+        with aqas.step("Изменить только что созданного стрелка"):
+            users_page.elements.NEW_USER_LBL.click()
+            users_page.elements.PASSWORD_TBX.send_keys('Пароль_тест')
+            users_page.elements.SAVE_BTN.click()
+
+        with aqas.step("Подождать, пока не исчезнут Уведомления"):
+            users_page.wait_for_notifications_invisible()
+
+        with aqas.step("Открыть боковое меню"):
+            users_page.elements.MENU_USERS_BTN.wait_and_click()
+            assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
+
+        with aqas.step("Открыть окно установки режима работы тира"):
+            sidebar_page.elements.SETTINGS_BTN.click()
+            sidebar_page.elements.SHOOTING_MODE_BTN.click()
+            shooting_settings_page = ShootingSettingsForm()
+            assert shooting_settings_page.is_wait_for_form_load(), "Страница не загрузилась"
+
+        with aqas.step("Сменить режим работы тира на узкий экран"):
+            shooting_settings_page.elements.TIDE_BTN.click()
+            shooting_settings_page.elements.APPLY_BTN.click()
+            shooting_settings_page.elements.CONFIRM_BTN.click()
+
+        with aqas.step("Сменить режим работы тира на полный экран"):
+            shooting_settings_page.elements.FULL_BTN.click()
+            shooting_settings_page.elements.APPLY_BTN.click()
+            shooting_settings_page.elements.CONFIRM_BTN_2.wait_and_click()
+
+        with aqas.step("Подождать, пока не исчезнут Уведомления"):
+            shooting_settings_page.wait_for_notifications_invisible()
+
+        with aqas.step("Сменить режим работы тира на широкий экран"):
+            shooting_settings_page.elements.WIDE_BTN.click()
+            shooting_settings_page.elements.AMOUNT_LANE_BTN.click()
+            shooting_settings_page.elements.TWO_LANES_LBL.click()
+            shooting_settings_page.elements.APPLY_BTN.wait_and_click()
+            shooting_settings_page.elements.CONFIRM_BTN_3.click()
+
+        with aqas.step("Подождать, пока не исчезнут Уведомления"):
+            shooting_settings_page.wait_for_notifications_invisible()
+
+        with aqas.step("Открыть боковое меню"):
+            shooting_settings_page.elements.MENU_BTN.click()
+            assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Открыть окно со статистикой"):
-            statistic_page = StatisticForm()
             sidebar_page.elements.STATISTIC_BTN.click()
+            statistic_page = StatisticForm()
             assert statistic_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Найти кнопку сформировать отчет"):
@@ -330,13 +322,12 @@ class TestAuthRoles:
             assert is_located(statistic_page.elements.MAKE_REPORT_BTN), "Администратору не доступно создание отчета"
 
         with aqas.step("Открыть боковое меню"):
-            sidebar_page = SideBarForm()
             statistic_page.elements.MENU_BTN.click()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Открыть окно с Организациями"):
-            organisations_page = OrganisationsForm()
             sidebar_page.elements.ORGANISATIONS_BTN.click()
+            organisations_page = OrganisationsForm()
             assert organisations_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Создать организацию"):
@@ -353,15 +344,9 @@ class TestAuthRoles:
             organisations_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
-            sidebar_page = SideBarForm()
             organisations_page.elements.MENU_BTN.click()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Открыть окно управлени полосами"):
             sidebar_page.elements.LANES_CONTROLLING_BTN.click()
-            lanes_control_page = LanesControlForm()
             assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
-
-
-
-

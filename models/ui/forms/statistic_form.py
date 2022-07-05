@@ -8,7 +8,7 @@ class StatisticFormElements(CommonElements):
     """Класс, который содержит элементы, используемые при проверке страницы Статистика."""
 
     MENU_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//span",
+        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//button",
         "Меню")
 
     USER_1_IN_LIST_BTN = aqas.element_factory.button(
@@ -16,7 +16,8 @@ class StatisticFormElements(CommonElements):
         "Выбрать первого пользователя в списке")
 
     EX_1_IN_LIST_BTN = aqas.element_factory.button(
-        By.XPATH, "tbody[contains( @class = 'p-datatable-tbody')][2]//tr[contains( @class = 'p-selectable-row')][1]//td",
+        By.XPATH,
+        "tbody[contains( @class = 'p-datatable-tbody')][2]//tr[contains( @class = 'p-selectable-row')][1]//td",
         "Выбрать первое упражнение в списке")
 
     MAKE_REPORT_BTN = aqas.element_factory.button(

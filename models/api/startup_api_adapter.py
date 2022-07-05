@@ -9,9 +9,9 @@ from faker import Faker
 from utils.constants import API
 
 
-class StartupApiAdapter(aqas.GraphQLDataAdapter):
+class GatewayApiAdapter(aqas.GraphQLDataAdapter):
     def __init__(self):
-        super().__init__("StartupApi")
+        super().__init__("GatewayApi")
         self.recursion_list = []
 
     # region Mutation's

@@ -8,7 +8,7 @@ class UsersFormElements(CommonElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
     MENU_USERS_BTN = aqas.element_factory.button(
-        By.XPATH, "//span[contains(text(),'menu')]",
+        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//button",
         "Меню")
 
     ADD_BTN = aqas.element_factory.button(
@@ -36,7 +36,7 @@ class UsersFormElements(CommonElements):
         "Поле ввода роста стрелка")
 
     PASSWORD_TBX = aqas.element_factory.text_box(
-        By.XPATH, ".//input[@id='user-password']",
+        By.XPATH, ".//input[@id='crus-password']",
         "Поле ввода пароля")
 
     CHECKBOX_2_BTN = aqas.element_factory.button(
@@ -60,7 +60,7 @@ class UsersFormElements(CommonElements):
         "Отменить удаление пользователя")
 
     NEW_USER_LBL = aqas.element_factory.button(
-        By.XPATH, "//span[contains(text(),'Фамилиятест')]",
+        By.XPATH, "//span[contains(text(),'Фамилия_тест')]",
         "Поле только что созданного пользователя")
 
 

@@ -135,5 +135,3 @@ class TestBusyLane:
 
         with aqas.step("Вернуться на страницу Управление полосой 1"):
             conditions_menu_page.elements.BACK_BTN.click()
-
-

@@ -1,7 +1,7 @@
 {
   "ui": {
     "projectSettings": {
-      "url": "http://10.10.72.214",
+      "url": "http://10.10.72.214/",
       "login": "",
       "password": ""
     },
@@ -11,7 +11,7 @@
         "password": "5555"
       },
       "instructor": {
-        "login": "instuctor",
+        "login": "instructor",
         "password": "2222"
       },
       "shooter": {
@@ -27,7 +27,7 @@
         "width": 1280,
         "height": 1000
       },
-      "isHighlightElement": true,
+      "isHighlightElement": false,
       "isPrivate": false,
       "chrome": {
         "webDriverVersion": "latest",
@@ -52,7 +52,10 @@
           "--disable-dev-shm-usage",
           "--verbose",
           "--ignore-certificate-errors",
-          "--disable-extensions"
+          "--disable-extensions",
+          "disable-infobars",
+          "--disable-notifications",
+          "--disable-gpu"
         ]
       },
       "firefox": {
@@ -83,12 +86,11 @@
       }
     }
   },
-  "api":{
+  "api": {
     "url": "http://10.10.72.214",
     "services": {
-      "StartupApi": {
-        "port": 5050,
-        "service_name": null
+      "GatewayApi": {
+        "port": 5050
       }
     }
   },
@@ -98,10 +100,10 @@
     "timeoutScript": 10,
     "timeoutPageLoad": 15,
     "timeoutPollingInterval": 0.1,
-    "timeoutApi": 5
+    "timeoutApi": 10
   },
   "logger": {
-    "level": "info",
+    "level": "debug",
     "language": "en",
     "logPageSource": true,
     "encoding": "utf-8",
@@ -109,15 +111,33 @@
     "format": "[%(asctime)s: %(levelname)s] %(message)s",
     "lineLength": 100
   },
+  "imageComparator": {
+    "height": 600,
+    "percentThreshold": 0.0,
+    "extension": ".png",
+    "maxPathLength": 255
+  },
   "jira": {
     "url": "https://jira.steor.tech",
     "login": "",
     "password": "",
     "zephyr": {
-      "projectKey": "",
+      "projectKey": "SND2",
       "release": "latest",
       "cycle": "new",
       "apiVersion": "latest"
     }
+  },
+  "mattermost": {
+    "host": "mm.steor.ru",
+    "token": "",
+    "channelId": ""
+  },
+  "jenkins": {
+    "url": "http://10.10.4.216",
+    "port": 8080,
+    "buildUrl": "",
+    "login": "",
+    "password": ""
   }
 }
