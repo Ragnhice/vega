@@ -78,33 +78,3 @@ class TestsStartupApiUser:
     def test_remove_user(self):
         result = ApiGatewayAdapter().remove_users_by_id([TestsStartupApiUser.USER_ID])
         assert result == 1, "Пользователи не удалены"
-
-
-
-
-    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-362")
-    @allure.title("create_weapon")
-    def test_create_weapon_1(self):
-        weapon_input = {
-            "createWeapon": {
-                "weaponInput":
-                    {
-                        "id": "{{$randomInt}}",
-                        "hwid": "{{$randomInt}}",
-                        "regDate": "{{$isoTimestamp}}",
-                        "shotsCount": "{{shotsCount_CreateWeapon_1}}",
-                        "typeId": "{{typeId_CreateWeapon_1}}",
-                        "mode": "{{mode_CreateWeapon_1}}"
-
-                        }
-                }
-            }
-        weapon = ApiGatewayAdapter().mutation("createWeapon", weapon_input)
-        assert isinstance(weapon["id"], str), "Пользователь не удалён"
-        TestsStartupApiUser.WEAPON_ID = weapon["id"]
-
-    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-362")
-    @allure.title("create_weapon")
-    def test_create_weapon_2(self):
-        weapon = ApiGatewayAdapter().create_weapon()
-        assert TestsStartupApiUser.USER_ID in weapon["id"], "Пользователь не удалён"

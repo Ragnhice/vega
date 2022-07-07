@@ -114,7 +114,7 @@ class TestAuthRoles:
             sidebar_page.elements.CLOSE_BTN.click()
 
     @allure.title("auth_instructor_view_buttons")
-    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-359")
+    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-333")
     def test_auth_instructor(self, get_auth_instructor):
         lanes_control_page = get_auth_instructor
 

@@ -1,22 +1,22 @@
 {
   "ui": {
     "projectSettings": {
-      "url": "http://10.10.72.214/",
+      "url": "http://10.10.127.22:3002/",
       "login": "",
       "password": ""
     },
     "credentials": {
       "administrator": {
-        "login": "admin",
-        "password": "5555"
+        "login": "",
+        "password": ""
       },
       "instructor": {
-        "login": "instructor",
-        "password": "2222"
+        "login": "",
+        "password": ""
       },
       "shooter": {
-        "login": "shooter",
-        "password": "1111"
+        "login": "",
+        "password": ""
       }
     },
     "browserSettings": {
@@ -44,7 +44,9 @@
             "download.prompt_for_download": false,
             "safebrowsing.enabled": true,
             "intl.accept_languages": "en",
-            "profile.default_content_settings.popups": 0
+            "profile.default_content_settings.popups": 0,
+            "credentials_enable_service": false,
+            "profile.password_manager_enabled": false
           }
         },
         "startArguments": [
@@ -89,7 +91,7 @@
   "api": {
     "url": "http://10.10.72.214",
     "services": {
-      "GatewayApi": {
+      "ApiGateway": {
         "port": 5050
       }
     }

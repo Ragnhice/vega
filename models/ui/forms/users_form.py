@@ -36,7 +36,7 @@ class UsersFormElements(CommonElements):
         "Поле ввода роста стрелка")
 
     PASSWORD_TBX = aqas.element_factory.text_box(
-        By.XPATH, ".//input[@id='crus-password']",
+        By.XPATH, ".//input[@id='user-password']",
         "Поле ввода пароля")
 
     CHECKBOX_2_BTN = aqas.element_factory.button(
