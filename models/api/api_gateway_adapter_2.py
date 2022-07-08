@@ -1,5 +1,3 @@
-import re
-from collections import Counter
 from random import choice
 from typing import Union
 
@@ -9,12 +7,12 @@ from faker import Faker
 from utils.constants import API
 
 
-class GatewayApiAdapter(aqas.GraphQLDataAdapter):
+class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
     def __init__(self):
-        super().__init__("GatewayApi")
+        super().__init__("ApiGateway")
         self.recursion_list = []
 
-    # region Mutation's
+
     def create_user(self,
                     login: str = "admin",
                     password: str = "0000",
@@ -64,7 +62,7 @@ class GatewayApiAdapter(aqas.GraphQLDataAdapter):
                         height: {Faker().random_int(1, 100)},
                         birthCity: "{Faker().city()}",
                         birthDate: "05.11.1991",
-                        appointment: "String", 
+                        appointment: "String",
                         personalId: "String",
                         title: "String",
                         archived: true,
@@ -94,9 +92,6 @@ class GatewayApiAdapter(aqas.GraphQLDataAdapter):
         response = self._call_service_method(mutation, expect_errors=expect_errors)
         return response.get("updateUser")
 
-    # endregion
-
-    # region Queries
     def get_version(self, expect_errors: Union[bool, type(None)] = False):
         """Получает текущую версию сервиса."""
         response = self._call_service_method(
@@ -164,113 +159,61 @@ class GatewayApiAdapter(aqas.GraphQLDataAdapter):
                  .generate())
         return self._call_service_method(query, expect_errors=expect_errors).get("objects")
 
-    # endregion
+    def create_weapon(self, expect_errors: Union[bool, type(None)] = False):
+        """Создает пользователя."""
 
-    # region GraphQLFeature
-    def get_graphql(self, expect_errors: bool = False):
-        """
-        Получение данных из GraphQL
+        mutation = f"""
+            mutation CreateWeapon_1
+($weaponInput: CreateWeaponInput)
+{{
+    createWeapon(weaponInput: {{"weaponInput":
+{{
+"id": 123,
+"hwid": 123 ,
+"regDate": "{{$isoTimestamp}}",
+"shotsCount": {{shotsCount_CreateWeapon_1}},
+"typeId": {{typeId_CreateWeapon_1}},
+"mode": "{{mode_CreateWeapon_1}}"
 
-        :param expect_errors: Флаг ожидания ошибки выполнения запроса
-        """
-        query = """
-            query IntrospectionQuery { __schema { types { kind name enumValues { name } fields { name description
-            type { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType {
-              kind name ofType { kind name ofType { kind name } } } } } } } } } } } }
-        """
-        return self._call_service_method(query, expect_errors=expect_errors)["__schema"]["types"]
+}}
+}}){{
+        id
+        hwid
+        regDate
+        shotsCount
+        mode
+        magazines
+        ammoType{{
+            id
+            name
+            localizationName
+            description
 
-    def get_of_type(self, field: dict):
+        }}
+    }}
+}}
         """
-        Рекурсивная обработка поля ofType
+        response = self._call_service_method(mutation, expect_errors=expect_errors)
+        return response.get("createWeapon")
 
-        :param field: Обрабатываемое поле
+    def remove_users_by_id(self, user_ids: list, expect_errors: Union[bool, type(None)] = False):
+        """Удаляет пользователей по id.
+        :param: user_ids - идентификаторы пользователей
         """
-        if field.get("type"):
-            field = field["type"]
-        if field.get("ofType"):
-            return self.get_of_type(field.get("ofType"))
-        return field
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("removeUsersById", input={"userIds": user_ids})
+                 .generate())
+        return self._call_service_method(query, expect_errors=expect_errors).get("removeUsersById")
 
-    def get_all_queries(self, expect_errors: bool = False):
-        """
-        Получение списка query
-
-        :param expect_errors: Флаг ожидания ошибки выполнения запроса
-        """
-        query = """
-        query { __schema { queryType { fields { name type { name kind ofType { kind name ofType { kind name ofType {
-               kind name  } } } fields { name type { name kind ofType { kind name ofType { kind name ofType {
-                    kind name ofType { kind name } } } } } } }
-                    args { name type { name kind ofType { kind name } } } } } } }
-        """
-        return self._call_service_method(query, expect_errors=expect_errors)["__schema"]["queryType"]["fields"]
-
-    def process_field(self, field: dict,
-                      objects: list,
-                      expected_fields: list = None,
-                      arguments: dict = None):
-        # flake8: noqa: CFQ004
-        """
-        Метод обработки полей
-
-        :param field: Обрабатываемое поле
-        :param objects: Объекты
-        :param expected_fields: Список полей для обработки
-        :param arguments: Параметры полей
-        """
-        if expected_fields is None:
-            expected_fields = []
-        if arguments is None:
-            arguments = {}
-
-        query_name = field["name"]
-        if field.get("kind") is None:
-            field = self.get_of_type(field)
-        if field.get("kind") == "OBJECT":
-            self.recursion_list.append(field["name"])
-            counter = Counter(self.recursion_list)
-            if counter[field["name"]] >= 3:
-                return ""
-            obj_fields = list(filter(lambda x: x["name"] == field["name"], objects))[0]["fields"]
-            if obj_fields:
-                query_fields = [self.process_field(obj, objects, expected_fields, arguments) for obj in obj_fields]
-                return (self.query_builder()
-                        .query(query_name, input=arguments.get(query_name, {}))
-                        .fields(query_fields)
-                        .generate())
-            return self.query_builder().query(query_name, input=arguments.get(query_name, {})).generate()
-        return query_name
-
-    def get_query(self, query_name: str, arguments: dict = None, expect_errors: bool = False):
-        """
-        Отправка запроса Query
-
-        :param query_name: Название Query
-        :param arguments: Параметры полей
-        :param expect_errors: Флаг ожидания ошибки выполнения запроса
-        """
-        # pylint: disable=W0703
-        if arguments is None:
-            arguments = {}
-
-        objects = self.get_graphql()
-        try:
-            find_query = list(filter(lambda x: x["name"] == query_name, self.get_all_queries()))[0]
-        except IndexError as exc:
-            raise IndexError(f"{query_name} not found") from exc
-        if arguments:
-            arguments[find_query["type"]["name"]] = arguments.pop(query_name)
-            for keys, values in arguments.items():
-                for key, value in values.items():
-                    arguments[keys][key] = self.convert_parameter(value)
-        fields = self.process_field(self.get_of_type(find_query), objects=objects, arguments=arguments)
-        name = find_query["type"]["name"] or find_query["type"]["ofType"]["name"]
-        query = re.sub(name, query_name, self.query_builder().fields([fields]).generate(), 1)
-        self.recursion_list.clear()
-        try:
-            return self._call_service_method(query, expect_errors=expect_errors).get(query_name)
-        except Exception as exc:
-            aqas.logger.error(f"ERROR: {query_name} query - {exc}")
-            raise Exception from exc
-    # endregion
+    def environment_restrictions(self, expect_errors: Union[bool, type(None)] = False):
+        response = self._call_service_method(
+            """
+                query {
+                    environmentRestrictions {
+                        key
+                        value
+                    }
+                }
+            """, expect_errors=expect_errors)
+        return response
