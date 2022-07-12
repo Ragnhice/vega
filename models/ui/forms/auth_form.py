@@ -18,6 +18,7 @@ class AuthenticationFormElements(aqas.BaseFormElements):
 
 class AuthenticationForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые на странице аутентификации."""
+
     elements = AuthenticationFormElements()
 
     def __init__(self):

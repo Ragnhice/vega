@@ -5,17 +5,11 @@ from models.ui.common_elements import CommonElements, SettingsElements, StateLan
 
 
 class ExerciseMenuFormElements(CommonElements, SettingsElements, StateLaneElements):
-    """
-       Класс, который содержит элементы, используемые при проверке страницы установки упражнения
-    """
+    """Класс, который содержит элементы, используемые при проверке страницы установки упражнения."""
 
     SHOOTER_CHOSEN_NAME_LBL = aqas.element_factory.label(
         By.XPATH, ".//div[@class='head_shooter__item-data']",
         "Имя выбранного стрелка")
-
-    SEARCH_EXERCISE_TBX = aqas.element_factory.text_box(
-        By.XPATH, ".//input[@placeholder='Поиск упражнения']",
-        "Поле поиска упражнения")
 
     EX_IN_LIST_NUM_1_LBL = aqas.element_factory.label(
         By.XPATH, ".//li[aria-label()='1']//span[@class='p-ink']",
@@ -25,15 +19,18 @@ class ExerciseMenuFormElements(CommonElements, SettingsElements, StateLaneElemen
         By.XPATH, ".//button[contains(text(),'Выйти без сохранения']",
         "Выйти без сохранения")
 
-    BUSY_LANE_BTN_EX_MENU = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-col-2')]//span",
+    SEARCH_EXERCISE_TBX = aqas.element_factory.text_box(
+        By.XPATH, ".//input[@placeholder='Поиск упражнения']",
+        "Поле поиска упражнения")
+
+    BUSY_LANE_EX_MENU_BTN = aqas.element_factory.button(
+        By.XPATH, "//div[contains(@class,'p-col-2')]//span",
         "Сменить занятость полосы")
 
 
 class ExerciseMenuForm(aqas.BaseForm):
-    """
-          Класс, который содержит методы, используемые при проверке страницы установки упражнения
-       """
+    """ Класс, который содержит методы, используемые при проверке страницы установки упражнения."""
+
     elements = ExerciseMenuFormElements()
 
     def __init__(self):

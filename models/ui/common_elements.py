@@ -6,11 +6,11 @@ class CommonElements(aqas.BaseFormElements):
     """Класс, который содержит элементы, используемые на всех формах."""
 
     MENU_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//span",
+        By.XPATH, "//div[contains(@class,'p-toolbar-group-left')]//span",
         "Меню")
 
     NOTIFICATIONS_LBL = aqas.element_factory.label(
-        By.XPATH, "//div[contains(@class, 'p-toast-top-right')]",
+        By.XPATH, "//div[contains(@class,'p-toast-top-right')]",
         "Все уведомления")
 
     NOTIFICATION_LBL = aqas.element_factory.labels(
@@ -42,7 +42,7 @@ class StateLaneElements(aqas.BaseFormElements):
         "Приостановить упражнение")
 
     BUSY_LANE_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-col-2')]//span",
+        By.XPATH, "//div[contains(@class,'p-col-2')]//span",
         "Сменить занятость полосы")
 
 
@@ -57,17 +57,12 @@ class SettingsElements(aqas.BaseFormElements):
         By.XPATH, "//a[@href='/lines/1']",
         "Стрелка Вернуться назад")
 
-    SHOOTERS_MENU_DRDN = aqas.element_factory.button(
-        By.XPATH, ".//a[@href='/lines/1/shooters']//span",
-        "Открыть окно выбора стрелков")
-
     EX_MENU_BTN = aqas.element_factory.button(
         By.XPATH, "//a[@href='/lines/1/exercises']//span",
         "Открыть окно Выбор упражнения на полосу 1")
 
     CONDITIONS_MENU_BTN = aqas.element_factory.button(
-        By.XPATH,
-        "//a[@href='/lines/1/conditions']",
+        By.XPATH, "//a[@href='/lines/1/conditions']",
         "Открыть окно Выбор условий полосы 1")
 
     SHOOTERS_MENU_BTN = aqas.element_factory.button(
@@ -75,5 +70,9 @@ class SettingsElements(aqas.BaseFormElements):
         "Открыть окно выбора стрелков")
 
     SAVE_BTN = aqas.element_factory.button(
-        By.XPATH, ".//button[contains(text(),'Сохранить ']",
+        By.XPATH, ".//button[contains(text(),'Сохранить']",
         "Сохранить ")
+
+    SHOOTERS_MENU_DRDN = aqas.element_factory.button(
+        By.XPATH, ".//a[@href='/lines/1/shooters']//span",
+        "Открыть окно выбора стрелков")

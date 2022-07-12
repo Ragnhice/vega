@@ -1,7 +1,9 @@
 import allure
 import aqas
 import pytest
+from faker import Faker
 
+from models.ui.forms.confirm_form import ConfirmForm
 from models.ui.forms.lanes_control_form import LanesControlForm
 from models.ui.forms.new_user_form import NewUserForm
 from models.ui.forms.organisations_form import OrganisationsForm
@@ -9,6 +11,7 @@ from models.ui.forms.shooting_settings_form import ShootingSettingsForm
 from models.ui.forms.side_bar_form import SideBarForm
 from models.ui.forms.statistic_form import StatisticForm
 from models.ui.forms.users_form import UsersForm
+from utils.constants import UI
 from utils.element_utils import is_located
 
 
@@ -28,15 +31,16 @@ class TestAuthRoles:
     def test_auth_admin(self, get_auth_admin):
         lanes_control_page = get_auth_admin
 
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
-
         with aqas.step("Занять полосу"):
             if is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL):
                 lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             lanes_control_page.wait_for_notifications_invisible()
+
+        with aqas.step("Проверить наличие доступа к изменению режима упражнения"):
+            assert not is_located(
+                lanes_control_page.elements.PLAY_LANE1_DISABLED_LBL), "Администратору не доступен запуск упражнения"
 
         with aqas.step("Открыть боковое меню"):
             lanes_control_page.elements.MENU_BTN.click()
@@ -72,9 +76,6 @@ class TestAuthRoles:
     def test_auth_shooter(self, get_auth_shooter):
         lanes_control_page = get_auth_shooter
 
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
-
         with aqas.step("Проверить отсутствие доступа к изменению занятости полосы"):
             assert is_located(
                 lanes_control_page.elements.BUSY_LANE1_RADIO_DISABLED_LBL), "Стрелку доступен запуск упражнения"
@@ -107,23 +108,17 @@ class TestAuthRoles:
             assert not is_located(sidebar_page.elements.USERS_BTN), "Стрелку доступен список пользователей"
 
         with aqas.step("Проверить доступ к Установке параметров работы оборудования"):
-            assert not is_located(sidebar_page.elements.CAMERA_SETTINGS_BTN), "Стрелку доступны насройки камеры"
+            assert not is_located(sidebar_page.elements.CAMERA_SETTINGS_BTN), "Стрелку доступны настройки камеры"
             assert not is_located(sidebar_page.elements.SERVICE_BTN), "Стрелку доступны сервисные функции"
-
-        with aqas.step("Закрыть боковое меню"):
-            sidebar_page.elements.CLOSE_BTN.click()
 
     @allure.title("auth_instructor_view_buttons")
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-333")
     def test_auth_instructor(self, get_auth_instructor):
         lanes_control_page = get_auth_instructor
 
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
-
         with aqas.step("Занять полосу"):
             if is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL):
-                lanes_control_page.elements.BUSY_LANE1_INSTRUCTOR_BTN.click()
+                lanes_control_page.elements.BUSY_LANE1_INSTRUCTOR_ON_BTN.click()
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             lanes_control_page.wait_for_notifications_invisible()
@@ -164,18 +159,12 @@ class TestAuthRoles:
 
         with aqas.step("Освободить полосу"):
             if is_located(lanes_control_page.elements.LANE1_IS_BUSY_LBL):
-                lanes_control_page.elements.BUSY_LANE1_INSTRUCTOR_BTN.click()
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
+                lanes_control_page.elements.BUSY_LANE1_INSTRUCTOR_OFF_BTN.wait_and_click()
 
     @allure.title("auth_instructor_functional")
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-359")
     def test_auth_instructor_functional(self, get_auth_instructor):
         lanes_control_page = get_auth_instructor
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
             lanes_control_page.elements.MENU_BTN.click()
@@ -196,11 +185,11 @@ class TestAuthRoles:
             assert new_user_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Ввести данные нового пользователя"):
-            new_user_page.elements.LASTNAME_TBX.send_keys("Фамилиятест")
-            new_user_page.elements.LOGIN_TBX.send_keys("Логинтест")
-            new_user_page.elements.PASSWORD_TBX.send_keys("1111")
-            new_user_page.elements.FIRSTNAME_TBX.send_keys("Имятест")
-            new_user_page.elements.MIDDLENAME_TBX.send_keys("Отчествотест")
+            new_user_page.elements.LASTNAME_TBX.send_keys(UI.TEST_LASTNAME)
+            new_user_page.elements.LOGIN_TBX.send_keys(Faker().first_name())
+            new_user_page.elements.PASSWORD_TBX.send_keys(UI.TEST_PASSWORD)
+            new_user_page.elements.FIRSTNAME_TBX.send_keys(Faker().first_name())
+            new_user_page.elements.MIDDLENAME_TBX.send_keys(Faker().first_name())
             new_user_page.elements.SAVE_BTN.click()
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
@@ -218,7 +207,7 @@ class TestAuthRoles:
             users_page.elements.MENU_USERS_BTN.click()
             assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
 
-        with aqas.step("Открыть окно управлени полосами"):
+        with aqas.step("Открыть окно управления полосами"):
             sidebar_page.elements.LANES_CONTROLLING_BTN.click()
             assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
 
@@ -226,16 +215,6 @@ class TestAuthRoles:
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-357")
     def test_auth_admin_users(self, get_auth_admin):
         lanes_control_page = get_auth_admin
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
-
-        with aqas.step("Занять полосу"):
-            if is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL):
-                lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
             lanes_control_page.elements.MENU_BTN.click()
@@ -253,11 +232,11 @@ class TestAuthRoles:
             assert new_user_page.is_wait_for_form_load(), "Страница не загрузилась"
 
         with aqas.step("Ввести данные нового пользователя"):
-            new_user_page.elements.LASTNAME_TBX.send_keys("Фамилия_тест")
-            new_user_page.elements.LOGIN_TBX.send_keys("Логин_тест")
-            new_user_page.elements.PASSWORD_TBX.send_keys("Пароль_тест")
-            new_user_page.elements.FIRSTNAME_TBX.send_keys("Имя_тест")
-            new_user_page.elements.MIDDLENAME_TBX.send_keys("Отчество_тест")
+            new_user_page.elements.LASTNAME_TBX.send_keys(UI.TEST_LASTNAME)
+            new_user_page.elements.LOGIN_TBX.send_keys(Faker().first_name())
+            new_user_page.elements.PASSWORD_TBX.send_keys(UI.TEST_PASSWORD)
+            new_user_page.elements.FIRSTNAME_TBX.send_keys(Faker().first_name())
+            new_user_page.elements.MIDDLENAME_TBX.send_keys(Faker().first_name())
             new_user_page.elements.SAVE_BTN.click()
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
@@ -268,34 +247,13 @@ class TestAuthRoles:
 
         with aqas.step("Изменить только что созданного стрелка"):
             users_page.elements.NEW_USER_LBL.click()
-            users_page.elements.PASSWORD_TBX.send_keys("Пароль_тест")
+            users_page.elements.PASSWORD_TBX.send_keys(UI.TEST_PASSWORD)
             users_page.elements.SAVE_BTN.click()
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            users_page.wait_for_notifications_invisible()
-
-        with aqas.step("Открыть боковое меню"):
-            users_page.elements.MENU_USERS_BTN.wait_and_click()
-            assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
-
-        with aqas.step("Открыть окно управлени полосами"):
-            sidebar_page.elements.LANES_CONTROLLING_BTN.click()
-            assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
 
     @allure.title("auth_admin_shooting")
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-386")
     def test_auth_admin_shooting(self, get_auth_admin):
         lanes_control_page = get_auth_admin
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
-
-        with aqas.step("Занять полосу"):
-            if is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL):
-                lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
             lanes_control_page.elements.MENU_BTN.click()
@@ -311,14 +269,27 @@ class TestAuthRoles:
         with aqas.step("Сменить режим работы тира на узкий экран"):
             shooting_settings_page.elements.TIDE_BTN.click()
             shooting_settings_page.elements.APPLY_BTN.click()
-            shooting_settings_page.elements.CONFIRM_BTN.reset()
-            shooting_settings_page.elements.CONFIRM_BTN.click()
+            confirm_form = ConfirmForm()
+            assert confirm_form.is_wait_for_form_load(), "Окно не отобразилось"
+            confirm_form.elements.CONFIRM_BTN.click()
+
+        with aqas.step("Проверить, что появилось уведомление о смене режима работы тира"):
+            assert is_located(
+                shooting_settings_page.elements.REGIME_CHANGE_LBL), "Нет уведомления о смене режима работы тира"
+
+        with aqas.step("Подождать, пока не исчезнут Уведомления"):
+            shooting_settings_page.wait_for_notifications_invisible()
 
         with aqas.step("Сменить режим работы тира на полный экран"):
             shooting_settings_page.elements.FULL_BTN.click()
             shooting_settings_page.elements.APPLY_BTN.click()
-            shooting_settings_page.elements.CONFIRM_BTN.reset()
-            shooting_settings_page.elements.CONFIRM_BTN.click()
+            assert confirm_form.is_wait_for_form_load(), "Окно не отобразилось"
+            confirm_form.elements.CONFIRM_BTN.reset()
+            confirm_form.elements.CONFIRM_BTN.click()
+
+        with aqas.step("Проверить, что появилось уведомление о смене режима работы тира"):
+            assert is_located(
+                shooting_settings_page.elements.REGIME_CHANGE_LBL), "Нет уведомления о смене режима работы тира"
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             shooting_settings_page.wait_for_notifications_invisible()
@@ -328,34 +299,17 @@ class TestAuthRoles:
             shooting_settings_page.elements.AMOUNT_LANE_BTN.click()
             shooting_settings_page.elements.TWO_LANES_LBL.click()
             shooting_settings_page.elements.APPLY_BTN.wait_and_click()
-            shooting_settings_page.elements.CONFIRM_BTN.reset()
-            shooting_settings_page.elements.CONFIRM_BTN.click()
+            confirm_form.elements.CONFIRM_BTN.reset()
+            confirm_form.elements.CONFIRM_BTN.click()
 
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            shooting_settings_page.wait_for_notifications_invisible()
-
-        with aqas.step("Открыть боковое меню"):
-            shooting_settings_page.elements.MENU_BTN.click()
-            assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
-
-        with aqas.step("Открыть окно управлени полосами"):
-            sidebar_page.elements.LANES_CONTROLLING_BTN.click()
-            assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
+        with aqas.step("Проверить, что появилось уведомление о смене режима работы тира"):
+            assert is_located(
+                shooting_settings_page.elements.REGIME_CHANGE_LBL), "Нет уведомления о смене режима работы тира"
 
     @allure.title("auth_admin_statistic")
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-338")
     def test_auth_admin_statistic(self, get_auth_admin):
         lanes_control_page = get_auth_admin
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
-
-        with aqas.step("Занять полосу"):
-            if is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL):
-                lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
             lanes_control_page.elements.MENU_BTN.click()
@@ -371,28 +325,10 @@ class TestAuthRoles:
             statistic_page.elements.USER_1_IN_LIST_BTN.click()
             assert is_located(statistic_page.elements.MAKE_REPORT_BTN), "Администратору не доступно создание отчета"
 
-        with aqas.step("Открыть боковое меню"):
-            statistic_page.elements.MENU_BTN.click()
-            assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
-
-        with aqas.step("Открыть окно управлени полосами"):
-            sidebar_page.elements.LANES_CONTROLLING_BTN.click()
-            assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
-
     @allure.title("auth_admin_organisations")
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-387")
     def test_auth_admin_func_organisations(self, get_auth_admin):
         lanes_control_page = get_auth_admin
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
-
-        with aqas.step("Занять полосу"):
-            if is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL):
-                lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
-
-        with aqas.step("Подождать, пока не исчезнут Уведомления"):
-            lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Открыть боковое меню"):
             lanes_control_page.elements.MENU_BTN.click()
@@ -406,21 +342,22 @@ class TestAuthRoles:
 
         with aqas.step("Создать организацию"):
             organisations_page.elements.ADD_BTN.click()
-            organisations_page.elements.INPUT_NAME_TBX.send_keys("Организация_тест")
+            organisations_page.elements.INPUT_NAME_TBX.send_keys(UI.TEST_NAME_ORGANISATION)
             organisations_page.elements.SAVE_BTN.click()
 
-        with aqas.step("Удалить организацию"):
-            organisations_page.elements.NEW_ORG_LBL.click()
-            organisations_page.elements.DELETE_BTN.click()
-            organisations_page.elements.CONFIRM_DELETE_BTN.click()
+        with aqas.step("Проверить, что появилось уведомление о создании организации"):
+            assert is_located(
+                organisations_page.elements.CREATION_NOTIFICATION_LBL), "Нет уведомления о создании организации"
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             organisations_page.wait_for_notifications_invisible()
 
-        with aqas.step("Открыть боковое меню"):
-            organisations_page.elements.MENU_BTN.click()
-            assert sidebar_page.is_wait_for_form_load(), "Страница не загрузилась"
+        with aqas.step("Удалить организацию"):
+            organisations_page.elements.NEW_ORG_LBL.click()
+            organisations_page.elements.DELETE_BTN.click()
+            confirm_form = ConfirmForm()
+            confirm_form.elements.CONFIRM_DELETE_BTN.click()
 
-        with aqas.step("Открыть окно управлени полосами"):
-            sidebar_page.elements.LANES_CONTROLLING_BTN.click()
-            assert lanes_control_page.is_wait_for_form_load(), "Страница не загрузилась"
+        with aqas.step("Проверить, что появилось уведомление об удалении организации"):
+            assert is_located(
+                organisations_page.elements.DELETION_NOTIFICATION_LBL), "Нет уведомления об удалении организации"

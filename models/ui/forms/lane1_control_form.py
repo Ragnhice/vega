@@ -7,13 +7,21 @@ from models.ui.common_elements import CommonElements, SettingsElements, StateLan
 class Lane1ControlFormElements(CommonElements, SettingsElements, StateLaneElements):
     """Класс, который содержит элементы, используемые при проверке управления первой полосой."""
 
-    CHOSEN_WEAPON_DRDN = aqas.element_factory.dropdown(
-        By.XPATH, "//div[@id='weaponId']//span",
-        "Поле выбранного оружия")
+    STOP_DISABLED_LBL = aqas.element_factory.label(
+        By.XPATH, "//button[contains(@class,'p-disabled')]/span[contains(text(),'stop')]",
+        "Кнопка остановки упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
-    CHOSEN_AMMO_DRDN = aqas.element_factory.dropdown(
-        By.XPATH, "//div[@id='ammoId']//span",
-        "Поле выбранного боеприпаса")
+    PLAY_DISABLED_LBL = aqas.element_factory.label(
+        By.XPATH, "//button[contains(@class,'p-disabled')]/span[contains(text(),'play_arrow')]",
+        "Кнопка запуска упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
+
+    PAUSE_DISABLED_LBL = aqas.element_factory.label(
+        By.XPATH, "//button[contains(@class,'p-disabled')]/span[contains(text(),'pause')]",
+        "Кнопка паузы в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ, упр. либо приостановлено либо остановлено")
+
+    TIME_LBL = aqas.element_factory.label(
+        By.XPATH, ".//div[contains(@class,'p-justify-between')]/div[5]/div[contains(@class,'value')]",
+        "Значение времени от начала")
 
     CLOSE_CHOSE_WEAPON_BTN = aqas.element_factory.button(
         By.XPATH, "//span[contains(text(),'Закрыть')]",
@@ -23,29 +31,22 @@ class Lane1ControlFormElements(CommonElements, SettingsElements, StateLaneElemen
         By.XPATH, "//span[contains(text(),'Подтвердить')]",
         "Подтвердить выбор оружия")
 
-    TIME_LBL = aqas.element_factory.label(
-        By.XPATH, ".//div[contains(text(),'Резульат')/div/div[5]/div[1]",
-        "Значение времени от начала")
-
     PRINT_QUICK_BTN = aqas.element_factory.button(
         By.XPATH, "//a[@href='/lines/1/stats']",
         "Распечатать отчет")
 
-    STOP_DISABLED_LBL = aqas.element_factory.label(
-        By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'stop')]",
-        "Кнопка остановки упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
+    CHOSEN_WEAPON_DRDN = aqas.element_factory.dropdown(
+        By.XPATH, "//div[@id='weaponId']//span",
+        "Поле выбранного оружия")
 
-    PLAY_DISABLED_LBL = aqas.element_factory.label(
-        By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'play_arrow')]",
-        "Кнопка запуска упражнения в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
-
-    PAUSE_DISABLED_LBL = aqas.element_factory.label(
-        By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'pause')]",
-        "Кнопка паузы в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ, упр. либо приостановлено либо оставновлено")
+    CHOSEN_AMMO_DRDN = aqas.element_factory.dropdown(
+        By.XPATH, "//div[@id='ammoId']//span",
+        "Поле выбранного боеприпаса")
 
 
 class Lane1ControlForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке страницы управления первой полосой."""
+
     elements = Lane1ControlFormElements()
 
     def __init__(self):

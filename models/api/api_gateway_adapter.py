@@ -13,6 +13,7 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
         self.recursion_list = []
 
     def objects_by_exercise_id(self, expect_errors: Union[bool, type(None)] = False):
+        """Получает список обьектов использующихся в упражнении с заданным номером."""
         response = self._call_service_method(
             """
                 query {
@@ -28,6 +29,7 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
         return response.get("objectsByExerciseId")
 
     def environment_restrictions(self, expect_errors: Union[bool, type(None)] = False):
+        """Получает список диапазонов погоды."""
         response = self._call_service_method(
             """
                 query {
@@ -39,17 +41,7 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
             """, expect_errors=expect_errors)
         return response.get("environmentRestrictions")
 
-    def get_version(self, expect_errors: Union[bool, type(None)] = False):
-        """Получает текущую версию сервиса."""
-        response = self._call_service_method(
-            """
-                query {
-                    startupApiVersion
-                }
-             """, expect_errors=expect_errors)
-        return response
-
-    def get_users(self, expect_errors: Union[bool, type(None)] = False):
+    def get_users_fields(self, expect_errors: Union[bool, type(None)] = False):
         """Получает список пользователей."""
         query = (self.query_builder()
                  .operation()
@@ -58,7 +50,7 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
                  .generate())
         return self._call_service_method(query, expect_errors=expect_errors).get("users")
 
-    def get_objects_by_exercise_id(self, expect_errors: Union[bool, type(None)] = False):
+    def get_objects_by_exercise_id_fields(self, expect_errors: Union[bool, type(None)] = False):
         """Объекты использующиеся в упражнении с заданным номером."""
         query = (self.query_builder()
                  .operation()
@@ -66,23 +58,6 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
                  .fields(["name", "localizationName", "guid", "prefab", "image"])
                  .generate())
         return self._call_service_method(query, expect_errors=expect_errors).get("objectsByExerciseId")
-
-    def get_exercises(self, expect_errors: Union[bool, type(None)] = False):
-        """Получает список упражнений."""
-        response = self._call_service_method(
-            """
-                query {
-                    exercises {
-                        id
-                        name
-                        description
-                        tags
-                        type
-                        sceneId
-                    }
-                }
-            """, expect_errors=expect_errors)
-        return response
 
     def get_objects_1(self, expect_errors: Union[bool, type(None)] = False):
         """Доступные объекты."""
@@ -94,7 +69,7 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
         return self._call_service_method(query, expect_errors=expect_errors).get("objects")
 
     def get_objects_2(self, expect_errors: Union[bool, type(None)] = False):
-        """Доступные объекты."""
+        """Доступные объекты, в ответе доступные команды."""
         available_commands = (self.query_builder()
                               .query("availableCommands")
                               .fields(["id", "name", "localizationName", "parameter", "isNeedPosition"])

@@ -8,6 +8,103 @@ from utils.constants import API
 
 
 class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
+
+        """Добавляет оружие."""
+        mutation = f"""
+            mutation createWeapon {{
+                createWeapon(
+                    weaponInput: {{
+                        firstName: "{Faker().first_name()}",
+                        middleName: "{Faker().first_name()}",
+                        lastName: "{Faker().last_name()}",
+                        height: {Faker().random_int(1, 100)},
+                        birthCity: "{Faker().city()}",
+                        birthDate: "05.11.1991",
+                        appointment: "String",
+                        personalId: "String",
+                        title: "String",
+                        memo: "String",
+                        archived: true,
+                        gender: {choice(API.GENDER)},
+                        role: {choice(API.ROLE)},
+                        login: "{login}",
+                        password: "{password}"
+                    }})
+                {{
+                    id
+                    shortName
+                    firstName
+                }}
+            }}
+        """
+        response = self._call_service_method(mutation, expect_errors=expect_errors)
+        return response.get("createUser")
+
+    def update_user(self, user_id_to_update, expect_errors: Union[bool, type(None)] = False):
+        """Обновляет пользователя."""
+        mutation = f"""
+            mutation {{
+                updateUser(
+                    userInput: {{
+                        id: {user_id_to_update},
+                        firstName: "{Faker().first_name()}",
+                        middleName: "{Faker().first_name()}",
+                        lastName: "{Faker().last_name()}",
+                        height: {Faker().random_int(1, 100)},
+                        birthCity: "{Faker().city()}",
+                        birthDate: "05.11.1991",
+                        appointment: "String",
+                        personalId: "String",
+                        title: "String",
+                        archived: true,
+                        memo: "String",
+                        gender: {choice(API.GENDER)},
+                        role: {choice(API.ROLE)},
+                    }})
+                {{
+                    id
+                    shortName
+                    firstName
+                    middleName
+                    lastName
+                    height
+                    birthCity
+                    birthDate
+                    appointment
+                    dutyDate
+                    personalId
+                    title
+                    archived
+                    memo
+                    role
+                }}
+            }}
+        """
+        response = self._call_service_method(mutation, expect_errors=expect_errors)
+        return response.get("updateUser")
+
+    def remove_users_by_id(self, user_ids: list, expect_errors: Union[bool, type(None)] = False):
+        """Удаляет пользователей по id.
+        :param: user_ids - идентификаторы пользователей
+        """
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("removeUsersById", input={"userIds": user_ids})
+                 .generate())
+        return self._call_service_method(query, expect_errors=expect_errors).get("removeUsersById")
+
+
+
+
+
+
+
+
+
+
+
+
+
     def __init__(self):
         super().__init__("ApiGateway")
         self.recursion_list = []
@@ -212,3 +309,25 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
                  .query("removeUsersById", input={"userIds": user_ids})
                  .generate())
         return self._call_service_method(query, expect_errors=expect_errors).get("removeUsersById")
+
+
+    def get_object_3(self, expect_errors: Union[bool, type(None)] = False):
+        response = self._call_service_method(
+            """
+                query {
+                    objects {
+                        name
+                        localizationName
+                        guid
+                        prefab
+                        image
+                        availableCommands {
+                            id
+                            name
+                            localizationName
+                            parameters
+                        }                       
+                    }
+                }
+            """, expect_errors=expect_errors)
+        return response.get("objects")

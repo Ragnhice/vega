@@ -47,7 +47,11 @@
             "profile.default_content_settings.popups": 0,
             "credentials_enable_service": false,
             "profile.password_manager_enabled": false
-          }
+          },
+          "excludeSwitches": [
+            "enable-automation"
+          ],
+          "useAutomationExtension": false
         },
         "startArguments": [
           "--no-sandbox",
@@ -89,7 +93,7 @@
     }
   },
   "api": {
-    "url": "http://10.10.72.214",
+    "url": "http://10.10.127.122",
     "services": {
       "ApiGateway": {
         "port": 5050
@@ -115,6 +119,7 @@
   },
   "imageComparator": {
     "height": 600,
+    "width": 600,
     "percentThreshold": 0.0,
     "extension": ".png",
     "maxPathLength": 255

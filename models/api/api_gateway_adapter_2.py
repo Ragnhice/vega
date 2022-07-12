@@ -162,6 +162,12 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
     def create_weapon(self, expect_errors: Union[bool, type(None)] = False):
         """Создает пользователя."""
 
+
+
+
+
+
+
         mutation = f"""
             mutation CreateWeapon_1
 ($weaponInput: CreateWeaponInput)

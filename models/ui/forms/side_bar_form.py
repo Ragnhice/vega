@@ -50,6 +50,7 @@ class SideBarFormElements(CommonElements):
 
 class SideBarForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
+
     elements = SideBarFormElements()
 
     def __init__(self):

@@ -76,11 +76,11 @@ class ConditionsMenuFormElements(CommonElements, SettingsElements, StateLaneElem
         "Влажность")
 
     ALTITUDE_SHOWN_BTN = aqas.element_factory.button(
-        By.XPATH, ". //h3[contains(text(),'Высота')] ",
+        By.XPATH, ". //h3[contains(text(),'Высота')]",
         "Высота")
 
     PRECIPITATION_SHOWN_BTN = aqas.element_factory.button(
-        By.XPATH, ".//h3[contains(text(),'Интенсивность осадков')]  ",
+        By.XPATH, ".//h3[contains(text(),'Интенсивность осадков')]",
         "Интенсивность осадков:")
 
     CHOSEN_WEAPON_DRDN = aqas.element_factory.dropdown(
@@ -100,26 +100,27 @@ class ConditionsMenuFormElements(CommonElements, SettingsElements, StateLaneElem
         "Подтвердить выбор оружия")
 
     BUSY_LANE_BTN_COND_MENU = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-col-2')]//span",
+        By.XPATH, "//div[contains(@class,'p-col-2')]//span",
         "Сменить занятость полосы")
 
 
 class ConditionsMenuForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке страницы с условиями."""
+
     elements = ConditionsMenuFormElements()
 
     def __init__(self):
         super().__init__(By.XPATH, ".//div[contains(text(),'Выбор условий полосы 1')]",
                          "Страница Выбор условий полосы 1")
 
-    def go_to_menu(self):
-        self.elements.MENU_BTN.click()
-
     def wait_for_notification_invisible(self):
         self.elements.NOTIFICATION_LBL.state.wait_for_invisible()
 
     def wait_for_notifications_invisible(self):
         self.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
+
+    def go_to_menu(self):
+        self.elements.MENU_BTN.click()
 
     def go_exercise_menu(self):
         self.elements.EX_MENU_BTN.click()

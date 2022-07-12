@@ -7,12 +7,16 @@ from models.ui.common_elements import CommonElements
 class UsersFormElements(CommonElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
+    NEW_USER_LBL = aqas.element_factory.button(
+        By.XPATH, "//span[contains(text(),'Фамилия_тест')]",
+        "Поле только что созданного пользователя")
+
     MENU_USERS_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//button",
+        By.XPATH, "//div[contains(@class,'p-toolbar-group-left')]//button",
         "Меню")
 
     ADD_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-grid p-mt-4')]//button",
+        By.XPATH, "//div[contains(@class,'p-mt-4')]//button",
         "Добавить")
 
     DELETE_BTN = aqas.element_factory.button(
@@ -20,7 +24,7 @@ class UsersFormElements(CommonElements):
         "Удалить выбранного пользователя")
 
     DELETE_DISABLED_LBL = aqas.element_factory.label(
-        By.XPATH, "//button[contains(@class, 'p-disabled')]/span[contains(text(),'удалить')]",
+        By.XPATH, "//button[contains(@class,'p-disabled')]",
         "Кнопка удаления в НЕКЛИКАБЕЛЬНОМ СОСТОЯНИИ")
 
     SAVE_BTN = aqas.element_factory.button(
@@ -40,15 +44,15 @@ class UsersFormElements(CommonElements):
         "Поле ввода пароля")
 
     CHECKBOX_2_BTN = aqas.element_factory.button(
-        By.XPATH, "// div[ @ role = 'checkbox'][3]",
+        By.XPATH, "//div[@role='checkbox'][3]",
         "Чекбокс 2-го пользователя")
 
     CHECKBOX_3_BTN = aqas.element_factory.button(
-        By.XPATH, "// div[ @ role = 'checkbox'][4]",
+        By.XPATH, "//div[@role='checkbox'][4]",
         "Чекбокс 3-го пользователя")
 
     CHECKBOX_ALL_BTN = aqas.element_factory.button(
-        By.XPATH, "// div[ @ role = 'checkbox'][1]",
+        By.XPATH, "//div[@role='checkbox'][1]",
         "Чекбокс всех  пользователей")
 
     CONFIRM_DELETE_USER_BTN = aqas.element_factory.button(
@@ -56,20 +60,17 @@ class UsersFormElements(CommonElements):
         "Подтвердить удаление пользователя")
 
     CANCEL_DELETE_USER_BTN = aqas.element_factory.button(
-        By.XPATH, "//button[contains(text(),'ОТМЕНИТЬ')] ",
+        By.XPATH, "//button[contains(text(),'ОТМЕНИТЬ')]",
         "Отменить удаление пользователя")
-
-    NEW_USER_LBL = aqas.element_factory.button(
-        By.XPATH, "//span[contains(text(),'Фамилия_тест')]",
-        "Поле только что созданного пользователя")
 
 
 class UsersForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
+
     elements = UsersFormElements()
 
     def __init__(self):
-        super().__init__(By.XPATH, ".//div[@class='title'][contains(text(),' Пользователи')]")
+        super().__init__(By.XPATH, ".//div[@class='title'][contains(text(),'Пользователи')]")
 
     def wait_for_notification_invisible(self):
         self.elements.NOTIFICATION_LBL.state.wait_for_invisible()

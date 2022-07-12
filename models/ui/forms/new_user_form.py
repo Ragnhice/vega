@@ -8,15 +8,31 @@ class NewUserFormElements(CommonElements):
     """Класс, который содержит элементы, используемые при проверке бокового меню."""
 
     MENU_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-toolbar-group-left')]//span",
+        By.XPATH, "//div[contains(@class,'p-toolbar-group-left')]//span",
         "Меню")
 
+    ROLE_LIST_OPEN_BTN = aqas.element_factory.button(
+        By.XPATH, "//span[contains(class(),'p-dropdown-trigger-icon')]",
+        "Открыть список ролей для выбора")
+
+    ROLE_ADMIN_IN_LIST_BTN = aqas.element_factory.button(
+        By.XPATH, ".//li[@aria-label='Администратор']",
+        "Роль администратора в списке")
+
+    SAVE_BTN = aqas.element_factory.button(
+        By.XPATH, "//div[contains(@class,'p-text-right')]//button[1]",
+        "Кнопка сохранить")
+
+    EXIT_WITHOUT_SAVING_BTN = aqas.element_factory.button(
+        By.XPATH, "//div[contains(@class,'p-text-right')]//button[2]",
+        "Выйти без сохранения")
+
     LASTNAME_TBX = aqas.element_factory.text_box(
-        By.XPATH, " .//input[@id='lastName']",
+        By.XPATH, ".//input[@id='lastName']",
         "Фамилия")
 
     LOGIN_TBX = aqas.element_factory.button(
-        By.XPATH, " .//input[@id='login']",
+        By.XPATH, ".//input[@id='login']",
         "Логин")
 
     PASSWORD_TBX = aqas.element_factory.text_box(
@@ -35,25 +51,10 @@ class NewUserFormElements(CommonElements):
         By.XPATH, ".//input[@id='height']",
         "Рост")
 
-    ROLE_OPEN_LIST_BTN = aqas.element_factory.button(
-        By.XPATH, "//span[contains(class(), 'p-dropdown-trigger-icon')]",
-        "Открыть список ролей для выбора")
-
-    ROLE_IN_LIST_BTN = aqas.element_factory.button(
-        By.XPATH, ".//li[@aria-label='Администратор']",
-        "Выбрать роль в списке")
-
-    SAVE_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-text-right')]//button[1]",
-        "Кнопка сохранить")
-
-    EXIT_WITHOUT_SAVING_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-text-right')]//button[2]",
-        "Выйти без сохранения")
-
 
 class NewUserForm(aqas.BaseForm):
     """Класс, который содержит методы, используемые при проверке бокового меню."""
+
     elements = NewUserFormElements()
 
     def __init__(self):

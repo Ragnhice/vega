@@ -3,6 +3,7 @@ import pytest
 from faker import Faker
 
 from models.api.api_gateway_adapter import ApiGatewayAdapter
+from utils.constants import API
 from utils.enums import Gender, UserTypeEnum
 
 
@@ -35,8 +36,8 @@ class TestsCrudUser:
                     "memo": Faker().isbn10(),
                     "role": UserTypeEnum.SHOOTER,
                     "gender": Gender.MALE,
-                    "login": "qa",
-                    "password": "1111",
+                    "login": Faker().first_name(),
+                    "password": API.TEST_PASSWORD_1,
                 },
             },
         }
@@ -65,8 +66,8 @@ class TestsCrudUser:
                     "memo": Faker().isbn10(),
                     "role": UserTypeEnum.SHOOTER,
                     "gender": Gender.MALE,
-                    "login": "testlogin",
-                    "password": "1111",
+                    "login": Faker().first_name(),
+                    "password": API.TEST_PASSWORD_2,
                 },
             },
         }

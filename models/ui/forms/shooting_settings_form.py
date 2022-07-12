@@ -5,9 +5,15 @@ from models.ui.common_elements import CommonElements
 
 
 class ShootingSettingsFormElements(CommonElements):
-    """
-    Класс, который содержит элементы, используемые при проверке страницы настроек тира
-    """
+    """Класс, который содержит элементы, используемые при проверке страницы настроек тира."""
+
+    REGIME_CHANGE_LBL = aqas.element_factory.label(
+        By.XPATH, "//div[contains(text(),'Устанавливаются новые настройки тира!')]",
+        "Уведомление о смене настроек")
+
+    TWO_LANES_LBL = aqas.element_factory.button(
+        By.XPATH, "//div[contains(@class,'p-dropdown-items-wrapper')]//li[2]",
+        "Выбрать 2 полосы")
 
     TIDE_BTN = aqas.element_factory.button(
         By.XPATH, ".//label[contains(text(),'Узкий')]",
@@ -30,28 +36,12 @@ class ShootingSettingsFormElements(CommonElements):
         "Поле выбора количества полос")
 
     APPLY_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-text-right')]//button",
+        By.XPATH, "//div[contains(@class,'p-text-right')]//button",
         "Применить")
 
-    CONFIRM_BTN = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-dialog-footer')]//button[2]",
-        "Подтвердить")
-
-    CONFIRM_BTN_2 = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-dialog-footer')]//button[2]",
-        "Подтвердить")
-
-    CONFIRM_BTN_3 = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-dialog-footer')]//button[2]",
-        "Подтвердить")
-
     AMOUNT_LANE_BTN = aqas.element_factory.button(
-        By.XPATH, "//span[contains(@class, 'p-dropdown-trigger-icon')]",
+        By.XPATH, "//span[contains(@class,'p-dropdown-trigger-icon')]",
         "Открыть выбор количества полос")
-
-    TWO_LANES_LBL = aqas.element_factory.button(
-        By.XPATH, "//div[contains(@class, 'p-dropdown-items-wrapper')]//li[2]",
-        "Выбрать 2 полосы")
 
 
 class ShootingSettingsForm(aqas.BaseForm):
@@ -60,7 +50,7 @@ class ShootingSettingsForm(aqas.BaseForm):
     elements = ShootingSettingsFormElements()
 
     def __init__(self):
-        super().__init__(By.XPATH, "//div[ contains(text(),'Настройки тира')]",
+        super().__init__(By.XPATH, "//div[contains(text(),'Настройки тира')]",
                          "Главная страница настроек тира")
 
     def wait_for_notification_invisible(self):

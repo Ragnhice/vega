@@ -23,12 +23,18 @@ class TestBusyLane:
             if is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL):
                 lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
 
+        with aqas.step("Проверить, что полоса стала занятой"):
+            assert is_located(lanes_control_page.elements.LANE1_IS_BUSY_LBL), "Полоса не стала занятой"
+
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             lanes_control_page.wait_for_notifications_invisible()
 
         with aqas.step("Освободить полосу"):
             if is_located(lanes_control_page.elements.LANE1_IS_BUSY_LBL):
                 lanes_control_page.elements.BUSY_LANE1_ADMIN_BTN.click()
+
+        with aqas.step("Проверить, что полоса стала свободной"):
+            assert is_located(lanes_control_page.elements.LANE1_IS_FREE_LBL), "Полоса не стала свободной"
 
     @allure.title("busy_on_lane1")
     @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-320")
@@ -50,6 +56,7 @@ class TestBusyLane:
 
         with aqas.step("Освободить полосу"):
             if is_located(shooter_chose_page.elements.LANE_IS_BUSY_LBL):
+                shooter_chose_page.elements.BUSY_LANE_BTN.reset()
                 shooter_chose_page.elements.BUSY_LANE_BTN.click()
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
@@ -59,12 +66,18 @@ class TestBusyLane:
             if is_located(shooter_chose_page.elements.LANE_IS_FREE_LBL):
                 shooter_chose_page.elements.BUSY_LANE_BTN.click()
 
+        with aqas.step("Проверить, что полоса стала занятой"):
+            assert is_located(shooter_chose_page.elements.LANE_IS_BUSY_LBL), "Полоса не стала занятой"
+
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             shooter_chose_page.wait_for_notifications_invisible()
 
         with aqas.step("Освободить полосу"):
             if is_located(shooter_chose_page.elements.LANE_IS_BUSY_LBL):
                 shooter_chose_page.elements.BUSY_LANE_BTN.click()
+
+        with aqas.step("Проверить, что полоса стала свободной"):
+            assert is_located(shooter_chose_page.elements.LANE_IS_FREE_LBL), "Полоса не стала свободной"
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             shooter_chose_page.wait_for_notifications_invisible()
@@ -83,21 +96,27 @@ class TestBusyLane:
 
         with aqas.step("Освободить полосу"):
             if is_located(exercise_menu_page.elements.LANE_IS_BUSY_LBL):
-                exercise_menu_page.elements.BUSY_LANE_BTN_EX_MENU.click()
+                exercise_menu_page.elements.BUSY_LANE_EX_MENU_BTN.click()
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             exercise_menu_page.wait_for_notifications_invisible()
 
         with aqas.step("Занять полосу"):
             if is_located(exercise_menu_page.elements.LANE_IS_FREE_LBL):
-                exercise_menu_page.elements.BUSY_LANE_BTN_EX_MENU.click()
+                exercise_menu_page.elements.BUSY_LANE_EX_MENU_BTN.click()
+
+        with aqas.step("Проверить, что полоса стала занятой"):
+            assert is_located(exercise_menu_page.elements.LANE_IS_BUSY_LBL), "Полоса не стала занятой"
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             exercise_menu_page.wait_for_notifications_invisible()
 
         with aqas.step("Освободить полосу"):
             if is_located(exercise_menu_page.elements.LANE_IS_BUSY_LBL):
-                exercise_menu_page.elements.BUSY_LANE_BTN_EX_MENU.click()
+                exercise_menu_page.elements.BUSY_LANE_EX_MENU_BTN.click()
+
+        with aqas.step("Проверить, что полоса стала свободной"):
+            assert is_located(exercise_menu_page.elements.LANE_IS_FREE_LBL), "Полоса не стала свободной"
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             exercise_menu_page.wait_for_notifications_invisible()
@@ -125,10 +144,17 @@ class TestBusyLane:
         with aqas.step("Занять полосу"):
             if is_located(conditions_menu_page.elements.LANE_IS_FREE_LBL):
                 conditions_menu_page.elements.BUSY_LANE_BTN_COND_MENU.click()
+                assert conditions_menu_page.is_wait_for_form_load(), "Страница не загрузилась"
+
+        with aqas.step("Проверить, что полоса стала занятой"):
+            assert is_located(conditions_menu_page.elements.LANE_IS_BUSY_LBL), "Полоса не стала занятой"
 
         with aqas.step("Освободить полосу"):
             if is_located(conditions_menu_page.elements.LANE_IS_BUSY_LBL):
                 conditions_menu_page.elements.BUSY_LANE_BTN_COND_MENU.click()
+
+        with aqas.step("Проверить, что полоса стала свободной"):
+            assert is_located(conditions_menu_page.elements.LANE_IS_FREE_LBL), "Полоса не стала свободной"
 
         with aqas.step("Подождать, пока не исчезнут Уведомления"):
             conditions_menu_page.elements.NOTIFICATIONS_LBL.state.wait_for_invisible()
