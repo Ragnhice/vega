@@ -307,7 +307,7 @@ class TestAuthRoles:
                 shooting_settings_page.elements.REGIME_CHANGE_LBL), "Нет уведомления о смене режима работы тира"
 
     @allure.title("auth_admin_statistic")
-    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-338")
+    @pytest.mark.test_case("https://jira.steor.tech/browse/VEGA2-388")
     def test_auth_admin_statistic(self, get_auth_admin):
         lanes_control_page = get_auth_admin
 

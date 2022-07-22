@@ -1,3 +1,4 @@
+import json
 from random import choice
 from typing import Union
 
@@ -5,6 +6,7 @@ import aqas
 from faker import Faker
 
 from utils.constants import API
+from utils.data_utils import generate_datetime
 
 
 class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
@@ -54,12 +56,12 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
         """Объекты использующиеся в упражнении с заданным номером."""
         query = (self.query_builder()
                  .operation()
-                 .query("users")
+                 .query("objectsByExerciseId")
                  .fields(["name", "localizationName", "guid", "prefab", "image"])
                  .generate())
         return self._call_service_method(query, expect_errors=expect_errors).get("objectsByExerciseId")
 
-    def get_objects_1(self, expect_errors: Union[bool, type(None)] = False):
+    def get_objects(self, expect_errors: Union[bool, type(None)] = False):
         """Доступные объекты."""
         query = (self.query_builder()
                  .operation()
@@ -68,7 +70,7 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
                  .generate())
         return self._call_service_method(query, expect_errors=expect_errors).get("objects")
 
-    def get_objects_2(self, expect_errors: Union[bool, type(None)] = False):
+    def get_objects_commands(self, expect_errors: Union[bool, type(None)] = False):
         """Доступные объекты, в ответе доступные команды."""
         available_commands = (self.query_builder()
                               .query("availableCommands")
@@ -81,87 +83,10 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
                  .generate())
         return self._call_service_method(query, expect_errors=expect_errors).get("objects")
 
-    def create_user(self,
-                    login: str = "admin",
-                    password: str = "0000",
-                    expect_errors: Union[bool, type(None)] = False,
-                    ):
-        """Создает пользователя."""
-        mutation = f"""
-            mutation createUser {{
-                createUser(
-                    userInput: {{
-                        firstName: "{Faker().first_name()}",
-                        middleName: "{Faker().first_name()}",
-                        lastName: "{Faker().last_name()}",
-                        height: {Faker().random_int(1, 100)},
-                        birthCity: "{Faker().city()}",
-                        birthDate: "05.11.1991",
-                        appointment: "String",
-                        personalId: "String",
-                        title: "String",
-                        memo: "String",
-                        archived: true,
-                        gender: {choice(API.GENDER)},
-                        role: {choice(API.ROLE)},
-                        login: "{login}",
-                        password: "{password}"
-                    }})
-                {{
-                    id
-                    shortName
-                    firstName
-                }}
-            }}
-        """
-        response = self._call_service_method(mutation, expect_errors=expect_errors)
-        return response.get("createUser")
-
-    def update_user(self, user_id_to_update, expect_errors: Union[bool, type(None)] = False):
-        """Обновляет пользователя."""
-        mutation = f"""
-            mutation {{
-                updateUser(
-                    userInput: {{
-                        id: {user_id_to_update},
-                        firstName: "{Faker().first_name()}",
-                        middleName: "{Faker().first_name()}",
-                        lastName: "{Faker().last_name()}",
-                        height: {Faker().random_int(1, 100)},
-                        birthCity: "{Faker().city()}",
-                        birthDate: "05.11.1991",
-                        appointment: "String",
-                        personalId: "String",
-                        title: "String",
-                        archived: true,
-                        memo: "String",
-                        gender: {choice(API.GENDER)},
-                        role: {choice(API.ROLE)},
-                    }})
-                {{
-                    id
-                    shortName
-                    firstName
-                    middleName
-                    lastName
-                    height
-                    birthCity
-                    birthDate
-                    appointment
-                    dutyDate
-                    personalId
-                    title
-                    archived
-                    memo
-                    role
-                }}
-            }}
-        """
-        response = self._call_service_method(mutation, expect_errors=expect_errors)
-        return response.get("updateUser")
-
     def remove_users_by_id(self, user_ids: list, expect_errors: Union[bool, type(None)] = False):
-        """Удаляет пользователей по id.
+        """
+        Удаляет пользователей по id.
+
         :param: user_ids - идентификаторы пользователей
         """
         query = (self.query_builder()
@@ -169,3 +94,236 @@ class ApiGatewayAdapter(aqas.GraphQLDataAdapter):
                  .query("removeUsersById", input={"userIds": user_ids})
                  .generate())
         return self._call_service_method(query, expect_errors=expect_errors).get("removeUsersById")
+
+    def create_weapon(self, expect_errors: Union[bool, type(None)] = False):
+        """Создает оружие."""
+        mutation = f"""
+            mutation CreateWeapon {{
+                createWeapon(
+                    weaponInput: {{
+                        id: {Faker().random_int(200, 300)},
+                        hwid: {Faker().random_int(200, 300)},
+                        shotsCount: {Faker().random_int(1, 3)},
+                        typeId: {Faker().random_int(1, 5)},
+                        mode:{choice(API.WEAPON_MODE)},
+                        regDate: {generate_datetime()}
+                        }})
+                    {{
+                        id
+                        hwid
+                        regDate
+                        shotsCount
+                        mode
+                        magazines
+                        ammoType{{
+                            id
+                            name
+                            localizationName
+                            description
+                        }}
+                    }}
+            }}
+        """
+        response = self._call_service_method(mutation, expect_errors=expect_errors)
+        return response.get("createWeapon")
+
+    def remove_weapons_by_id(self,
+                             weapon_ids: list,
+                             expect_errors: Union[bool, type(None)] = False):
+        """
+        Удаляет оружия по id.
+
+        :param: weapon_ids - идентификаторы оружий
+        """
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("removeWeaponsById", input={"weaponIds": weapon_ids})
+                 .generate())
+        return self._call_service_method(query, expect_errors=expect_errors).get("removeWeaponsById")
+
+    def add_oject(self,
+                  create_object_input: Union[dict, str] = "null",
+                  expect_errors: Union[bool, type(None)] = False):
+        """Создает объект.
+
+        :param: create_object_input - Словарь с данными нового объекта, предсталенными ниже
+        :param expect_errors: Флаг ожидания ошибки выполнения запроса
+        """
+        available_commands = (self.query_builder()
+                              .query("availableCommands")
+                              .fields(["id", "name", "localizationName", "parameters"])
+                              .generate())
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("addObject",
+                        input={
+                            "objectCreateInput": self.format_mutation(
+                                json.dumps(create_object_input, ensure_ascii=False)),
+                        },
+                        )
+                 .fields(["name", "localizationName", "guid", "prefab", "image", available_commands])
+                 .generate())
+        response = self._call_service_method(query, expect_errors=expect_errors)
+        return response.get("addObject", response)
+
+    def update_object_by_guid(self, update_object_input: Union[dict, str] = "null", expect_errors=False):
+        """
+        Обновление объекта
+
+        :param update_object_input: Параметры объекта
+        :param expect_errors: Флаг ожидания ошибки выполнения запроса
+        """
+        available_commands = (self.query_builder()
+                              .query("availableCommands")
+                              .fields(["id", "name", "localizationName", "parameters"])
+                              .generate())
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("updateObjectByGuid",
+                        input={
+                            "objectInput": self.format_mutation(json.dumps(update_object_input, ensure_ascii=False)),
+                        },
+                        )
+                 .fields(["name", "localizationName", "guid", "prefab", "image", available_commands])
+                 .generate())
+        response = self._call_service_method(query, expect_errors=expect_errors)
+        return response.get("updateObjectByGuid", response)
+
+    def remove_object_by_guid(self, object_guid: str, expect_errors: Union[bool, type(None)] = False):
+        """
+        Удаляет объект по guid.
+
+        :param: object_guid - идентификатор объекта
+        """
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("removeObjectByGuid", input={"guid": self.convert_parameter(object_guid)})
+                 .generate())
+        response = self._call_service_method(query, expect_errors=expect_errors)
+        return response.get("removeObjectByGuid", response)
+
+    def remove_scene_by_guid(self, guid_scene: str, expect_errors=False):
+        """
+        Удаление сцены
+
+        :param guid_scene: guid сцены
+        :param expect_errors: Флаг ожидания ошибки выполнения запроса
+        """
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("removeSceneByGuid", input={"guid": self.convert_parameter(guid_scene)})
+                 .generate())
+        return self._call_service_method(query, expect_errors=expect_errors).get("removeSceneByGuid")
+
+    def update_scene_by_guid(self, update_scene_input: Union[dict, str] = "null", expect_errors=False):
+        """
+        Обновление сцены
+
+        :param update_scene_input: Параметры сцены
+        :param expect_errors: Флаг ожидания ошибки выполнения запроса
+        """
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("updateSceneByGuid",
+                        input={
+                            "sceneInput": self.format_mutation(json.dumps(update_scene_input, ensure_ascii=False)),
+                        },
+                        )
+                 .fields([
+                     "name",
+                     "description",
+                     "localizationName",
+                     "guid",
+                     "prefab",
+                     "image",
+                     "bounds",
+                     "zeroPointShiftMeters",
+                     "cameraDefaultPosition",
+                     "cameraDefaultRotation",
+                     "keepRealism",
+                 ])
+                 .generate())
+        response = self._call_service_method(query, expect_errors=expect_errors)
+        return response.get("updateSceneByGuid", response)
+
+    def remove_exercise_by_id(self, id_exercise: str, expect_errors=False):
+        """
+        Удаление упражнения
+
+        :param id_exercise: id упражнения
+        :param expect_errors: Флаг ожидания ошибки выполнения запроса
+        """
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("removeExerciseById", input={"id": id_exercise})
+                 .fields(["response"])
+                 .generate())
+        response = self._call_service_method(query, expect_errors=expect_errors)
+        return response.get("removeExerciseById", response)
+
+    def update_exercise_by_id(self, update_exercise_input: Union[dict, str] = "null", expect_errors=False):
+        """
+        Обновление упражнения
+
+        :param update_exercise_input: Параметры упражнения
+        :param expect_errors: Флаг ожидания ошибки выполнения запроса
+        """
+        scene = (self.query_builder()
+                 .query("scene")
+                 .fields([
+                     "name",
+                     "description",
+                     "localizationName",
+                     "guid",
+                     "prefab",
+                     "image",
+                 ])
+                 .generate())
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("updateExerciseById",
+                        input={
+                            "Input": self.format_mutation(json.dumps(update_exercise_input,
+                                                                     ensure_ascii=False)),
+                        },
+                        )
+                 .fields([
+                     "name",
+                     "description",
+                     "id",
+                     "tags",
+                     scene,
+                 ])
+                 .generate())
+        response = self._call_service_method(query, expect_errors=expect_errors)
+        return response.get("updateExerciseById", response)
+
+    def remove_units_by_id(self,
+                           unit_ids: list,
+                           expect_errors: Union[bool, type(None)] = False):
+        """
+        Удаляет подразделения по id.
+
+        :param: unit_ids - подразделения
+        """
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("removeUnitsById", input={"unitIds": unit_ids})
+                 .generate())
+        return self._call_service_method(query, expect_errors=expect_errors).get("removeUnitsById")
+
+    def remove_ammo_weapon(self,
+                           weapon_type_id: int,
+                           ammo_type_id: int,
+                           expect_errors: Union[bool, type(None)] = False):
+        """
+        Удаляет связку боеприпасов и типа оружия
+
+        :param: ammoTypeId - Тип боеприпасов
+        :param: weaponTypeId - Тип боеприпасов
+        """
+        query = (self.query_builder()
+                 .operation("mutation")
+                 .query("removeAmmoWeapons", input={"weaponTypeId": weapon_type_id, "ammoTypeId": ammo_type_id})
+                 .generate())
+        return self._call_service_method(query, expect_errors=expect_errors).get("removeAmmoWeapons")

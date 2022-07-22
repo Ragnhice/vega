@@ -1,5 +1,4 @@
 # pylint: disable=W0621
-
 import aqas
 import pytest
 
@@ -11,11 +10,17 @@ from utils.enums import UserTypeEnum
 
 
 @pytest.fixture(scope="function")
-def start_browser():
-    aqas.browser.start()
-    aqas.browser.navigation.go_to(aqas.config.project_settings.url)
+def start_browser(request):
+    with aqas.pre_step("Запуск браузера"):
+        aqas.browser.start(request.node.name)
+
+    with aqas.pre_step("Переход на главную страницу"):
+        aqas.browser.navigation.go_to(aqas.config.project_settings.url)
+
     yield
-    aqas.browser.stop()
+
+    with aqas.post_step("Закрытие браузера"):
+        aqas.browser.stop()
 
 
 @pytest.fixture(scope="function")
@@ -82,7 +87,7 @@ def go_lane1(get_auth_admin):
             lane1_control_page.elements.BUSY_LANE_BTN.reset()
             lane1_control_page.elements.BUSY_LANE_BTN.click()
 
-    with aqas.step("Проверить, что полоса стала свободной"):
+    with aqas.post_step("Проверить, что полоса стала свободной"):
         assert is_located(lane1_control_page.elements.LANE_IS_FREE_LBL), "Полоса не стала свободной"
 
     with aqas.post_step("Подождать, пока не исчезнут Уведомления"):
